@@ -13,6 +13,5 @@ while True:
             pygame.quit()
             exit()
        
-    
-    pygame.display.update()
+
     main_clock.tick(60) #maximum frameratxxxx
