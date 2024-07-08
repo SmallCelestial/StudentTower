@@ -5,7 +5,7 @@ main_screen=pygame.display.set_mode((800,400)) #width,height
 pygame.display.set_caption("Pixel_Runner")
 
 main_clock=pygame.time.Clock()
-# asfadfas
+new_Variable=100
 
 while True:
     for event in pygame.event.get():
