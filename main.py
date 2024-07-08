@@ -15,4 +15,4 @@ while True:
        
     
     pygame.display.update()
-    main_clock.tick(60) #maximum framerate
+    main_clock.tick(60) #maximum frameratxxxx
