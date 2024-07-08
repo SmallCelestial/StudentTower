@@ -1,8 +1,8 @@
 import pygame
 
 pygame.init()
-main_screen=pygame.display.set_mode((1200,400)) #width,height
-pygame.display.set_caption("Pixel_Runner")
+main_screen=pygame.display.set_mode((1000,800)) #width,height
+pygame.display.set_caption("Student_Tower")
 
 main_clock=pygame.time.Clock()
 #GLOBAL VARIABLES
