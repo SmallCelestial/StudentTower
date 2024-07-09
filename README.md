@@ -1,6 +1,6 @@
 # StudentTower
 
-##floor_naming_scheme
+FLOOR NAMING SCHEME
 *floor_snowbiom_300_0*  
 first_number (in thi case 300) - means the widht of step/floor  
 second_number (int this case 0) - means the frame of the step where  

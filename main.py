@@ -76,7 +76,6 @@ class step_snowbiom(pygame.sprite.Sprite):
         self.rect=self.image.get_rect(midbottom=self.top_left_xy)
 
         
-
     def falling_mechanic(self):
         self.rect.centery+=self.falling_speed
         self.relative_height-=self.falling_speed
@@ -122,7 +121,6 @@ def jumping_mechanic(player,steps):
 #BACGROUND_AND_FLOOR_TEXTURES
 start_background=pygame.image.load('resources/backgrounds/start_background.png').convert_alpha()
 start_floor=pygame.image.load('resources/floors/start_floor.png').convert_alpha()
-
 
 
 #GROUPS
