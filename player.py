@@ -43,8 +43,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx += self.x_speed
         self.rect.centery += self.y_speed
 
-    def contact_with_steps(self, steps):
-        pass
 
     # temporary function
     def contact_with_floor(self):
