@@ -1,59 +1,13 @@
 import pygame
-import random #for randint
+import random # for randint
+from player import Player
 
 pygame.init()
-main_screen=pygame.display.set_mode((1000,800)) #width,height
+main_screen = pygame.display.set_mode((1000, 800)) #width,height
 pygame.display.set_caption("Student_Tower")
 
-#CLASSES
-class Player(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.player_walk=pygame.image.load("resources/Player/player_stand.png").convert_alpha()
 
-        self.image= self.player_walk #jakbys zmienial to napisz
-        self.rect=self.image.get_rect(midbottom=(500,200)) #jakbys zmienial to napisz
-
-        #basic_parameters
-        self.x_speed=0
-        self.y_speed=0
-        self.current_height=0
-        self.max_height=0
-        floor_under_legs_status=True #if true player stands on floor and can jump
-
-
-    def player_input(self):
-        keys=pygame.key.get_pressed()
-        if (keys[pygame.K_UP] or keys[pygame.K_SPACE]):
-            self.y_speed=-10
-        if keys[pygame.K_DOWN]:
-            self.y_speed=+10
-        if keys[pygame.K_LEFT]:
-            self.rect.x-=5 
-        if keys[pygame.K_RIGHT]:
-            self.rect.x+=5
-
-
-    def gravity_function(self):
-        if self.rect.bottom >= 700 and self.current_height==0:
-            self.rect.bottom=700
-        
-        if self.y_speed<10: #max garivty strength
-            self.y_speed+=0.2 #gravity strength
-
-        self.rect.centerx+=self.x_speed
-        self.rect.centery+=self.y_speed
-
-    def contact_with_steps(self,steps):
-        pass #TO BE IMPLEMENTED
-
-
-    def update(self):
-        self.player_input()
-        self.gravity_function()
-
-
-#CLASSES
+# CLASSES
 class step_snowbiom(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -78,23 +32,21 @@ class step_snowbiom(pygame.sprite.Sprite):
         self.image= self.floor_snowbiom_300_0
         self.rect=self.image.get_rect(topleft=self.topLeft)
 
-        
     def falling_mechanic(self):
-        self.rect.centery+=self.falling_speed
-        self.relative_height-=self.falling_speed
-        if self.relative_height<=0:
+        self.rect.centery += self.falling_speed
+        self.relative_height -= self.falling_speed
+        if self.relative_height <= 0:
             self.kill()
         
         #updating topLeft and topRight cords
-        self.topLeft[1]=self.relative_height #x cords, stay unchanged
-        self.topRight[1]=self.relative_height #x cords, stay unchanged
-        
+        self.topLeft[1] = self.relative_height #x cords, stay unchanged
+        self.topRight[1] = self.relative_height #x cords, stay unchanged
 
     def animation_mehcanic(self):
-        self.floor_snowbiom_index+=0.02
-        if self.floor_snowbiom_index>=len(self.floor_snowbiom_300):
-            self.floor_snowbiom_index=0
-        self.image=self.floor_snowbiom_300[int(self.floor_snowbiom_index)]
+        self.floor_snowbiom_index += 0.02
+        if self.floor_snowbiom_index >= len(self.floor_snowbiom_300):
+            self.floor_snowbiom_index = 0
+        self.image = self.floor_snowbiom_300[int(self.floor_snowbiom_index)]
 
     def update(self):
         self.falling_mechanic()
@@ -102,23 +54,23 @@ class step_snowbiom(pygame.sprite.Sprite):
 
 
 #GLOBAL VARIABLES
-main_clock=pygame.time.Clock()
-game_status="game_on" #intro, game_on, outro
+main_clock = pygame.time.Clock()
+game_status = "game_on" #intro, game_on, outro
 
-floor_spawn_cooldown=60 #time between each step is spawned
-floor_spawn_timer=floor_spawn_cooldown #timer used for measuring time between spawns of steps
+floor_spawn_cooldown = 60 #time between each step is spawned
+floor_spawn_timer = floor_spawn_cooldown #timer used for measuring time between spawns of steps
 
 #GLOBAL_FUNCTIONS
 def spawning_steps(): #function responsible for cyclic spawning falling steps
     global floor_spawn_timer
     global floor_spawn_cooldown
-    floor_spawn_timer-=1
-    if floor_spawn_timer<=0:
+    floor_spawn_timer -= 1
+    if floor_spawn_timer <= 0:
         falling_floors_group.add(step_snowbiom())
-        floor_spawn_timer=floor_spawn_cooldown
+        floor_spawn_timer = floor_spawn_cooldown
 
 
-def jumping_mechanic(player,steps):
+def jumping_mechanic(player, steps):
     pass #TO BE IMPLEMENTED
 
 #BACGROUND_AND_FLOOR_TEXTURES
@@ -127,27 +79,31 @@ start_floor=pygame.image.load('resources/floors/start_floor.png').convert_alpha(
 
 
 #GROUPS
-player_group=pygame.sprite.GroupSingle()
+player_group = pygame.sprite.GroupSingle()
 player_group.add(Player())
 
-falling_floors_group=pygame.sprite.Group()
+falling_floors_group = pygame.sprite.Group()
 
 
 while True:
     for event in pygame.event.get():
-        if event.type==pygame.QUIT:
+        if event.type == pygame.QUIT:
             pygame.quit()
             exit()
 
     if game_status == "game_on":
 
         #module reposnsible for background and steps display
-        main_screen.blit(start_background,(0,0))
-        main_screen.blit(start_floor,(0,700))
+        main_screen.blit(start_background, (0, 0))
+        main_screen.blit(start_floor, (0, 700))
 
         spawning_steps()
         falling_floors_group.draw(main_screen)
         falling_floors_group.update()
+
+        # temporary lines imitating walls
+        pygame.draw.line(main_screen, 'Black', (125, 700), (125, 0))
+        pygame.draw.line(main_screen, 'Black', (875, 700), (875, 0))
 
         #module responsible for player animation and movement display 
         jumping_mechanic(player_group.sprite,falling_floors_group) #TO BE IMPLEMENTED
