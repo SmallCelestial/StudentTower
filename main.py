@@ -24,13 +24,13 @@ class Player(pygame.sprite.Sprite):
 
     def player_input(self):
         keys=pygame.key.get_pressed()
-        if (keys[pygame.K_UP] or keys[pygame.K_SPACE]) and keys[pygame.K_DOWN]==False and keys[pygame.K_LEFT]==False and keys[pygame.K_RIGHT]==False:
+        if (keys[pygame.K_UP] or keys[pygame.K_SPACE]):
             self.y_speed=-10
-        if keys[pygame.K_UP]==False and keys[pygame.K_DOWN] and keys[pygame.K_LEFT]==False and keys[pygame.K_RIGHT]==False:
+        if keys[pygame.K_DOWN]:
             self.y_speed=+10
-        if keys[pygame.K_UP]==False and keys[pygame.K_DOWN]==False and keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]==False:
+        if keys[pygame.K_LEFT]:
             self.rect.x-=5 
-        if keys[pygame.K_UP]==False and keys[pygame.K_DOWN]==False and keys[pygame.K_LEFT]==False and keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT]:
             self.rect.x+=5
 
 
@@ -43,6 +43,9 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.centerx+=self.x_speed
         self.rect.centery+=self.y_speed
+
+    def contact_with_steps(self,steps):
+        pass #TO BE IMPLEMENTED
 
 
     def update(self):
@@ -70,10 +73,10 @@ class step_snowbiom(pygame.sprite.Sprite):
 
         #setting topleft adn topright points, needed for function checking if player standing on sth
         self.topLeft=[random.randint(300,600),0]
-        self.topRight=[self.top_left_xy[0]+self.width,self.top_left_xy[1]]
+        self.topRight=[self.topLeft[0]+self.width,self.topLeft[1]]
 
         self.image= self.floor_snowbiom_300_0
-        self.rect=self.image.get_rect(midbottom=self.top_left_xy)
+        self.rect=self.image.get_rect(topleft=self.topLeft)
 
         
     def falling_mechanic(self):
