@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.current_height = 0
         self.max_height = 0
-        floor_under_legs_status=True #if true player stands on floor and can jump
+        self.floor_under_legs_status=False #if true player stands on floor and can jump
 
 
     def player_input(self):
@@ -38,22 +38,29 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= 700 and self.current_height == 0:
             self.rect.bottom = 700
         
-        if self.y_speed < 10: #max garivty strength
+        if self.y_speed < 10 and self.floor_under_legs_status == False: #max garivty strength
             self.y_speed += 0.2 #gravity strength
 
         self.rect.centerx += self.x_speed
         self.rect.centery += self.y_speed
 
-    def contact_with_steps(self,steps):
-        pass #TO BE IMPLEMENTED
-
+    #def contact_with_steps(self,steps):
+    #   self.floor_under_legs_status=False
+    #    for step in steps:
+    #        if self.x_speed >= 0 and self.rect.midbottom[0]>=step.topLeft[0] and self.rect.midbottom[0]<=step.topRight[0] and self.rect.midbottom[0]>=step.topLeft[1]-1 and self.rect.midbottom[0]<=step.topLeft[1]+1:
+    #            self.floor_under_legs_status=True
+    #            self.rect.bottom=step.rect.top
+        
 
     def update(self):
         self.player_input()
         self.gravity_function()
+        #self.contact_with_steps(falling_steps_group)
+
 
 """
 STEP_SNOWBIOM
+
 ===Atributes===
 relative_height -> it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
 falling_speed ->  how many pixels a sec a step goes down
@@ -61,12 +68,13 @@ height -> height of a step
 width -> wifth of a step
 topLeft -> a list of two elements, first being x cord, second y cord of topleft corner of step
 topRight -> a list of two elements, first being x cord, second y cord of topright corner of step
-image -> image, a texture of an object
-rect -> rectangle of an object
+floor_snowbiom_300 -> list of all images responsible for animation
+floor_snowbiom_index -> iterator of an floor_snowbiom_300 list
+
 ===Methods===
 falling_mechcanic() -> makes step fall, based on relative height, and also kill when step out of screen
 animation_mechanic() -> responsible for changing textures for image variable, makes step animated
-update() -> function updating status of  created objects
+
 """
 class step_snowbiom(pygame.sprite.Sprite):
     def __init__(self):
@@ -78,14 +86,11 @@ class step_snowbiom(pygame.sprite.Sprite):
         self.floor_snowbiom_300=[self.floor_snowbiom_300_0,self.floor_snowbiom_300_1,self.floor_snowbiom_300_2,self.floor_snowbiom_300_3]
         self.floor_snowbiom_index=0
         
-        
-        #basic_parameters
         self.relative_height = 1000 
-        self.falling_speed = 5  #1000 is at top, 0 is at bottom (contrary to y. positioning)
+        self.falling_speed = 5 
         self.height = 50
         self.width = 300
 
-        #setting topleft adn topright points, needed for function checking if player standing on sth
         self.topLeft = [random.randint(300,600),0]
         self.topRight = [self.topLeft[0]+self.width,self.topLeft[1]]
 
@@ -127,23 +132,18 @@ def spawning_steps(): #function responsible for cyclic spawning falling steps
     global floor_spawn_cooldown
     floor_spawn_timer -= 1
     if floor_spawn_timer <= 0:
-        falling_floors_group.add(step_snowbiom())
+        falling_steps_group.add(step_snowbiom())
         floor_spawn_timer=floor_spawn_cooldown
 
-
-def jumping_mechanic(player,steps):
-    pass #TO BE IMPLEMENTED
 
 #BACGROUND_AND_FLOOR_TEXTURES
 start_background=pygame.image.load('resources/backgrounds/start_background.png').convert_alpha()
 start_floor=pygame.image.load('resources/floors/start_floor.png').convert_alpha()
 
-
 #GROUPS
 player_group = pygame.sprite.GroupSingle()
 player_group.add(Player())
-
-falling_floors_group=pygame.sprite.Group()
+falling_steps_group=pygame.sprite.Group()
 
 
 while True:
@@ -159,11 +159,10 @@ while True:
         main_screen.blit(start_floor,(0,700))
 
         spawning_steps()
-        falling_floors_group.draw(main_screen)
-        falling_floors_group.update()
+        falling_steps_group.draw(main_screen)
+        falling_steps_group.update()
 
         #module responsible for player animation and movement display 
-        jumping_mechanic(player_group.sprite,falling_floors_group) #TO BE IMPLEMENTED
         player_group.draw(main_screen)
         player_group.update()
 
