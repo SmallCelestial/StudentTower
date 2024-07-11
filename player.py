@@ -1,7 +1,7 @@
 import pygame
 
-LEFT_WALL_COORDINATE = 125
-RIGHT_WALL_COORDINATE = 875
+LEFT_WALL_COORDINATE = 100
+RIGHT_WALL_COORDINATE = 900
 
 
 class Player(pygame.sprite.Sprite):
