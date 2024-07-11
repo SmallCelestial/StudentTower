@@ -72,10 +72,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += 5
 
     def apply_gravity(self):
-        if self.rect.bottom >= 700 and self.current_height == 0:
+        if self.rect.bottom >= 700 and self.current_height <= 0:
             self.rect.bottom = 700
 
-        if self.y_speed < 10:  # max gravity strength
+        if self.y_speed < 10 and self.can_jump == False:  # max gravity strength
             self.y_speed += 0.2  # gravity strength
         else:
             self.y_speed = 0

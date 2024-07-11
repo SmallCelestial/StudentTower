@@ -28,9 +28,9 @@ def spawning_steps(): #function responsible for cyclic spawning falling steps
 
 def contact_with_steps(player, steps):
         for step in steps:
-            #self.rect.bottom <= step.rect.top +5 and self.rect.bottom >= step.rect.top -5
-            if player.rect.bottom == step.rect.top  and player.rect.centerx >= step.topLeft[0] and player.rect.centerx <= step.topRight[0] and player.y_speed >= 0:
-                player.floor_under_legs_status = True
+            #
+            if player.rect.bottom <= step.rect.top + 5 and player.rect.bottom >= step.rect.top - 5  and player.rect.centerx >= step.topLeft[0] and player.rect.centerx <= step.topRight[0] and player.y_speed >= 0:
+                player.can_jump = True
                 player.rect.bottom = step.rect.top
                 player.y_speed = 0
 
