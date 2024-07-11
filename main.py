@@ -36,7 +36,7 @@ def contact_with_steps(player, steps):
 
 
 #BACGROUND_AND_FLOOR_TEXTURES
-start_background=pygame.image.load('resources/backgrounds/start_background.png').convert_alpha()
+start_background=pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
 start_floor=pygame.image.load('resources/floors/start_floor.png').convert_alpha()
 
 
@@ -64,8 +64,8 @@ while True:
         falling_floors_group.update()
 
         # temporary lines imitating walls
-        pygame.draw.line(main_screen, 'Black', (LEFT_WALL_COORDINATE, 700), (LEFT_WALL_COORDINATE, 0))
-        pygame.draw.line(main_screen, 'Black', (RIGHT_WALL_COORDINATE, 700), (RIGHT_WALL_COORDINATE, 0))
+        # pygame.draw.line(main_screen, 'Black', (LEFT_WALL_COORDINATE, 700), (LEFT_WALL_COORDINATE, 0))
+        # pygame.draw.line(main_screen, 'Black', (RIGHT_WALL_COORDINATE, 700), (RIGHT_WALL_COORDINATE, 0))
 
         #module responsible for player animation and movement display 
         contact_with_steps(player_group.sprite, falling_floors_group)
