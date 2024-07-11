@@ -29,7 +29,7 @@ class step_snowbiom(pygame.sprite.Sprite):
         self.floor_snowbiom_index=0
         
         self.relative_height = 1000 
-        self.falling_speed = 5 
+        self.falling_speed = 2 
         self.height = 50
         self.width = 300
 

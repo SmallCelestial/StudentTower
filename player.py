@@ -1,5 +1,6 @@
 import pygame
 
+
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
 
@@ -76,8 +77,14 @@ class Player(pygame.sprite.Sprite):
 
         if self.y_speed < 10:  # max gravity strength
             self.y_speed += 0.2  # gravity strength
+        else:
+            self.y_speed = 0
 
         self.rect.centery += self.y_speed
+
+    def height_status(self):
+        self.current_height -= self.y_speed
+        self.max_height = max(self.max_height, self.current_height)
 
     # temporary function
     def contact_with_floor(self):
@@ -88,3 +95,5 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
         self.contact_with_floor()
+        self.height_status()
+        print(self.current_height) # for testing purposes
