@@ -2,6 +2,9 @@ import pygame
 from player import Player
 from steps_lib import step_snowbiom
 
+LEFT_WALL_COORDINATE = 100
+RIGHT_WALL_COORDINATE = 900
+
 pygame.init()
 main_screen = pygame.display.set_mode((1000, 800)) #width,height
 pygame.display.set_caption("Student_Tower")
@@ -56,8 +59,8 @@ while True:
         falling_floors_group.update()
 
         # temporary lines imitating walls
-        pygame.draw.line(main_screen, 'Black', (125, 700), (125, 0))
-        pygame.draw.line(main_screen, 'Black', (875, 700), (875, 0))
+        pygame.draw.line(main_screen, 'Black', (LEFT_WALL_COORDINATE, 700), (LEFT_WALL_COORDINATE, 0))
+        pygame.draw.line(main_screen, 'Black', (RIGHT_WALL_COORDINATE, 700), (RIGHT_WALL_COORDINATE, 0))
 
         #module responsible for player animation and movement display 
         jumping_mechanic(player_group.sprite,falling_floors_group) #TO BE IMPLEMENTED
