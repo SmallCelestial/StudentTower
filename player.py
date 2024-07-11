@@ -96,4 +96,4 @@ class Player(pygame.sprite.Sprite):
         self.apply_gravity()
         self.contact_with_floor()
         self.height_status()
-        print(self.current_height) # for testing purposes
+        print(self.current_height) # for testing purposes # komentarz
