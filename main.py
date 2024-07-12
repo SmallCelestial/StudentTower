@@ -1,24 +1,23 @@
-import pygame
 from player import *
-from steps_lib import step_snowbiom, Floor_snowbiom
+from steps_lib import Step_snowbiom, Floor_snowbiom
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
 
 pygame.init()
-main_screen = pygame.display.set_mode((1000, 800)) #width,height
+main_screen = pygame.display.set_mode((1000, 800))  # width,height
 pygame.display.set_caption("Student_Tower")
 
-
-#GLOBAL VARIABLES
+# GLOBAL VARIABLES
 main_clock = pygame.time.Clock()
-game_status = "intro" #intro, game_on, outro
+game_status = "intro"  # intro, game_on, outro
 
-floor_spawn_cooldown = 60 #time between each step is spawned
-floor_spawn_timer = floor_spawn_cooldown #timer used for measuring time between spawns of steps
+floor_spawn_cooldown = 60  # time between each step is spawned
+floor_spawn_timer = floor_spawn_cooldown  # timer used for measuring time between spawns of steps
 
-#GLOBAL_FUNCTIONS
-def spawning_steps(): #function responsible for cyclic spawning falling steps
+
+# GLOBAL_FUNCTIONS
+def spawning_steps():  # function responsible for cyclic spawning falling steps
     global floor_spawn_timer
     global floor_spawn_cooldown
     floor_spawn_timer -= 1
@@ -26,29 +25,32 @@ def spawning_steps(): #function responsible for cyclic spawning falling steps
         falling_floors_group.add(Step_snowbiom())
         floor_spawn_timer = floor_spawn_cooldown
 
+
 def contact_with_steps(player, steps):
-        flag_1 = False
-        for step in steps:
-            if player.rect.bottom <= step.rect.top + 5 and player.rect.bottom >= step.rect.top - 5  and player.rect.centerx >= step.topLeft[0] and player.rect.centerx <= step.topRight[0] and player.y_speed >= 0:
-                player.can_jump = True
-                player.rect.bottom = step.rect.top
-                player.y_speed = 0
-                flag_1 = True
-        if flag_1 == False:
-            player.can_jump = False
-
-#BACGROUND_AND_FLOOR_TEXTURES
-start_background=pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
-start_floor=pygame.image.load('resources/floors/start_floor.png').convert_alpha()
+    flag_1 = False
+    for step in steps:
+        if (step.rect.top + 5 >= player.rect.bottom >= step.rect.top - 5 and
+                step.topLeft[0] <= player.rect.centerx <= step.topRight[0] and
+                player.y_speed >= 0):
+            player.can_jump = True
+            player.rect.bottom = step.rect.top
+            player.y_speed = 0
+            flag_1 = True
+    if not flag_1:
+        player.can_jump = False
 
 
-#GROUPS
+# BACKGROUND_AND_FLOOR_TEXTURES
+start_background = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
+start_floor = pygame.image.load('resources/floors/start_floor.png').convert_alpha()
+
+# GROUPS
 player_group = pygame.sprite.GroupSingle()
 player_group.add(Player())
 
 falling_floors_group = pygame.sprite.Group()
 
-falling_floors_group.add(Floor_snowbiom()) # for test
+falling_floors_group.add(Floor_snowbiom())  # for test
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -57,9 +59,9 @@ while True:
 
     if game_status == "game_on":
 
-        #module reposnsible for background and steps display
+        # module responsible for background and steps display
         main_screen.blit(start_background, (0, 0))
-        #main_screen.blit(start_floor, (0, 700))
+        # main_screen.blit(start_floor, (0, 700))
 
         spawning_steps()
         falling_floors_group.draw(main_screen)
@@ -69,7 +71,7 @@ while True:
         # pygame.draw.line(main_screen, 'Black', (LEFT_WALL_COORDINATE, 700), (LEFT_WALL_COORDINATE, 0))
         # pygame.draw.line(main_screen, 'Black', (RIGHT_WALL_COORDINATE, 700), (RIGHT_WALL_COORDINATE, 0))
 
-        #module responsible for player animation and movement display 
+        # module responsible for player animation and movement display
         contact_with_steps(player_group.sprite, falling_floors_group)
         player_group.draw(main_screen)
         player_group.update()
@@ -80,7 +82,7 @@ while True:
         if intro.play_button:
             game_status = "game_on"
     elif game_status == "outro":
-        pass  
+        pass
 
     pygame.display.update()
-    main_clock.tick(60) #maximum framerate 60tics = 1 second
+    main_clock.tick(60)  # maximum framerate 60tics = 1 second
