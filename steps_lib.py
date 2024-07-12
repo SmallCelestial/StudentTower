@@ -1,21 +1,48 @@
 import pygame
 import random
 
-class step_snowbiom(pygame.sprite.Sprite):
+class Step_snowbiom(pygame.sprite.Sprite):
     """
-    ===Atributes===
-    relative_height -> it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
-    falling_speed ->  how many pixels a sec a step goes down
-    height -> height of a step
-    width -> wifth of a step
-    topLeft -> a list of two elements, first being x cord, second y cord of topleft corner of step
-    topRight -> a list of two elements, first being x cord, second y cord of topright corner of step
-    floor_snowbiom_300 -> list of all images responsible for animation
-    floor_snowbiom_index -> iterator of an floor_snowbiom_300 list
+    Step_snowbiom is a class represeting texture and rectangle of a step 
+    
+    Atributes:
+    ----------
+    relative_height : float 
+        it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
+    falling_speed : float
+        how many pixels a sec a step goes down
+    height : float
+        height of a step
+    width : float
+        wifth of a step
+    topLeft : list[x,y]
+        a list of two elements, first being x cord, second y cord of topleft corner of step
+    topRight : list[x,y]
+        a list of two elements, first being x cord, second y cord of topright corner of step
+    
+    textures:
+    ---------
+    floor_snowbiom_300_0 : pygame.Surface
+        A texture of a step
+    floor_snowbiom_300 : list[pygame.Surface,...] 
+        list of all images responsible for animation
+    floor_snowbiom_index : int
+        iterator of an floor_snowbiom_300 list
+    image : pygame.Surface
+        The current image of the step used for rendering.
+    rect : pygame.Rect
+        The rectangular area defining the step's position and dimensions.
 
-    ===Methods===
-    falling_mechcanic() -> makes step fall, based on relative height, and also kill when step out of screen
-    animation_mechanic() -> responsible for changing textures for image variable, makes step animated
+    Methods:
+    --------
+    __init__():
+        Initializes the step with default settings and loads the image.
+    falling_mechcanic():
+        makes step fall, based on relative height, and also kill when step out of screen
+    animation_mechanic():
+        responsible for changing textures for image variable, makes step animated
+    update():
+        Updates the step's state by  applying gravity.
 
     """
 
@@ -59,3 +86,60 @@ class step_snowbiom(pygame.sprite.Sprite):
     def update(self):
         self.falling_mechanic()
         self.animation_mehcanic()
+
+class Floor_snowbiom(pygame.sprite.Sprite):
+    """
+    Step_snowbiom is a class represeting texture and rectangle of a step 
+    
+    Atributes:
+    ----------
+    relative_height : float 
+        it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
+    falling_speed : float
+        how many pixels a sec a step goes down
+    height : float
+        height of a step
+    width : float
+        wifth of a step
+    topLeft : list[x,y]
+        a list of two elements, first being x cord, second y cord of topleft corner of step
+    topRight : list[x,y]
+        a list of two elements, first being x cord, second y cord of topright corner of step
+    
+    textures:
+    ---------
+    floor_snowbiom_1000_0 : pygame.Surface
+        A texture of a step
+    image : pygame.Surface
+        The current image of the step used for rendering.
+    rect : pygame.Rect
+        The rectangular area defining the step's position and dimensions.
+
+    Methods:
+    --------
+    __init__():
+        Initializes the step with default settings and loads the image.
+    falling_mechcanic():
+        makes step fall, based on relative height, and also kill when step out of screen
+    animation_mechanic():
+        responsible for changing textures for image variable, makes step animated
+    update():
+        Updates the step's state by  applying gravity.
+    """    
+    def __init__(self):
+        super().__init__()
+        self.floor_snowbiom_1000_0 = pygame.image.load('resources/floors/floor_snowbiom_1000_0.png').convert_alpha()
+        
+        self.relative_height = 1 
+        self.falling_speed = 0 
+        self.height = 100
+        self.width = 1000
+
+        self.topLeft = [0,700]
+        self.topRight = [self.topLeft[0]+self.width,self.topLeft[1]]
+
+        self.image = self.floor_snowbiom_1000_0
+        self.rect = self.image.get_rect(topleft=self.topLeft)
+
+    def update(self):
+        pass
