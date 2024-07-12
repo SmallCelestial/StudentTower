@@ -4,8 +4,11 @@ from steps_lib import Step_snowbiom, Floor_snowbiom
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
 
+WIDTH = 1000
+HEIGHT = 800
+
 pygame.init()
-main_screen = pygame.display.set_mode((1000, 800))  # width,height
+main_screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Student_Tower")
 
 # GLOBAL VARIABLES
@@ -42,7 +45,6 @@ def contact_with_steps(player, steps):
 
 # BACKGROUND_AND_FLOOR_TEXTURES
 start_background = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
-start_floor = pygame.image.load('resources/floors/start_floor.png').convert_alpha()
 
 # GROUPS
 player_group = pygame.sprite.GroupSingle()
@@ -61,15 +63,10 @@ while True:
 
         # module responsible for background and steps display
         main_screen.blit(start_background, (0, 0))
-        # main_screen.blit(start_floor, (0, 700))
 
         spawning_steps()
         falling_floors_group.draw(main_screen)
         falling_floors_group.update()
-
-        # temporary lines imitating walls
-        # pygame.draw.line(main_screen, 'Black', (LEFT_WALL_COORDINATE, 700), (LEFT_WALL_COORDINATE, 0))
-        # pygame.draw.line(main_screen, 'Black', (RIGHT_WALL_COORDINATE, 700), (RIGHT_WALL_COORDINATE, 0))
 
         # module responsible for player animation and movement display
         contact_with_steps(player_group.sprite, falling_floors_group)

@@ -97,11 +97,6 @@ class Intro(pygame.sprite.Sprite):
         self.rect.center = main_screen.get_rect().center
         self.play_button = False
 
-        # font = pygame.font.Font(None, 36)
-        # text = font.render("Play!", True, pygame.Color('Black'))
-        # text_rect = text.get_rect(center=self.image.get_rect().center)
-        # self.image.blit(text, text_rect)
-
         self.play_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
         self.play_image = pygame.transform.scale(self.play_image, (300, 200))
         self.play_image_rect = self.play_image.get_rect(bottomleft=(150, 500))
@@ -114,9 +109,7 @@ class Intro(pygame.sprite.Sprite):
         self.quit_image = pygame.transform.scale(self.quit_image, (300, 200))
         self.quit_image_rect = self.quit_image.get_rect(bottomleft=(150, 800))
 
-        #  To remove later
         self.tower_image = pygame.image.load('resources/backgrounds/skyscraper.png').convert_alpha()
-        # self.tower_image = pygame.transform.scale(self.quit_image, (300, 200))
         self.tower_image_rect = self.quit_image.get_rect(center=(600, 300))
 
         self.image.blit(self.play_image, self.play_image_rect)

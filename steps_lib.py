@@ -4,9 +4,9 @@ import random
 
 class Step_snowbiom(pygame.sprite.Sprite):
     """
-    Step_snowbiom is a class represeting texture and rectangle of a step 
+    Step_snowbiom is a class representing texture and rectangle of a step
     
-    Atributes:
+    Attributes:
     ----------
     relative_height : float 
         it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
@@ -15,7 +15,7 @@ class Step_snowbiom(pygame.sprite.Sprite):
     height : float
         height of a step
     width : float
-        wifth of a step
+        width of a step
     topLeft : list[x,y]
         a list of two elements, first being x cord, second y cord of topleft corner of step
     topRight : list[x,y]
@@ -38,7 +38,7 @@ class Step_snowbiom(pygame.sprite.Sprite):
     --------
     __init__():
         Initializes the step with default settings and loads the image.
-    falling_mechcanic():
+    falling_mechanic():
         makes step fall, based on relative height, and also kill when step out of screen
     animation_mechanic():
         responsible for changing textures for image variable, makes step animated
@@ -74,10 +74,10 @@ class Step_snowbiom(pygame.sprite.Sprite):
         if self.relative_height <= 0:
             self.kill()
         
-        self.topLeft[1] = self.relative_height  # x cords, stay unchanged
-        self.topRight[1] = self.relative_height  # x cords, stay unchanged
+        self.topLeft[1] = self.relative_height
+        self.topRight[1] = self.relative_height
 
-    def animation_mehcanic(self):
+    def animation_mechanic(self):
         self.floor_snowbiom_index += 0.02
         if self.floor_snowbiom_index >= len(self.floor_snowbiom_300):
             self.floor_snowbiom_index = 0
@@ -85,7 +85,7 @@ class Step_snowbiom(pygame.sprite.Sprite):
 
     def update(self):
         self.falling_mechanic()
-        self.animation_mehcanic()
+        self.animation_mechanic()
 
 
 class Floor_snowbiom(pygame.sprite.Sprite):
