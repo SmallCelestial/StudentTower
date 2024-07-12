@@ -1,5 +1,5 @@
 import pygame
-from player import Player
+from player import *
 from steps_lib import step_snowbiom
 
 LEFT_WALL_COORDINATE = 100
@@ -12,7 +12,7 @@ pygame.display.set_caption("Student_Tower")
 
 #GLOBAL VARIABLES
 main_clock = pygame.time.Clock()
-game_status = "game_on" #intro, game_on, outro
+game_status = "intro" #intro, game_on, outro
 
 floor_spawn_cooldown = 60 #time between each step is spawned
 floor_spawn_timer = floor_spawn_cooldown #timer used for measuring time between spawns of steps
@@ -73,7 +73,10 @@ while True:
         player_group.update()
 
     elif game_status == "intro":
-        pass
+        intro = Intro(main_screen)
+        intro.update()
+        if intro.play_button:
+            game_status = "game_on"
     elif game_status == "outro":
         pass  
 
