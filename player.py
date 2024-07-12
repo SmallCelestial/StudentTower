@@ -38,10 +38,8 @@ class Player(pygame.sprite.Sprite):
         Handles the jumping logic when the player is on the floor.
     player_input():
         Handles the player's input for movement and jumping.
-    gravity_function():
+    apply_gravity():
         Applies gravity to the player and updates their position.
-    contact_with_floor():
-        Checks if the player is in contact with the floor and updates the floor status.
     update():
         Updates the player's state by processing input, applying gravity, and checking floor contact.
     """
@@ -72,13 +70,8 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += 5
 
     def apply_gravity(self):
-        if self.rect.bottom >= 700 and self.current_height <= 0:
-            self.rect.bottom = 700
-
         if self.y_speed < 10 and not self.can_jump:  # max gravity strength
             self.y_speed += 0.2  # gravity strength
-        else:
-            self.y_speed = 0
 
         self.rect.centery += self.y_speed
 
@@ -86,17 +79,12 @@ class Player(pygame.sprite.Sprite):
         self.current_height -= self.y_speed
         self.max_height = max(self.max_height, self.current_height)
 
-    # temporary function
-    def contact_with_floor(self):
-        if self.rect.bottom >= 700:
-            self.can_jump = True
 
     def update(self):
         self.player_input()
         self.apply_gravity()
-        self.contact_with_floor()
         self.height_status()
-        print(self.current_height)  # for testing purposes
+        print(f"{self.current_height}_{self.can_jump}") # for testing purposes # komentarz
 
 
 # I need to change
