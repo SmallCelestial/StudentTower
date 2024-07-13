@@ -1,9 +1,8 @@
 import pygame
-
+from steps_lib import *
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
-
 
 class Player(pygame.sprite.Sprite):
     """
@@ -102,7 +101,7 @@ class Player(pygame.sprite.Sprite):
         self._place_inside_area()
 
     def apply_gravity(self):
-        if self.y_speed < 10 and not self.can_jump:  # max gravity strength
+        if self.y_speed < 5 and not self.can_jump:  # max gravity strength
             self.y_speed += 0.2  # gravity strength
         self.counter += 1
         if self.counter % 10 == 0 and not self.can_jump and self.super_jump:
@@ -120,12 +119,13 @@ class Player(pygame.sprite.Sprite):
         self.current_height -= self.y_speed
         self.max_height = max(self.max_height, self.current_height)
 
+        self.rect.bottom +=self.y_speed
+
     def update(self):
         self.player_input()
         self.apply_gravity()
         self.height_status()
         print(f"{self.current_height}_{self.can_jump}")  # for testing purposes
-
 
 # I need to change
 class Intro(pygame.sprite.Sprite):
