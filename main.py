@@ -13,7 +13,7 @@ pygame.display.set_caption("Student_Tower")
 
 # GLOBAL VARIABLES
 main_clock = pygame.time.Clock()
-game_status = "intro"  # intro, game_on, outro
+game_status = "game_on"  # intro, game_on, outro
 
 floor_spawn_cooldown = 60  # time between each step is spawned
 floor_spawn_timer = floor_spawn_cooldown  # timer used for measuring time between spawns of steps
