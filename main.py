@@ -1,24 +1,21 @@
-from player import *
-#from steps_lib import Step_snowbiom, Floor_snowbiom
+import pygame
+from engine import *
+
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
 
-WIDTH = 1000
-HEIGHT = 800
 
 pygame.init()
-main_screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Student_Tower")
 
 # GLOBAL VARIABLES
 main_clock = pygame.time.Clock()
 game_status = "intro"  # intro, game_on, outro
 
+
 # BACKGROUND_AND_FLOOR_TEXTURES
 start_background = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
-
-# GROUPS
+main_engine = Engine(player_group, falling_floors_group)
 
 while True:
     for event in pygame.event.get():
@@ -31,12 +28,8 @@ while True:
         # module responsible for background and steps display
         main_screen.blit(start_background, (0, 0))
 
-        falling_floors_group.draw(main_screen)
-        falling_floors_group.update()
-
-        # module responsible for player animation and movement display
-        player_group.draw(main_screen)
-        player_group.update()
+        #engine consisting of player class and various steps class
+        main_engine.update()
 
     elif game_status == "intro":
         intro = Intro(main_screen)
