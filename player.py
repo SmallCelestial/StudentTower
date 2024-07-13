@@ -1,8 +1,8 @@
-import pygame
 from steps_lib import *
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
+
 
 class Player(pygame.sprite.Sprite):
     """
@@ -119,13 +119,14 @@ class Player(pygame.sprite.Sprite):
         self.current_height -= self.y_speed
         self.max_height = max(self.max_height, self.current_height)
 
-        self.rect.bottom +=self.y_speed
+        self.rect.bottom += self.y_speed
 
     def update(self):
         self.player_input()
         self.apply_gravity()
         self.height_status()
         print(f"{self.current_height}_{self.can_jump}")  # for testing purposes
+
 
 # I need to change
 class Intro(pygame.sprite.Sprite):
