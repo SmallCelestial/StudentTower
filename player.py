@@ -64,7 +64,7 @@ class Player(pygame.sprite.Sprite):
         if self.can_jump:
             self.y_speed = -7
             self.can_jump = False
-            if self.x_speed >= 4:
+            if self.x_speed >= 4 or self.x_speed <= -4:
                 self.super_jump = True
                 self.y_speed -= 5
 
@@ -126,7 +126,7 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
         self.height_status()
-        # print(f"{self.current_height}_{self.can_jump}")  # for testing purposes
+        print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
 
 
 # I need to change

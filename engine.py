@@ -34,6 +34,13 @@ class Engine:
         for step in self.my_steps:
             step.rect.top = 800 - step.height + self.my_player.sprite.current_height
 
+    def display_player(self):
+        # Constrain player position
+        if self.my_player.sprite.rect.top < 100:
+            self.my_player.sprite.rect.top = 100
+        if self.my_player.sprite.rect.bottom > 700:
+            self.my_player.sprite.rect.bottom = 700
+
     def contact_with_steps(self):
         flag_1 = False
         for step in self.my_steps:
@@ -50,6 +57,7 @@ class Engine:
     def update(self):
         self.spawning_steps()
         self.display_steps()
+        self.display_player()
         self.contact_with_steps()
 
         self.my_player.draw(main_screen)

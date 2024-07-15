@@ -15,6 +15,8 @@ game_status = "intro"  # intro, game_on, outro
 
 # BACKGROUND_AND_FLOOR_TEXTURES
 start_background = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
+
+#Engine class initialisation
 main_engine = Engine(player_group, falling_floors_group)
 
 while True:

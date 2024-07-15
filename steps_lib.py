@@ -8,18 +8,12 @@ class Step_snowbiom(pygame.sprite.Sprite):
     
     Attributes:
     ----------
-    relative_height : float 
-        it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
-    falling_speed : float
-        how many pixels a sec a step goes down
     height : float
         height of a step
     width : float
         width of a step
     topLeft : list[x,y]
         a list of two elements, first being x cord, second y cord of topleft corner of step
-    topRight : list[x,y]
-        a list of two elements, first being x cord, second y cord of topright corner of step
     
     textures:
     ---------
@@ -38,8 +32,6 @@ class Step_snowbiom(pygame.sprite.Sprite):
     --------
     __init__():
         Initializes the step with default settings and loads the image.
-    falling_mechanic():
-        makes step fall, based on relative height, and also kill when step out of screen
     animation_mechanic():
         responsible for changing textures for image variable, makes step animated
     update():
@@ -81,18 +73,12 @@ class Floor_snowbiom(pygame.sprite.Sprite):
     
     Atributes:
     ----------
-    relative_height : float 
-        it describes height on screen, 1000 is at top, 0 is at bottom (contrary to y. positioning)
-    falling_speed : float
-        how many pixels a sec a step goes down
     height : float
         height of a step
     width : float
         wifth of a step
     topLeft : list[x,y]
         a list of two elements, first being x cord, second y cord of topleft corner of step
-    topRight : list[x,y]
-        a list of two elements, first being x cord, second y cord of topright corner of step
     
     textures:
     ---------
@@ -107,13 +93,12 @@ class Floor_snowbiom(pygame.sprite.Sprite):
     --------
     __init__():
         Initializes the step with default settings and loads the image.
-    falling_mechcanic():
-        makes step fall, based on relative height, and also kill when step out of screen
     animation_mechanic():
         responsible for changing textures for image variable, makes step animated
     update():
         Updates the step's state by  applying gravity.
-    """    
+    """   
+     
     def __init__(self, spawn_height: int):
         super().__init__()
         self.floor_snowbiom_1000_0 = pygame.image.load('resources/floors/floor_snowbiom_1000_0.png').convert_alpha()
