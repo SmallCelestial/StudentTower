@@ -49,7 +49,7 @@ class Engine():
         player = player_gr.sprite
         flag_1 = False
         for step in steps:
-            if (step.rect.top + 5 >= player.rect.bottom >= step.rect.top - 5 and
+            if (step.rect.top + 10 >= player.rect.bottom >= step.rect.top - 2 and
                     step.topLeft[0] <= player.rect.centerx <= step.topRight[0] and
                     player.y_speed >= 0):
                 player.can_jump = True
