@@ -101,19 +101,20 @@ class Player(pygame.sprite.Sprite):
         self._place_inside_area()
 
     def apply_gravity(self):
-        if self.y_speed < 5 and not self.can_jump:  # max gravity strength
-            self.y_speed += 0.2  # gravity strength
-        self.counter += 1
-        if self.counter % 10 == 0 and not self.can_jump and self.super_jump:
-            self.actual_angle += (self.actual_angle + 60) % 360
-            self.image = pygame.transform.rotate(self.player_walk, self.actual_angle)
-            self.rect = self.image.get_rect(center=self.rect.center)
-        if self.can_jump:
+        if not self.can_jump:
+            if self.y_speed < 5:
+                self.y_speed += 0.2
+            self.counter += 1
+            if self.counter % 10 == 0 and self.super_jump:
+                self.actual_angle += (self.actual_angle + 60) % 360
+                self.image = pygame.transform.rotate(self.player_walk, self.actual_angle)
+                self.rect = self.image.get_rect(center=self.rect.center)
+            self.rect.centery += self.y_speed
+        else:  # player is on floor
             self.image = self.player_walk
             self.rect = self.image.get_rect(center=self.rect.center)
             self.actual_angle = 0
             self.super_jump = False
-        self.rect.centery += self.y_speed
 
     def height_status(self):
         self.current_height -= self.y_speed
@@ -125,7 +126,7 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
         self.height_status()
-        print(f"{self.current_height}_{self.can_jump}")  # for testing purposes
+        # print(f"{self.current_height}_{self.can_jump}")  # for testing purposes
 
 
 # I need to change
