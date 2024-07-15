@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Step_snowbiom(pygame.sprite.Sprite):
     """
     Step_snowbiom is a class representing texture and rectangle of a step
@@ -27,7 +28,7 @@ class Step_snowbiom(pygame.sprite.Sprite):
     floor_snowbiom_300 : list[pygame.Surface,...] 
         list of all images responsible for animation
     floor_snowbiom_index : int
-        iterator of an floor_snowbiom_300 list
+        iterator of a floor_snowbiom_300 list
     image : pygame.Surface
         The current image of the step used for rendering.
     rect : pygame.Rect
@@ -46,7 +47,7 @@ class Step_snowbiom(pygame.sprite.Sprite):
 
     """
 
-    def __init__(self, spawn_height : int):
+    def __init__(self, spawn_height: int):
         super().__init__()
         self.floor_snowbiom_300_0 = pygame.image.load('resources/floors/floor_snowbiom_300_0.png').convert_alpha()
         self.floor_snowbiom_300_1 = pygame.image.load('resources/floors/floor_snowbiom_300_1.png').convert_alpha()
@@ -60,11 +61,9 @@ class Step_snowbiom(pygame.sprite.Sprite):
         self.width = 300
         self.height = spawn_height
 
-        self.topLeft = [random.randint(300, 600), self.height]
-        self.topRight = [self.topLeft[0]+self.width, self.topLeft[1]]
-
+        topLeft = [random.randint(300, 600), self.height]
         self.image = self.floor_snowbiom_300_0
-        self.rect = self.image.get_rect(topleft=self.topLeft)
+        self.rect = self.image.get_rect(topleft=topLeft)
 
     def animation_mechanic(self):
         self.floor_snowbiom_index += 0.02
@@ -115,19 +114,16 @@ class Floor_snowbiom(pygame.sprite.Sprite):
     update():
         Updates the step's state by  applying gravity.
     """    
-    def __init__(self, spawn_height : int):
+    def __init__(self, spawn_height: int):
         super().__init__()
-        self.floor_snowbiom_1000_0 = pygame.image.load('resources/floors/floor_snowbiom_1000_0.png')#.convert_alpha()
+        self.floor_snowbiom_1000_0 = pygame.image.load('resources/floors/floor_snowbiom_1000_0.png').convert_alpha()
         
         self.tall = 100
         self.width = 1000
         self.height = spawn_height
 
-        self.topLeft = [0, self.height]
-        self.topRight = [self.topLeft[0]+self.width, self.topLeft[1]]
-
         self.image = self.floor_snowbiom_1000_0
-        self.rect = self.image.get_rect(topleft=(0,900))
+        self.rect = self.image.get_rect(topleft=(0, 900))
 
     def update(self):
         pass
