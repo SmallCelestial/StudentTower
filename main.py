@@ -28,7 +28,7 @@ while True:
         # module responsible for background and steps display
         main_screen.blit(start_background, (0, 0))
 
-        #engine consisting of player class and various steps class
+        # engine consisting of player class and various steps class
         main_engine.update()
 
     elif game_status == "intro":
