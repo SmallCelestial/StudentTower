@@ -109,7 +109,10 @@ class Player(pygame.sprite.Sprite):
                 self.actual_angle += (self.actual_angle + 60) % 360
                 self.image = pygame.transform.rotate(self.player_walk, self.actual_angle)
                 self.rect = self.image.get_rect(center=self.rect.center)
-            self.rect.centery += self.y_speed
+            if self.rect.top <= 100 and self.y_speed < 0:
+                pass
+            else:
+                self.rect.centery += self.y_speed
         else:  # player is on floor
             self.image = self.player_walk
             self.rect = self.image.get_rect(center=self.rect.center)
@@ -120,13 +123,13 @@ class Player(pygame.sprite.Sprite):
         self.current_height -= self.y_speed
         self.max_height = max(self.max_height, self.current_height)
 
-        self.rect.bottom += self.y_speed
+        # self.rect.bottom += self.y_speed
 
     def update(self):
         self.player_input()
         self.apply_gravity()
         self.height_status()
-        print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
+        # print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
 
 
 # I need to change

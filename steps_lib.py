@@ -2,6 +2,10 @@ import pygame
 import random
 
 
+class biom(pygame.sprite.Sprite):
+    pass
+
+
 class Step_snowbiom(pygame.sprite.Sprite):
     """
     Step_snowbiom is a class representing texture and rectangle of a step
@@ -53,8 +57,8 @@ class Step_snowbiom(pygame.sprite.Sprite):
         self.width = 300
         self.height = spawn_height
 
-        topLeft = [random.randint(300, 600), self.height]
         self.image = self.floor_snowbiom_300_0
+        topLeft = [random.randint(300, 600), self.height]
         self.rect = self.image.get_rect(topleft=topLeft)
 
     def animation_mechanic(self):
