@@ -20,9 +20,10 @@ class Engine:
         self.my_steps = steps  # this is Group
 
         self.list_of_steps = [[400,Step_snowbiom(400), 0],
-                              [600,Step_snowbiom(600), 1], [800,Step_snowbiom(800), 2],
-                              [1000,Step_snowbiom(1000), 3], [1200,Step_snowbiom(1200), 4],
-                              [1400,Step_snowbiom(1400), 5], [1600,Step_snowbiom(1600), 6]]
+                              [600,Step_snowbiom(600), 1], 
+                              [800,Step_snowbiom(800), 2],
+                              [1000,Step_junglebiom(1000), 3], 
+                              [1200,Step_junglebiom(1200), 4]]
         self.my_steps.add(Floor_snowbiom(100))
 
     def spawning_steps(self):
@@ -30,10 +31,10 @@ class Engine:
         for step in self.list_of_steps:
             if step[0] < self.my_player.sprite.current_height + 1000:
                 self.my_steps.add(step[1])
-                if step[0] + 1400 < 3000:
-                    new_step = [step[0] + 1400,Step_snowbiom(step[0] + 1400), step[2] + 7]
+                if step[0] + 1000 < 2000:
+                    new_step = [step[0] + 1000,Step_snowbiom(step[0] + 1000), step[2] + 5]
                 else:
-                    new_step = [step[0] + 1400,Step_junglebiom(step[0] + 1400), step[2] + 7]
+                    new_step = [step[0] + 1000,Step_junglebiom(step[0] + 1000), step[2] + 5]
                 new_steps_list.append(new_step)
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
@@ -44,7 +45,6 @@ class Engine:
                 step.rect.top = 800 - step.height + self.my_player.sprite.current_height
         else:
             for step in falling_floors_group:
-                print(step.biom_id)
                 step.height += self.my_player.sprite.y_speed
                 step.rect.top = 800 - step.height + self.my_player.sprite.current_height
             for step in self.list_of_steps:

@@ -45,11 +45,11 @@ class Step_template(pygame.sprite.Sprite):
     """
     def __init__(self):
         super().__init__()
-        self.step_0 = None
-        self.step_1 = None
-        self.step_2 = None
-        self.step_3 = None
-        self.step_4 = None
+        self.step_0 = pygame.image.load('resources/floors/step_junglebiom_0.png').convert_alpha()
+        self.step_1 = pygame.image.load('resources/floors/step_junglebiom_1.png').convert_alpha()
+        self.step_2 = pygame.image.load('resources/floors/step_junglebiom_2.png').convert_alpha()
+        self.step_3 = pygame.image.load('resources/floors/step_junglebiom_3.png').convert_alpha()
+        self.step_4 = pygame.image.load('resources/floors/step_junglebiom_4.png').convert_alpha()
         self.animation_frames = []
         self.animation_frames_index = 0
 
@@ -127,6 +127,7 @@ class Step_snowbiom(Step_template):
         self.step_2 = pygame.image.load('resources/floors/step_snowbiom_2.png').convert_alpha()
         self.step_3 = pygame.image.load('resources/floors/step_snowbiom_3.png').convert_alpha()
         self.step_4 = pygame.image.load('resources/floors/step_snowbiom_4.png').convert_alpha()
+        print("jungle step init")
         self.initialize_animation_frames()
 
         self.tall = 50
@@ -173,8 +174,6 @@ class Step_junglebiom(Step_template):
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=topLeft)
 
-    def initialize_animation_frames(self):
-        self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
 
 
 
