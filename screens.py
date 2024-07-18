@@ -74,7 +74,7 @@ class Floor(pygame.sprite.Sprite):
 
     def __init__(self, leftbottom):
         super().__init__()
-        self.image = pygame.image.load('resources/floors/floor_snowbiom_300_0.png').convert_alpha()
+        self.image = pygame.image.load('resources/floors/step_snowbiom_0.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (100, 30))
         self.rect = self.image.get_rect(bottomleft=leftbottom)
 

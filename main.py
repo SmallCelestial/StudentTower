@@ -1,5 +1,3 @@
-import pygame.sprite
-
 from engine import *
 from screens import Intro, Outro
 
@@ -55,9 +53,11 @@ while True:
     elif game_status == "outro":
         outro.update()
         if outro.status == "game_on":
+            main_engine.reset()
             game_status = outro.status
             outro.status = "outro"
         elif outro.status == "intro":
+            main_engine.reset()
             game_status = "intro"
             outro.status = "outro"
         # TODO: The board should be reset

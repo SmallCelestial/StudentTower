@@ -121,8 +121,19 @@ class Player(pygame.sprite.Sprite):
         self.current_height -= self.y_speed
         self.max_height = max(self.max_height, self.current_height)
 
+    def reset(self):
+        self.x_speed = 0
+        self.y_speed = 0
+        self.current_height = 0
+        self.max_height = 0
+        self.can_jump = True
+        self.super_jump = False
+        self.counter = 0
+        self.actual_angle = 0
+        self.rect.midbottom = (500, 700)
+
     def update(self):
         self.player_input()
         self.apply_gravity()
         self.height_status()
-        #print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
+        # print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
