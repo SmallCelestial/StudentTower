@@ -151,7 +151,7 @@ class Outro:
 
         # Text
         font = pygame.font.SysFont("Comic Sans MS", 75)
-        display_text("GAME OVER", font, (100, 5), self.image)
+        display_text("GAME OVER", font, (130, 5), self.image)
 
         # Result
         font = pygame.font.SysFont("Comic Sans MS", 40)

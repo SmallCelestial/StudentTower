@@ -12,7 +12,7 @@ pygame.init()
 
 # GLOBAL VARIABLES
 main_clock = pygame.time.Clock()
-game_status = "game_on"  # intro, game_on, outro
+game_status = "intro"  # intro, game_on, outro
 
 
 # BACKGROUND_AND_FLOOR_TEXTURES
@@ -51,10 +51,14 @@ while True:
         introGroup.draw(main_screen)
         if intro.play_button:
             game_status = "game_on"
+            intro.play_button = False
     elif game_status == "outro":
         outro.update()
         if outro.status == "game_on":
             game_status = outro.status
+            outro.status = "outro"
+        elif outro.status == "intro":
+            game_status = "intro"
             outro.status = "outro"
         # TODO: The board should be reset
         # outroGroup.draw(main_screen)
