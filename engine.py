@@ -56,9 +56,6 @@ class Engine:
                 step[0] += self.my_player.sprite.y_speed
                 step[2] = Step_snowbiom(step[0])
 
-
-
-
     # def display_player(self):
     #     # Constrain player position
     #     if self.my_player.sprite.rect.top < 100:

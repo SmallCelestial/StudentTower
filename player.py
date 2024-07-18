@@ -49,8 +49,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.player_walk
         self.rect = self.image.get_rect(midbottom=(500, 700))
 
-        # self.rect = self.rotated_images[0]
-
         self.x_speed = 0
         self.y_speed = 0
         self.current_height = 0
@@ -105,8 +103,8 @@ class Player(pygame.sprite.Sprite):
             if self.y_speed < 5:
                 self.y_speed += 0.2
             self.counter += 1
-            if self.counter % 10 == 0 and self.super_jump:
-                self.actual_angle += (self.actual_angle + 60) % 360
+            if self.counter % 5 == 0 and self.super_jump:
+                self.actual_angle = (self.actual_angle + 60) % 360
                 self.image = pygame.transform.rotate(self.player_walk, self.actual_angle)
                 self.rect = self.image.get_rect(center=self.rect.center)
             if self.rect.top <= 100 and self.y_speed < 0:
@@ -130,52 +128,3 @@ class Player(pygame.sprite.Sprite):
         self.apply_gravity()
         self.height_status()
         # print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
-
-
-# I need to change
-class Intro(pygame.sprite.Sprite):
-    def __init__(self, main_screen: pygame.Surface):
-        super().__init__()
-        self.main_screen = main_screen
-        self.image = pygame.image.load('resources/backgrounds/handpaintedwall2.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (1000, 800))
-        self.rect = self.image.get_rect()
-        self.rect.center = main_screen.get_rect().center
-        self.play_button = False
-
-        self.play_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
-        self.play_image = pygame.transform.scale(self.play_image, (300, 200))
-        self.play_image_rect = self.play_image.get_rect(bottomleft=(150, 500))
-
-        self.help_image = pygame.image.load('resources/backgrounds/HelpButtonHighlight.png').convert_alpha()
-        self.help_image = pygame.transform.scale(self.help_image, (300, 200))
-        self.help_image_rect = self.help_image.get_rect(bottomleft=(150, 650))
-
-        self.quit_image = pygame.image.load('resources/backgrounds/QuitButtonHighlight.png').convert_alpha()
-        self.quit_image = pygame.transform.scale(self.quit_image, (300, 200))
-        self.quit_image_rect = self.quit_image.get_rect(bottomleft=(150, 800))
-
-        self.tower_image = pygame.image.load('resources/backgrounds/skyscraper.png').convert_alpha()
-        self.tower_image_rect = self.quit_image.get_rect(center=(600, 300))
-
-        self.image.blit(self.play_image, self.play_image_rect)
-        self.image.blit(self.help_image, self.help_image_rect)
-        self.image.blit(self.quit_image, self.quit_image_rect)
-        self.image.blit(self.tower_image, self.tower_image_rect)
-
-        self.main_screen.blit(self.image, self.rect)
-
-    def check_buttons(self):
-        mouse_state = pygame.mouse.get_pressed()
-        mouse_pos = pygame.mouse.get_pos()
-
-        if mouse_state[0] == 1:
-            if self.play_image_rect.collidepoint(mouse_pos):
-                self.play_button = True
-            elif self.help_image_rect.collidepoint(mouse_pos):
-                print("I can't help you")
-            elif self.quit_image_rect.collidepoint(mouse_pos):
-                pygame.event.post(pygame.event.Event(pygame.QUIT))
-
-    def update(self):
-        self.check_buttons()
