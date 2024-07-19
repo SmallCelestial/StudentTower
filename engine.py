@@ -14,16 +14,17 @@ player_group.add(Player())
 
 
 class Engine:
-    def __init__(self, player, steps):
+    def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group):
         super().__init__()
         self.my_player = player  # this is GroupSingle
         self.my_steps = steps  # this is Group
 
-        self.list_of_steps = [[400,1,Step_snowbiom(400), 0],
-                              [600,1,Step_snowbiom(600), 1], 
-                              [800,1,Step_snowbiom(800), 2],
-                              [1000,1,Step_snowbiom(1000), 3], 
-                              [1200,1,Step_snowbiom(1200), 4]]
+        self.list_of_steps = [[400, 1, Step_snowbiom(400), 0],
+                              [600, 1, Step_snowbiom(600), 1],
+                              [800, 1, Step_snowbiom(800), 2],
+                              [1000, 1, Step_snowbiom(1000), 3],
+                              [1200, 1, Step_snowbiom(1200), 4]]
+
         self.my_steps.add(Floor_snowbiom(100))
 
     def spawning_steps(self):
@@ -34,7 +35,7 @@ class Engine:
                 ####
                 if step[0] + 1000 < 2000:
                     new_step = [step[0] + 1000, 1, Step_snowbiom(step[0] + 1000), step[3] + 5]
-                elif step[0] + 1000 <3000:
+                elif step[0] + 1000 < 3000:
                     new_step = [step[0] + 1000, 2, Step_junglebiom(step[0] + 1000), step[3] + 5]
                 else:
                     new_step = [step[0] + 1000, 3, Step_lavabiom(step[0] + 1000), step[3] + 5]
@@ -79,9 +80,19 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                step.destruction = True # destruction when collision for now
+                step.destruction = True  # destruction when collision for now
         if not flag_1:
             self.my_player.sprite.can_jump = False
+
+    def reset(self):
+        self.list_of_steps = [[400, 1, Step_snowbiom(400), 0],
+                              [600, 1, Step_snowbiom(600), 1],
+                              [800, 1, Step_snowbiom(800), 2],
+                              [1000, 1, Step_snowbiom(1000), 3],
+                              [1200, 1, Step_snowbiom(1200), 4]]
+        falling_floors_group.empty()
+        self.my_steps.add(Floor_snowbiom(100))
+        self.my_player.sprite.reset()
     
     def update(self):
         self.spawning_steps()

@@ -55,17 +55,17 @@ class Step_template(pygame.sprite.Sprite):
         self.animation_frames_index = 0
         self.destruction = False
 
-        self.tall = 0 # initiated value
-        self.width = 0 # initiated value
-        self.height = 0 # initiated value
-        self.topLeft = [0,0]  # initiated value
-        self.biom_id = 0 # 0 means biom_id not selected yet
+        self.tall = 0  # initiated value
+        self.width = 0  # initiated value
+        self.height = 0  # initiated value
+        self.topLeft = [0, 0]  # initiated value
+        self.biom_id = 0  # 0 means biom_id not selected yet
 
     def initialize_animation_frames(self):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
 
     def destruction_mechanic(self):
-        if self.destruction == True:
+        if self.destruction:
             self.animation_frames_index += 0.02
             if self.animation_frames_index < len(self.animation_frames):
                 self.image = self.animation_frames[int(self.animation_frames_index)]
@@ -74,6 +74,7 @@ class Step_template(pygame.sprite.Sprite):
 
     def update(self):
         self.destruction_mechanic()
+
 
 class Floor_snowbiom(Step_template):
     """
@@ -111,6 +112,7 @@ class Floor_snowbiom(Step_template):
     def destruction_mechanic(self):
         pass
 
+
 class Step_snowbiom(Step_template):
     """
     Step_snowbiom is a class representing step from junglebiom (id = 1)
@@ -146,6 +148,7 @@ class Step_snowbiom(Step_template):
 
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=topLeft)
+
 
 class Step_junglebiom(Step_template):
     """
@@ -217,7 +220,3 @@ class Step_lavabiom(Step_template):
 
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=topLeft)
-
-
-
-
