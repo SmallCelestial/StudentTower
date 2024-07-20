@@ -2,7 +2,7 @@ import pygame
 import random
 
 
-class Step_template(pygame.sprite.Sprite):
+class StepTemplate(pygame.sprite.Sprite):
     """
     Step_template is a father class for other step classes (child classes only add texture)
     
@@ -44,7 +44,7 @@ class Step_template(pygame.sprite.Sprite):
         Updates the step's state.
 
     """
-    def __init__(self):
+    def __init__(self, step_number: int):
         super().__init__()
         self.step_0 = pygame.image.load('resources/floors/step_junglebiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_junglebiom_1.png').convert_alpha()
@@ -60,6 +60,7 @@ class Step_template(pygame.sprite.Sprite):
         self.height = 0  # initiated value
         self.topLeft = [0, 0]  # initiated value
         self.biom_id = 0  # 0 means biom_id not selected yet
+        self.number = step_number
 
     def initialize_animation_frames(self):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
@@ -76,7 +77,7 @@ class Step_template(pygame.sprite.Sprite):
         self.destruction_mechanic()
 
 
-class Floor_snowbiom(Step_template):
+class FloorSnowbiom(StepTemplate):
     """
    Floor_snowbiom is a class representing floor from snowbiom (id = 1)
     
@@ -95,25 +96,25 @@ class Floor_snowbiom(Step_template):
         This function overrides the destruction_mechanic of parent class, floor doesnt disappear.
     """   
 
-    def __init__(self, spawn_height: int):
-        super().__init__()
+    def __init__(self, spawn_height: int, step_number: int):
+        super().__init__(step_number)
         self.floor_snowbiom_0 = pygame.image.load('resources/floors/floor_snowbiom_0.png').convert_alpha()
         self.animation_frames = [self.floor_snowbiom_0]
 
         self.tall = 100
         self.width = 1000
         self.height = spawn_height
-        topLeft = [0, 900]
+        top_left = [0, 900]
         self.biom_id = 1 
         
         self.image = self.floor_snowbiom_0
-        self.rect = self.image.get_rect(topleft=topLeft)
+        self.rect = self.image.get_rect(topleft=top_left)
 
     def destruction_mechanic(self):
         pass
 
 
-class Step_snowbiom(Step_template):
+class StepSnowbiom(StepTemplate):
     """
     Step_snowbiom is a class representing step from junglebiom (id = 1)
     
@@ -131,8 +132,8 @@ class Step_snowbiom(Step_template):
 
     """
 
-    def __init__(self, spawn_height: int):
-        super().__init__()
+    def __init__(self, spawn_height: int, step_number: int):
+        super().__init__(step_number)
         self.step_0 = pygame.image.load('resources/floors/step_snowbiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_snowbiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_snowbiom_2.png').convert_alpha()
@@ -143,14 +144,14 @@ class Step_snowbiom(Step_template):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        topLeft = [random.randint(300, 600), self.height]
+        top_left = [random.randint(300, 600), self.height]
         self.biom_id = 2
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=topLeft)
+        self.rect = self.image.get_rect(topleft=top_left)
 
 
-class Step_junglebiom(Step_template):
+class StepJunglebiom(StepTemplate):
     """
     Step_junglebiom is a class representing step form junglebiom (id = 2)
     
@@ -168,8 +169,8 @@ class Step_junglebiom(Step_template):
 
     """
 
-    def __init__(self, spawn_height: int):
-        super().__init__()
+    def __init__(self, spawn_height: int, step_number: int):
+        super().__init__(step_number)
         self.step_0 = pygame.image.load('resources/floors/step_junglebiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_junglebiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_junglebiom_2.png').convert_alpha()
@@ -180,13 +181,13 @@ class Step_junglebiom(Step_template):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        topLeft = [random.randint(300, 600), self.height]
+        top_left = [random.randint(300, 600), self.height]
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=topLeft)
+        self.rect = self.image.get_rect(topleft=top_left)
 
 
-class Step_lavabiom(Step_template):
+class StepLavabiom(StepTemplate):
     """
     Step_lavabiom is a class representing step form lavabiom (id = 3)
     
@@ -204,8 +205,8 @@ class Step_lavabiom(Step_template):
 
     """
 
-    def __init__(self, spawn_height: int):
-        super().__init__()
+    def __init__(self, spawn_height: int, step_number: int):
+        super().__init__(step_number)
         self.step_0 = pygame.image.load('resources/floors/step_lavabiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_lavabiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_lavabiom_2.png').convert_alpha()
@@ -216,7 +217,7 @@ class Step_lavabiom(Step_template):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        topLeft = [random.randint(300, 600), self.height]
+        top_left = [random.randint(300, 600), self.height]
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=topLeft)
+        self.rect = self.image.get_rect(topleft=top_left)

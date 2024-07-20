@@ -120,15 +120,20 @@ def display_text(text, font, topleft, image):
 
 class Outro:
 
-    def __init__(self, screen):
+    def __init__(self, screen, level=0, max_combo=0, score=0):
+
+        self.level = level
+        self.max_combo = max_combo
+        self.score = score
+
         self.main_screen = screen
         self.image = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
         self.image = pygame.transform.scale(self.image, (1000, 800))
         self.rect = self.image.get_rect(center=(500, 400))
 
         # falling player
-        self.rotatePlayerGroup = pygame.sprite.GroupSingle()
-        self.rotatePlayerGroup.add(RotatePlayer())
+        self.rotate_player_group = pygame.sprite.GroupSingle()
+        self.rotate_player_group.add(RotatePlayer())
 
         # Images are just temporary
         self.play_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
@@ -155,9 +160,9 @@ class Outro:
 
         # Result
         font = pygame.font.SysFont("Comic Sans MS", 40)
-        display_text("Level: {}".format(9999), font, (180, 150), self.image)
-        display_text("Max combo: {}".format(9999), font, (180, 200), self.image)
-        display_text("Total score: {}".format(9999), font, (180, 250), self.image)
+        display_text("Level: {}".format(self.level), font, (180, 150), self.image)
+        display_text("Max combo: {}".format(self.max_combo), font, (180, 200), self.image)
+        display_text("Total score: {}".format(self.score), font, (180, 250), self.image)
         display_text("Best score: {}".format(9999), font, (180, 300), self.image)
 
         self.status = "outro"
@@ -177,8 +182,8 @@ class Outro:
     def update(self):
         self.main_screen.blit(self.image, self.rect)
 
-        self.rotatePlayerGroup.update()
-        self.rotatePlayerGroup.draw(self.main_screen)
+        self.rotate_player_group.update()
+        self.rotate_player_group.draw(self.main_screen)
 
         self.floorsGroup.update()
         self.floorsGroup.draw(self.main_screen)

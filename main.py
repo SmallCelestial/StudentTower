@@ -51,6 +51,9 @@ while True:
             game_status = "game_on"
             intro.play_button = False
     elif game_status == "outro":
+        if outro.score != main_engine.score:
+            outro = Outro(main_screen, main_engine.level, main_engine.max_combo, main_engine.score)
+        outro.score = main_engine.score
         outro.update()
         if outro.status == "game_on":
             main_engine.reset()
