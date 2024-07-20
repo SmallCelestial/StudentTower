@@ -1,4 +1,6 @@
-from player import *
+import pygame
+from player import Player
+from steps_lib import StepSnowbiom, StepLavabiom, StepJunglebiom, FloorSnowbiom
 
 WIDTH = 1000
 HEIGHT = 800
@@ -48,23 +50,6 @@ class Engine:
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
 
-    # def spawning_steps(self):
-    #     new_steps_list = []
-    #     for step in self.my_steps:
-    #         if step.height < self.my_player.sprite.current_height + 1000:
-    #             ####
-    #             if step.height + 1000 < 2000:
-    #                 new_step = StepSnowbiom(step.height + 1000, step.number + 5)
-    #             elif step.height + 1000 < 3000:
-    #                 new_step = StepJunglebiom(step.height + 1000, step.number + 5)
-    #             else:
-    #                 new_step = StepLavabiom(step.height + 1000, step.number + 5)
-    #             new_steps_list.append(new_step)
-    #             self.my_steps.remove(step)
-    #             ####
-    #     self.my_steps.add(new_steps_list)
-    #     print([step[0] for step in self.list_of_steps])
-
     def display_steps(self):
         if self.my_player.sprite.rect.top > 100:
             for step in self.my_steps:
@@ -75,24 +60,7 @@ class Engine:
                 step.rect.top = 800 - step.height + self.my_player.sprite.current_height
             for step in self.list_of_steps:
                 step[0] += self.my_player.sprite.y_speed
-                ####
-                if step[1] == 1:
-                    print(step[2].number)
-                    step[2] = StepSnowbiom(step[0], step[2].number + 5)
-                elif step[1] == 2:
-                    print(step[2].number)
-                    step[2] = StepJunglebiom(step[0], step[2].number + 5)
-                elif step[1] == 3:
-                    print(step[2].number)
-                    step[2] = StepLavabiom(step[0], step[2].number + 5)
-            #     ####
-
-    # def display_player(self):
-    #     # Constrain player position
-    #     if self.my_player.sprite.rect.top < 100:
-    #         self.my_player.sprite.rect.top = 100
-    #     if self.my_player.sprite.rect.bottom > 700:
-    #         self.my_player.sprite.rect.bottom = 700
+                step[2].height = step[0]
 
     def check_result(self):
         for step in self.my_steps:

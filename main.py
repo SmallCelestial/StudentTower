@@ -20,12 +20,7 @@ start_background = pygame.image.load('resources/backgrounds/background.xcf').con
 main_engine = Engine(player_group, falling_floors_group)
 
 # screens
-introGroup = pygame.sprite.GroupSingle()
-introGroup.add(Intro(main_screen))
-intro = introGroup.sprite
-
-# outroGroup = pygame.sprite.GroupSingle()
-# outroGroup.add(Outro())
+intro = Intro(main_screen)
 outro = Outro(main_screen)
 
 while True:
@@ -43,10 +38,8 @@ while True:
 
         # engine consisting of player class and various steps class
         main_engine.update()
-    # TODO: remove main_screen as an argument Intro class if everything will work
     elif game_status == "intro":
         intro.update()
-        introGroup.draw(main_screen)
         if intro.play_button:
             game_status = "game_on"
             intro.play_button = False
@@ -63,8 +56,6 @@ while True:
             main_engine.reset()
             game_status = "intro"
             outro.status = "outro"
-        # TODO: The board should be reset
-        # outroGroup.draw(main_screen)
 
     pygame.display.update()
     main_clock.tick(60)  # maximum framerate 60tics = 1 second

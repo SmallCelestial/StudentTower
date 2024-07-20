@@ -2,7 +2,7 @@ import pygame
 from random import randint
 
 
-class Intro(pygame.sprite.Sprite):
+class Intro():
     def __init__(self, screen: pygame.Surface):
         super().__init__()
         self.main_screen = screen
@@ -44,7 +44,11 @@ class Intro(pygame.sprite.Sprite):
             elif self.quit_image_rect.collidepoint(mouse_pos):
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
 
+    def draw(self):
+        self.main_screen.blit(self.image, self.rect)
+
     def update(self):
+        self.draw()
         self.check_buttons()
 
 
@@ -90,7 +94,7 @@ class AllFloors:
     def __init__(self):
         self.floors_group = pygame.sprite.Group()
         height = 1000
-        for i in range(8):
+        for _ in range(8):
             left = randint(600, 800)
             self.floors_group.add(Floor((left, height)))
             height -= 200
@@ -152,7 +156,7 @@ class Outro:
         self.image.blit(self.exit_image, self.exit_image_rect)
 
         # Floors
-        self.floorsGroup = AllFloors()
+        self.floors_group = AllFloors()
 
         # Text
         font = pygame.font.SysFont("Comic Sans MS", 75)
@@ -185,7 +189,7 @@ class Outro:
         self.rotate_player_group.update()
         self.rotate_player_group.draw(self.main_screen)
 
-        self.floorsGroup.update()
-        self.floorsGroup.draw(self.main_screen)
+        self.floors_group.update()
+        self.floors_group.draw(self.main_screen)
 
         self.check_buttons()

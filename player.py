@@ -1,4 +1,4 @@
-from steps_lib import *
+import pygame
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
