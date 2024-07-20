@@ -2,7 +2,7 @@ import pygame
 from random import randint
 
 
-class Intro(pygame.sprite.Sprite):
+class Intro:
     def __init__(self, screen: pygame.Surface):
         super().__init__()
         self.main_screen = screen
@@ -27,11 +27,6 @@ class Intro(pygame.sprite.Sprite):
         self.tower_image = pygame.image.load('resources/backgrounds/skyscraper.png').convert_alpha()
         self.tower_image_rect = self.quit_image.get_rect(center=(600, 300))
 
-        self.image.blit(self.play_image, self.play_image_rect)
-        self.image.blit(self.help_image, self.help_image_rect)
-        self.image.blit(self.quit_image, self.quit_image_rect)
-        self.image.blit(self.tower_image, self.tower_image_rect)
-
     def check_buttons(self):
         mouse_state = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
@@ -43,8 +38,17 @@ class Intro(pygame.sprite.Sprite):
                 print("I can't help you")
             elif self.quit_image_rect.collidepoint(mouse_pos):
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
+            # sleep(0.2)
+
+    def draw(self):
+        self.main_screen.blit(self.image, self.rect)
+        self.main_screen.blit(self.play_image, self.play_image_rect)
+        self.main_screen.blit(self.help_image, self.help_image_rect)
+        self.main_screen.blit(self.quit_image, self.quit_image_rect)
+        self.main_screen.blit(self.tower_image, self.tower_image_rect)
 
     def update(self):
+        self.draw()
         self.check_buttons()
 
 
@@ -90,7 +94,7 @@ class AllFloors:
     def __init__(self):
         self.floors_group = pygame.sprite.Group()
         height = 1000
-        for i in range(8):
+        for _ in range(8):
             left = randint(600, 800)
             self.floors_group.add(Floor((left, height)))
             height -= 200
@@ -120,45 +124,32 @@ def display_text(text, font, topleft, image):
 
 class Outro:
 
-    def __init__(self, screen):
+    def __init__(self, screen, level=0, max_combo=0, score=0):
+
+        self.level = level
+        self.max_combo = max_combo
+        self.score = score
+
         self.main_screen = screen
         self.image = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
         self.image = pygame.transform.scale(self.image, (1000, 800))
         self.rect = self.image.get_rect(center=(500, 400))
 
         # falling player
-        self.rotatePlayerGroup = pygame.sprite.GroupSingle()
-        self.rotatePlayerGroup.add(RotatePlayer())
+        self.rotate_player_group = pygame.sprite.GroupSingle()
+        self.rotate_player_group.add(RotatePlayer())
 
         # Images are just temporary
-        self.play_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
-        self.play_image = pygame.transform.scale(self.play_image, (300, 150))
-        self.play_image_rect = self.play_image.get_rect(bottomleft=(150, 600))
-        self.image.blit(self.play_image, self.play_image_rect)
+        self.restart_image = pygame.image.load('resources/backgrounds/restart.png').convert_alpha()
+        self.restart_image = pygame.transform.scale_by(self.restart_image, 2)
+        self.restart_image_rect = self.restart_image.get_rect(bottomleft=(200, 600))
 
-        self.menu_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
-        self.menu_image = pygame.transform.scale(self.menu_image, (300, 150))
-        self.menu_image_rect = self.menu_image.get_rect(bottomleft=(150, 700))
-        self.image.blit(self.menu_image, self.menu_image_rect)
-
-        self.exit_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
-        self.exit_image = pygame.transform.scale(self.exit_image, (300, 150))
-        self.exit_image_rect = self.exit_image.get_rect(bottomleft=(150, 800))
-        self.image.blit(self.exit_image, self.exit_image_rect)
+        self.home_image = pygame.image.load('resources/backgrounds/home.png').convert_alpha()
+        self.home_image = pygame.transform.scale_by(self.home_image, 2)
+        self.home_image_rect = self.home_image.get_rect(bottomleft=(200, 750))
 
         # Floors
-        self.floorsGroup = AllFloors()
-
-        # Text
-        font = pygame.font.SysFont("Comic Sans MS", 75)
-        display_text("GAME OVER", font, (130, 5), self.image)
-
-        # Result
-        font = pygame.font.SysFont("Comic Sans MS", 40)
-        display_text("Level: {}".format(9999), font, (180, 150), self.image)
-        display_text("Max combo: {}".format(9999), font, (180, 200), self.image)
-        display_text("Total score: {}".format(9999), font, (180, 250), self.image)
-        display_text("Best score: {}".format(9999), font, (180, 300), self.image)
+        self.floors_group = AllFloors()
 
         self.status = "outro"
 
@@ -167,20 +158,29 @@ class Outro:
         mouse_pos = pygame.mouse.get_pos()
 
         if mouse_state[0] == 1:
-            if self.play_image_rect.collidepoint(mouse_pos):
+            if self.restart_image_rect.collidepoint(mouse_pos):
                 self.status = "game_on"
-            elif self.menu_image_rect.collidepoint(mouse_pos):
+            elif self.home_image_rect.collidepoint(mouse_pos):
                 self.status = "intro"
-            elif self.exit_image_rect.collidepoint(mouse_pos):
-                pygame.event.post(pygame.event.Event(pygame.QUIT))
+
+    def draw(self):
+        self.main_screen.blit(self.image, self.rect)
+        self.main_screen.blit(self.restart_image, self.restart_image_rect)
+        self.main_screen.blit(self.home_image, self.home_image_rect)
+        self.rotate_player_group.draw(self.main_screen)
+        self.floors_group.draw(self.main_screen)
+
+        font = pygame.font.SysFont("Comic Sans MS", 75)
+        display_text("GAME OVER", font, (130, 5), self.image)
+
+        font = pygame.font.SysFont("Comic Sans MS", 40)
+        display_text("Level: {}".format(self.level), font, (180, 150), self.main_screen)
+        display_text("Max combo: {}".format(self.max_combo), font, (180, 200), self.main_screen)
+        display_text("Total score: {}".format(self.score), font, (180, 250), self.main_screen)
+        display_text("Best score: {}".format(9999), font, (180, 300), self.main_screen)
 
     def update(self):
-        self.main_screen.blit(self.image, self.rect)
-
-        self.rotatePlayerGroup.update()
-        self.rotatePlayerGroup.draw(self.main_screen)
-
-        self.floorsGroup.update()
-        self.floorsGroup.draw(self.main_screen)
-
+        self.rotate_player_group.update()
+        self.floors_group.update()
         self.check_buttons()
+        self.draw()

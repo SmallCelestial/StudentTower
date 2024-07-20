@@ -1,4 +1,4 @@
-from steps_lib import *
+import pygame
 
 LEFT_WALL_COORDINATE = 100
 RIGHT_WALL_COORDINATE = 900
@@ -69,10 +69,10 @@ class Player(pygame.sprite.Sprite):
     def _place_inside_area(self):
         if self.rect.right > RIGHT_WALL_COORDINATE:
             self.rect.right = RIGHT_WALL_COORDINATE
-            self.x_speed = 0
+            self.x_speed = -self.x_speed
         if self.rect.left < LEFT_WALL_COORDINATE:
             self.rect.left = LEFT_WALL_COORDINATE
-            self.x_speed = 0
+            self.x_speed = -self.x_speed
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -107,9 +107,7 @@ class Player(pygame.sprite.Sprite):
                 self.actual_angle = (self.actual_angle + 60) % 360
                 self.image = pygame.transform.rotate(self.player_walk, self.actual_angle)
                 self.rect = self.image.get_rect(center=self.rect.center)
-            if self.rect.top <= 100 and self.y_speed < 0:
-                pass
-            else:
+            if self.rect.top > 100 and self.y_speed <= 0:
                 self.rect.centery += self.y_speed
         else:  # player is on floor
             self.image = self.player_walk
