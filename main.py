@@ -1,10 +1,20 @@
-from engine import *
+from engine import Engine
+import pygame
 from screens import Intro, Outro
+from time import sleep
+from player import Player
 
+WIDTH = 1000
+HEIGHT = 800
 
-LEFT_WALL_COORDINATE = 100
-RIGHT_WALL_COORDINATE = 900
+# SCREEN initialization
+main_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Student_Tower")
 
+# GROUPS
+falling_floors_group = pygame.sprite.Group()
+player_group = pygame.sprite.GroupSingle()
+player_group.add(Player())
 
 pygame.init()
 
@@ -14,10 +24,10 @@ game_status = "intro"  # intro, game_on, outro
 
 
 # BACKGROUND_AND_FLOOR_TEXTURES
-start_background = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
+start_background = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
 
 # Engine class initialisation
-main_engine = Engine(player_group, falling_floors_group)
+main_engine = Engine(player_group, falling_floors_group, main_screen)
 
 # screens
 intro = Intro(main_screen)
@@ -49,10 +59,12 @@ while True:
         outro.score = main_engine.score
         outro.update()
         if outro.status == "game_on":
+            sleep(0.2)
             main_engine.reset()
             game_status = outro.status
             outro.status = "outro"
         elif outro.status == "intro":
+            sleep(0.2)
             main_engine.reset()
             game_status = "intro"
             outro.status = "outro"

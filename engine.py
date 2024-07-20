@@ -1,25 +1,13 @@
 import pygame
-from player import Player
 from steps_lib import StepSnowbiom, StepLavabiom, StepJunglebiom, FloorSnowbiom
-
-WIDTH = 1000
-HEIGHT = 800
-
-# SCREEN initialization
-main_screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Student_Tower")
-
-# GROUPS
-falling_floors_group = pygame.sprite.Group()
-player_group = pygame.sprite.GroupSingle()
-player_group.add(Player()) 
 
 
 class Engine:
-    def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group):
+    def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group, screen):
         super().__init__()
         self.my_player = player  # this is GroupSingle
         self.my_steps = steps  # this is Group
+        self.main_screen = screen
 
         self.list_of_steps = [[400, 1, StepSnowbiom(400, 1)],
                               [600, 1, StepSnowbiom(600, 2)],
@@ -89,7 +77,7 @@ class Engine:
                               [800, 1, StepSnowbiom(800, 3)],
                               [1000, 1, StepSnowbiom(1000, 4)],
                               [1200, 1, StepSnowbiom(1200, 5)]]
-        falling_floors_group.empty()
+        self.my_steps.empty()
         self.my_steps.add(FloorSnowbiom(100, 0))
         self.my_player.sprite.reset()
         self.level = 0
@@ -103,8 +91,8 @@ class Engine:
         self.contact_with_steps()
         self.check_result()
 
-        self.my_player.draw(main_screen)
+        self.my_player.draw(self.main_screen)
         self.my_player.update()
 
-        self.my_steps.draw(main_screen)
+        self.my_steps.draw(self.main_screen)
         self.my_steps.update()

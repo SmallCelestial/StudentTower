@@ -13,7 +13,7 @@ class StepTemplate(pygame.sprite.Sprite):
     animation_frames : list[pygame.Surface,...] 
         list of surfaces making animatation
     animation_frames_index : int
-        iterator of a animation_frames list 
+        iterator of an animation_frames list
 
     tall : float
         how many pixels tall a step is
@@ -35,7 +35,7 @@ class StepTemplate(pygame.sprite.Sprite):
     Methods:
     --------
     __init__():
-        Initializes the step with default mechanics (but template doesnt include texture loading).
+        Initializes the step with default mechanics (but template doesn't include texture loading).
     initialize_animation_frames():
         Function used by child classes to set animation_frames as list of step_0, step_1...
     destruction_mechanic():
@@ -93,7 +93,7 @@ class FloorSnowbiom(StepTemplate):
     __init__():
         Loads textures added to self.animation_frames 
     destruction_mechanic():
-        This function overrides the destruction_mechanic of parent class, floor doesnt disappear.
+        This function overrides the destruction_mechanic of parent class, floor doesn't disappear.
     """   
 
     def __init__(self, spawn_height: int, step_number: int):
