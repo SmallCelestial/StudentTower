@@ -60,7 +60,7 @@ class Engine:
     def contact_with_steps(self):
         flag_1 = False
         for step in self.my_steps:
-            if (step.rect.top - 2 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
+            if (step.rect.top - 4 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
                     step.rect.left <= self.my_player.sprite.rect.centerx <= step.rect.right and
                     self.my_player.sprite.y_speed >= 0):
                 self.my_player.sprite.can_jump = True
