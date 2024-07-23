@@ -38,7 +38,6 @@ class Intro:
                 print("I can't help you")
             elif self.quit_image_rect.collidepoint(mouse_pos):
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
-            # sleep(0.2)
 
     def draw(self):
         self.main_screen.blit(self.image, self.rect)
@@ -63,7 +62,7 @@ class RotatePlayer(pygame.sprite.Sprite):
         self.counter = 0
         self.angle = 0
 
-    def rotate_player(self):
+    def rotate(self):
         self.counter += 1
         if self.counter % 10 == 0:
             self.angle = (self.angle + 60) % 360
@@ -71,7 +70,7 @@ class RotatePlayer(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center=(775, 500))
 
     def update(self):
-        self.rotate_player()
+        self.rotate()
 
 
 class Floor(pygame.sprite.Sprite):
@@ -93,19 +92,21 @@ class AllFloors:
 
     def __init__(self):
         self.floors_group = pygame.sprite.Group()
-        height = 1000
-        for _ in range(8):
+        height = 100
+        for _ in range(4):
             left = randint(600, 800)
             self.floors_group.add(Floor((left, height)))
-            height -= 200
+            height += 200
 
     def check_steps(self):
         to_add = []
         for step in self.floors_group:
-            if step.rect.centery <= -600:
+            if step.rect.bottom <= 0:
                 self.floors_group.remove(step)
                 left = randint(600, 800)
-                to_add.append(Floor((left, 1000)))
+                floor = Floor((left, 0))
+                floor.rect.top = 800
+                to_add.append(floor)
         self.floors_group.add(to_add)
 
     def update(self):
@@ -116,22 +117,16 @@ class AllFloors:
         self.floors_group.draw(screen)
 
 
-def display_text(text, font, topleft, image):
-    text_surface = font.render(text, True, "Brown")
-    text_rect = text_surface.get_rect(topleft=topleft)
-    image.blit(text_surface, text_rect)
-
-
 class Outro:
 
-    def __init__(self, screen, level=0, max_combo=0, score=0):
+    def __init__(self, screen):
 
-        self.level = level
-        self.max_combo = max_combo
-        self.score = score
+        self.level = 0
+        self.max_combo = 0
+        self.score = 0
 
         self.main_screen = screen
-        self.image = pygame.image.load('resources/backgrounds/background.xcf').convert_alpha()
+        self.image = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (1000, 800))
         self.rect = self.image.get_rect(center=(500, 400))
 
@@ -153,6 +148,12 @@ class Outro:
 
         self.status = "outro"
 
+    @staticmethod
+    def display_text(text, font, top_left, image):
+        text_surface = font.render(text, True, "Brown")
+        text_rect = text_surface.get_rect(topleft=top_left)
+        image.blit(text_surface, text_rect)
+
     def check_buttons(self):
         mouse_state = pygame.mouse.get_pressed()
         mouse_pos = pygame.mouse.get_pos()
@@ -171,13 +172,13 @@ class Outro:
         self.floors_group.draw(self.main_screen)
 
         font = pygame.font.SysFont("Comic Sans MS", 75)
-        display_text("GAME OVER", font, (130, 5), self.image)
+        self.display_text("GAME OVER", font, (130, 5), self.image)
 
         font = pygame.font.SysFont("Comic Sans MS", 40)
-        display_text("Level: {}".format(self.level), font, (180, 150), self.main_screen)
-        display_text("Max combo: {}".format(self.max_combo), font, (180, 200), self.main_screen)
-        display_text("Total score: {}".format(self.score), font, (180, 250), self.main_screen)
-        display_text("Best score: {}".format(9999), font, (180, 300), self.main_screen)
+        self.display_text("Level: {}".format(self.level), font, (180, 150), self.main_screen)
+        self.display_text("Max combo: {}".format(self.max_combo), font, (180, 200), self.main_screen)
+        self.display_text("Total score: {}".format(self.score), font, (180, 250), self.main_screen)
+        self.display_text("Best score: {}".format(9999), font, (180, 300), self.main_screen)
 
     def update(self):
         self.rotate_player_group.update()
