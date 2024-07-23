@@ -48,12 +48,13 @@ class Engine:
                 step.rect.top = 800 - step.height + self.my_player.sprite.current_height
             for step in self.list_of_steps:
                 step[0] += self.my_player.sprite.y_speed
-                step[2].height = step[0]
+                step[2].height = step[0] #czyli obiekt zoztał utworzony jeszcze przed dodadniem do my_step_sgroup?
 
     def check_result(self):
         for step in self.my_steps:
-            if step.rect.top == self.my_player.sprite.rect.bottom and self.my_player.sprite.y_speed == 0:
-                self.level = max(self.level, step.number)
+            if (step.rect.top == self.my_player.sprite.rect.bottom and self.my_player.sprite.y_speed == 0
+            and step.rect.right >= self.my_player.sprite.rect.centerx >= step.rect.left): # czy nie naliczy obok dla y =0 zlego maxa?
+                self.level = max(self.level, step.number) 
                 self.score = max(self.score, step.number)
                 print(step.number)
 
@@ -67,7 +68,7 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                step.destruction = True  # destruction when collision for now
+                step.destruction = True 
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
