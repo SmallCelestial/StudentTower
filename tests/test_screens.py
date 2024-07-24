@@ -4,7 +4,6 @@ import pygame
 import os
 
 import screens
-from screens import Intro, RotatePlayer, Floor, AllFloors, Outro
 
 
 class TestIntro(unittest.TestCase):
@@ -21,7 +20,7 @@ class TestIntro(unittest.TestCase):
     def setUp(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1, 1))
-        self.intro = Intro(self.screen)
+        self.intro = screens.Intro(self.screen)
 
     def tearDown(self):
         pygame.quit()
@@ -29,7 +28,7 @@ class TestIntro(unittest.TestCase):
     @patch('pygame.image.load')
     @patch('pygame.transform.scale')
     def test_init(self, mock_scale, mock_load):
-        self.intro = Intro(self.screen)
+        self.intro = screens.Intro(self.screen)
         self.assertTrue(mock_load.called)
         self.assertTrue(mock_scale.called)
 
@@ -87,7 +86,7 @@ class TestRotatePlayer(unittest.TestCase):
     def setUp(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1, 1))
-        self.player = RotatePlayer()
+        self.player = screens.RotatePlayer()
 
     def tearDown(self):
         pygame.quit()
@@ -100,7 +99,7 @@ class TestRotatePlayer(unittest.TestCase):
         mock_load.return_value = mock_image
         mock_scale.return_value = mock_image
 
-        self.player = RotatePlayer()
+        self.player = screens.RotatePlayer()
 
         self.assertTrue(mock_load.called)
         self.assertTrue(mock_scale.called)
@@ -140,7 +139,7 @@ class TestFloor(unittest.TestCase):
     def setUp(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1, 1))
-        self.floor = Floor((0, 0))
+        self.floor = screens.Floor((0, 0))
 
     def tearDown(self):
         pygame.quit()
@@ -155,7 +154,7 @@ class TestFloor(unittest.TestCase):
 
         mock_scale.return_value = mock_image
 
-        self.floor = Floor((0, 0))
+        self.floor = screens.Floor((0, 0))
 
         mock_load.assert_called_once_with('resources/floors/step_snowbiom_0.png')
         mock_scale.assert_called_once_with(mock_image, (100, 30))
@@ -187,7 +186,7 @@ class TestAllFloors(unittest.TestCase):
     def setUp(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1, 1))
-        self.all_floors = AllFloors()
+        self.all_floors = screens.AllFloors()
 
     def tearDown(self):
         pygame.quit()
@@ -196,7 +195,7 @@ class TestAllFloors(unittest.TestCase):
         self.assertIsInstance(self.all_floors.floors_group, pygame.sprite.Group)
         self.assertEqual(len(self.all_floors.floors_group), 4)
         for floor in self.all_floors.floors_group:
-            self.assertIsInstance(floor, Floor)
+            self.assertIsInstance(floor, screens.Floor)
             self.assertLessEqual(floor.rect.top, 800)
             self.assertGreaterEqual(floor.rect.bottom, 0)
 
@@ -234,7 +233,7 @@ class TestOutro(unittest.TestCase):
     def setUp(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1, 1))
-        self.outro = Outro(self.screen)
+        self.outro = screens.Outro(self.screen)
 
     def tearDown(self):
         pygame.quit()
@@ -242,19 +241,14 @@ class TestOutro(unittest.TestCase):
     @patch('pygame.image.load')
     @patch('pygame.transform.scale')
     @patch('pygame.transform.scale_by')
-    @patch('screens.AllFloors')
-    @patch('screens.RotatePlayer')
-    def test_initialization(self, mock_rotate_player, mock_all_floors, mock_scale_by, mock_scale, mock_load):
+    def test_initialization(self, mock_scale_by, mock_scale, mock_load):
         mock_image = Mock(spec=pygame.Surface)
         mock_image.convert_alpha.return_value = mock_image
         mock_load.return_value = mock_image
         mock_scale.return_value = mock_image
         mock_scale_by.return_value = mock_image
 
-        mock_all_floors.return_value = Mock(spec=AllFloors)
-        mock_rotate_player.return_value = Mock(spec=RotatePlayer)
-
-        outro = Outro(self.screen)
+        outro = screens.Outro(self.screen)
 
         self.assertEqual(outro.level, 0)
         self.assertEqual(outro.max_combo, 0)
@@ -269,20 +263,73 @@ class TestOutro(unittest.TestCase):
         mock_scale_by.assert_any_call(mock_image, 2)
 
         self.assertIsInstance(outro.rotate_player_group, pygame.sprite.GroupSingle)
-        self.assertIsInstance(outro.rotate_player_group.sprite, RotatePlayer)
-        self.assertIsInstance(outro.floors_group, AllFloors)
+        self.assertIsInstance(outro.rotate_player_group.sprite, screens.RotatePlayer)
+        self.assertIsInstance(outro.floors_group, screens.AllFloors)
 
     @patch('pygame.mouse.get_pressed')
     @patch('pygame.mouse.get_pos')
-    def test_check_buttons(self, mock_get_pos, mock_get_pressed):
+    def test_check_buttons_home_button(self, mock_get_pos, mock_get_pressed):
         mock_get_pressed.return_value = (1, 0, 0)
 
         mock_get_pos.return_value = self.outro.home_image_rect.center
         self.outro.check_buttons()
         self.assertEqual(self.outro.status, "intro")
 
+    @patch('pygame.mouse.get_pressed')
+    @patch('pygame.mouse.get_pos')
+    def test_check_buttons_home_button(self, mock_get_pos, mock_get_pressed):
+        mock_get_pressed.return_value = (1, 0, 0)
+
         mock_get_pos.return_value = self.outro.restart_image_rect.center
         self.outro.check_buttons()
         self.assertEqual(self.outro.status, "game_on")
 
-    # TODO: write tests for methods display_text, draw, update
+    def test_display_text(self):
+        mock_screen = MagicMock(spec=pygame.Surface)
+        mock_font = MagicMock(spec=pygame.font.Font)
+        mock_text_surface = MagicMock(spec=pygame.Surface)
+        mock_rect = Mock()
+        self.outro.main_screen = mock_screen
+
+        mock_font.render.return_value = mock_text_surface
+        mock_text_surface.get_rect.return_value = mock_rect
+
+        self.outro.display_text("Hello World!", mock_font, (10, 20))
+
+        mock_font.render.assert_called_once_with("Hello World!", True, "Brown")
+        mock_text_surface.get_rect.assert_called_once_with(topleft=(10, 20))
+        mock_screen.blit.assert_called_once_with(mock_text_surface, mock_rect)
+
+    @patch('screens.Outro.display_text')
+    def test_draw(self, mock_display_text):
+        mock_screen = MagicMock(spec=pygame.Surface)
+        mock_player_group = MagicMock(spec=pygame.sprite.Group)
+        mock_floors_group = MagicMock(spec=pygame.sprite.Group)
+
+        self.outro.rotate_player_group = mock_player_group
+        self.outro.floors_group = mock_floors_group
+        self.outro.main_screen = mock_screen
+
+        self.outro.draw()
+
+        mock_screen.blit.assert_any_call(self.outro.image, self.outro.rect)
+        mock_screen.blit.assert_any_call(self.outro.restart_image, self.outro.restart_image_rect)
+        mock_screen.blit.assert_any_call(self.outro.home_image, self.outro.home_image_rect)
+        mock_player_group.draw.assert_called_once_with(self.outro.main_screen)
+        mock_floors_group.draw.assert_called_once_with(self.outro.main_screen)
+        self.assertEqual(mock_display_text.call_count, 5)
+
+    @patch('screens.Outro.check_buttons')
+    @patch('screens.Outro.draw')
+    def check_update(self, mock_draw, mock_check_buttons):
+        mock_player_group = MagicMock(spec=pygame.sprite.Group)
+        mock_floors_group = MagicMock(spec=pygame.sprite.Group)
+        self.outro.rotate_player_group = mock_player_group
+        self.outro.floors_group = mock_floors_group
+
+        self.outro.update()
+
+        mock_player_group.update.assert_called_once()
+        mock_floors_group.update.assert_called_once()
+        mock_check_buttons.assert_called_once()
+        mock_draw.assert_called_once()

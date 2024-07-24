@@ -148,11 +148,10 @@ class Outro:
 
         self.status = "outro"
 
-    @staticmethod
-    def display_text(text, font, top_left, image):
+    def display_text(self, text, font, top_left):
         text_surface = font.render(text, True, "Brown")
         text_rect = text_surface.get_rect(topleft=top_left)
-        image.blit(text_surface, text_rect)
+        self.main_screen.blit(text_surface, text_rect)
 
     def check_buttons(self):
         mouse_state = pygame.mouse.get_pressed()
@@ -172,13 +171,13 @@ class Outro:
         self.floors_group.draw(self.main_screen)
 
         font = pygame.font.SysFont("Comic Sans MS", 75)
-        self.display_text("GAME OVER", font, (130, 5), self.image)
+        self.display_text("GAME OVER", font, (130, 5))
 
         font = pygame.font.SysFont("Comic Sans MS", 40)
-        self.display_text("Level: {}".format(self.level), font, (180, 150), self.main_screen)
-        self.display_text("Max combo: {}".format(self.max_combo), font, (180, 200), self.main_screen)
-        self.display_text("Total score: {}".format(self.score), font, (180, 250), self.main_screen)
-        self.display_text("Best score: {}".format(9999), font, (180, 300), self.main_screen)
+        self.display_text("Level: {}".format(self.level), font, (180, 150))
+        self.display_text("Max combo: {}".format(self.max_combo), font, (180, 200))
+        self.display_text("Total score: {}".format(self.score), font, (180, 250))
+        self.display_text("Best score: {}".format(9999), font, (180, 300))
 
     def update(self):
         self.rotate_player_group.update()
