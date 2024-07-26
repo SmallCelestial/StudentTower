@@ -27,7 +27,7 @@ class TestIntro(unittest.TestCase):
 
     @patch('pygame.image.load')
     @patch('pygame.transform.scale')
-    def test_init(self, mock_scale, mock_load):
+    def test_initialization(self, mock_scale, mock_load):
         self.intro = screens.Intro(self.screen)
         self.assertTrue(mock_load.called)
         self.assertTrue(mock_scale.called)
@@ -93,7 +93,7 @@ class TestRotatePlayer(unittest.TestCase):
 
     @patch('pygame.image.load')
     @patch('pygame.transform.scale_by')
-    def test_init(self, mock_scale, mock_load):
+    def test_initialization(self, mock_scale, mock_load):
         mock_image = MagicMock()
         mock_image.get_rect.return_value.center = (775, 500)
         mock_load.return_value = mock_image
@@ -146,7 +146,7 @@ class TestFloor(unittest.TestCase):
 
     @patch('pygame.image.load')
     @patch('pygame.transform.scale')
-    def test_init(self, mock_scale, mock_load):
+    def test_initialization(self, mock_scale, mock_load):
         mock_image = Mock(spec=pygame.Surface)
         mock_image.convert_alpha.return_value = mock_image
         mock_image.get_rect.return_value = pygame.Rect(0, 0, 100, 30)
@@ -199,7 +199,7 @@ class TestAllFloors(unittest.TestCase):
             self.assertLessEqual(floor.rect.top, 800)
             self.assertGreaterEqual(floor.rect.bottom, 0)
 
-    def test_init(self):
+    def test_initialization(self):
         self._check_conditions()
 
     def test_check_steps(self):
