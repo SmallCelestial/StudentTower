@@ -9,11 +9,11 @@ class Engine:
         self.my_steps = steps  # this is Group
         self.main_screen = screen
 
-        self.list_of_steps = [[400, 1, StepSnowbiom(400, 1)],
-                              [600, 1, StepSnowbiom(600, 2)],
-                              [800, 1, StepSnowbiom(800, 3)],
-                              [1000, 1, StepSnowbiom(1000, 4)],
-                              [1200, 1, StepSnowbiom(1200, 5)]]
+        self.list_of_steps = [[300, 1, StepSnowbiom(300, 1)],
+                              [500, 1, StepSnowbiom(500, 2)],
+                              [700, 1, StepSnowbiom(700, 3)],
+                              [900, 1, StepSnowbiom(900, 4)],
+                              [1100, 1, StepSnowbiom(1100, 5)]]
 
         self.my_steps.add(FloorSnowbiom(100, 0))
 
@@ -56,12 +56,11 @@ class Engine:
             and step.rect.right >= self.my_player.sprite.rect.centerx >= step.rect.left): # czy nie naliczy obok dla y =0 zlego maxa?
                 self.level = max(self.level, step.number) 
                 self.score = max(self.score, step.number)
-                print(step.number)
 
     def contact_with_steps(self):
         flag_1 = False
         for step in self.my_steps:
-            if (step.rect.top - 4 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
+            if (step.rect.top - 10 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
                     step.rect.left <= self.my_player.sprite.rect.centerx <= step.rect.right and
                     self.my_player.sprite.y_speed >= 0):
                 self.my_player.sprite.can_jump = True
@@ -73,11 +72,11 @@ class Engine:
             self.my_player.sprite.can_jump = False
 
     def reset(self):
-        self.list_of_steps = [[400, 1, StepSnowbiom(400, 1)],
-                              [600, 1, StepSnowbiom(600, 2)],
-                              [800, 1, StepSnowbiom(800, 3)],
-                              [1000, 1, StepSnowbiom(1000, 4)],
-                              [1200, 1, StepSnowbiom(1200, 5)]]
+        self.list_of_steps = [[300, 1, StepSnowbiom(300, 1)],
+                              [500, 1, StepSnowbiom(500, 2)],
+                              [700, 1, StepSnowbiom(700, 3)],
+                              [900, 1, StepSnowbiom(900, 4)],
+                              [1100, 1, StepSnowbiom(1100, 5)]]
         self.my_steps.empty()
         self.my_steps.add(FloorSnowbiom(100, 0))
         self.my_player.sprite.reset()
