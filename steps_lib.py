@@ -46,11 +46,11 @@ class StepTemplate(pygame.sprite.Sprite):
     """
     def __init__(self, step_number: int):
         super().__init__()
-        self.step_0 = pygame.image.load('resources/floors/step_junglebiom_0.png').convert_alpha()
-        self.step_1 = pygame.image.load('resources/floors/step_junglebiom_1.png').convert_alpha()
-        self.step_2 = pygame.image.load('resources/floors/step_junglebiom_2.png').convert_alpha()
-        self.step_3 = pygame.image.load('resources/floors/step_junglebiom_3.png').convert_alpha()
-        self.step_4 = pygame.image.load('resources/floors/step_junglebiom_4.png').convert_alpha()
+        self.step_0 = None
+        self.step_1 = None
+        self.step_2 = None
+        self.step_3 = None
+        self.step_4 = None
         self.animation_frames = []
         self.animation_frames_index = 0
         self.destruction = False
