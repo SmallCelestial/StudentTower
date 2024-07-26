@@ -17,6 +17,16 @@ def my_StepSnowbiom():
     with patch('pygame.image.load', return_value=Mock()):
         return StepSnowbiom(100, 1)
 
+@pytest.fixture
+def my_StepJunglebiom():
+    with patch('pygame.image.load', return_value=Mock()):
+        return StepJunglebiom(100, 1)
+
+@pytest.fixture
+def my_StepLavabiom():
+    with patch('pygame.image.load', return_value=Mock()):
+        return StepLavabiom(100, 1)
+
 def test_initialization_of_StepTemplate(my_StepTemplate):
     assert my_StepTemplate.tall == my_StepTemplate.width == my_StepTemplate.height == my_StepTemplate.biom_id == 0
     assert my_StepTemplate.topLeft == [0,0]
@@ -53,4 +63,27 @@ def test_initialisation_of_StepSnowbiom(my_StepSnowbiom):
     # Ensure the animation frames are mocks
     for frame in my_StepSnowbiom.animation_frames:
         assert isinstance(frame, Mock)
+
+def test_initialisation_of_StepJunglebiom(my_StepJunglebiom):
+    assert len(my_StepJunglebiom.animation_frames) == 5
+    assert my_StepJunglebiom.number == 1
+    assert my_StepJunglebiom.height == 100
+    assert my_StepJunglebiom.biom_id == 2
+    assert 300 <= my_StepJunglebiom.top_left[0] <= 600
+
+    # Ensure the animation frames are mocks
+    for frame in my_StepJunglebiom.animation_frames:
+        assert isinstance(frame, Mock)
+
+def test_initialisation_of_StepLavabiom(my_StepLavabiom):
+    assert len(my_StepLavabiom.animation_frames) == 5
+    assert my_StepLavabiom.number == 1
+    assert my_StepLavabiom.height == 100
+    assert my_StepLavabiom.biom_id == 3
+    assert 300 <= my_StepLavabiom.top_left[0] <= 600
+
+    # Ensure the animation frames are mocks
+    for frame in my_StepLavabiom.animation_frames:
+        assert isinstance(frame, Mock)
+
 

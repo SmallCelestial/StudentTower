@@ -182,6 +182,7 @@ class StepJunglebiom(StepTemplate):
         self.width = 300
         self.height = spawn_height
         self.top_left = [random.randint(300, 600), self.height]
+        self.biom_id = 2
 
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
@@ -218,6 +219,7 @@ class StepLavabiom(StepTemplate):
         self.width = 300
         self.height = spawn_height
         self.top_left = [random.randint(300, 600), self.height]
+        self.biom_id = 3
 
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
