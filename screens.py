@@ -55,7 +55,7 @@ class RotatePlayer(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.original_image = pygame.image.load('resources/PLayer/player_stand.png').convert_alpha()
+        self.original_image = pygame.image.load('resources/Player/player_stand.png').convert_alpha()
         self.original_image = pygame.transform.scale_by(self.original_image, (0.75, 0.75))
         self.image = self.original_image
         self.rect = self.image.get_rect(center=(775, 500))
