@@ -64,6 +64,7 @@ class Engine:
                     step.rect.left <= self.my_player.sprite.rect.centerx <= step.rect.right and
                     self.my_player.sprite.y_speed >= 0):
                 self.my_player.sprite.can_jump = True
+                self.my_player.sprite.super_jump = False
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
