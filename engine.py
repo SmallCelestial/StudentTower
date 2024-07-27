@@ -48,7 +48,7 @@ class Engine:
                 step.rect.top = 800 - step.height + self.my_player.sprite.current_height
             for step in self.list_of_steps:
                 step[0] += self.my_player.sprite.y_speed
-                step[2].height = step[0] #czyli obiekt zoztał utworzony jeszcze przed dodadniem do my_step_sgroup?
+                step[2].height = step[0] 
 
     def check_result(self):
         for step in self.my_steps:
@@ -68,7 +68,7 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                step.destruction = True 
+                #step.destruction = True 
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
