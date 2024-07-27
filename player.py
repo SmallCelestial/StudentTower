@@ -57,13 +57,12 @@ class Player(pygame.sprite.Sprite):
         self.max_height = 0
         self.counter = 0
         self.actual_angle = 0
-        self.can_jump = True
-        self.super_jump = False
-
-        self.should_around_counter = 0
-        self.can_move_horizontally = True
+        self.around_delay_counter = 0
         self.direction = 'forward'
         self.ignore_buttons_counter = {'left': 0, 'right': 0}
+        self.can_jump = True
+        self.super_jump = False
+        self.can_move_horizontally = True
 
     def _can_process_button(self, button: str) -> bool:
         if self.ignore_buttons_counter[button] > 0:
@@ -105,15 +104,15 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
     def _turn_around(self):
-        if self.should_around_counter > 0:
-            self.should_around_counter -= 1
+        if self.around_delay_counter > 0:
+            self.around_delay_counter -= 1
         else:
             self.can_move_horizontally = True
             self._set_position()
 
         if (self.direction == 'left' and self.x_speed > 0) or (self.direction == 'right' and self.x_speed < 0):
             self.x_speed = 0
-            self.should_around_counter = 5
+            self.around_delay_counter = 5
             self.can_move_horizontally = False
 
     def _move(self):
@@ -173,9 +172,9 @@ class Player(pygame.sprite.Sprite):
                 self._set_position()
             if self.rect.top > 100 and self.y_speed <= 0:
                 self.rect.centery += self.y_speed
-        else:  # player is on floor
+        else:
             self.actual_angle = 0
-            self.super_jump = False
+            self.counter = 0
 
     def height_status(self):
         self.current_height -= self.y_speed
@@ -186,14 +185,18 @@ class Player(pygame.sprite.Sprite):
         self.y_speed = 0
         self.current_height = 0
         self.max_height = 0
-        self.can_jump = True
-        self.super_jump = False
         self.counter = 0
         self.actual_angle = 0
+        self.around_delay_counter = 0
+        self.direction = 'forward'
+        self.ignore_buttons_counter = {'left': 0, 'right': 0}
+        self.can_jump = True
+        self.super_jump = False
+        self.can_move_horizontally = True
         self.rect.midbottom = (500, 700)
 
     def update(self):
         self.player_input()
-        self.apply_gravity()
         self.height_status()
+        self.apply_gravity()
         # print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
