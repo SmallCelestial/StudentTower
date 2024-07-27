@@ -104,11 +104,11 @@ class FloorSnowbiom(StepTemplate):
         self.tall = 100
         self.width = 1000
         self.height = spawn_height
-        top_left = [0, 900]
+        self.top_left = [0, 900]
         self.biom_id = 1 
         
         self.image = self.floor_snowbiom_0
-        self.rect = self.image.get_rect(topleft=top_left)
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
     def destruction_mechanic(self):
         pass
@@ -144,11 +144,11 @@ class StepSnowbiom(StepTemplate):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        top_left = [random.randint(300, 600), self.height]
-        self.biom_id = 2
+        self.top_left = [random.randint(300, 600), self.height]
+        self.biom_id = 1
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=top_left)
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
 
 class StepJunglebiom(StepTemplate):
@@ -181,10 +181,11 @@ class StepJunglebiom(StepTemplate):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        top_left = [random.randint(300, 600), self.height]
+        self.top_left = [random.randint(300, 600), self.height]
+        self.biom_id = 2
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=top_left)
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
 
 class StepLavabiom(StepTemplate):
@@ -217,7 +218,8 @@ class StepLavabiom(StepTemplate):
         self.tall = 50
         self.width = 300
         self.height = spawn_height
-        top_left = [random.randint(300, 600), self.height]
+        self.top_left = [random.randint(300, 600), self.height]
+        self.biom_id = 3
 
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=top_left)
+        self.rect = self.image.get_rect(topleft=self.top_left)

@@ -1,15 +1,31 @@
 import pytest
 import pygame
 from steps_lib import StepTemplate, FloorSnowbiom, StepSnowbiom, StepJunglebiom, StepLavabiom
-
+from unittest.mock import patch, Mock
 
 @pytest.fixture
 def my_stepTemplate():
     return StepTemplate(1)
 
 @pytest.fixture
+def my_floorSnowbiom():
+    with patch('pygame.image.load', return_value=Mock()):
+        return FloorSnowbiom(100, 0)
+
+@pytest.fixture
 def my_stepSnowbiom():
-    return StepSnowbiom(100,1)
+    with patch('pygame.image.load', return_value=Mock()):
+        return StepSnowbiom(100, 1)
+
+@pytest.fixture
+def my_stepJunglebiom():
+    with patch('pygame.image.load', return_value=Mock()):
+        return StepJunglebiom(100, 1)
+
+@pytest.fixture
+def my_stepLavabiom():
+    with patch('pygame.image.load', return_value=Mock()):
+        return StepLavabiom(100, 1)
 
 def test_initialization_of_StepTemplate(my_stepTemplate):
     assert my_stepTemplate.tall == my_stepTemplate.width == my_stepTemplate.height == my_stepTemplate.biom_id == 0
@@ -27,4 +43,47 @@ def test_destruction_mechanic(my_stepTemplate):
     step_group.add(destruction_ready_step)
     pygame.sprite.Group.sprites(step_group)[0].destruction_mechanic()
     assert len(step_group) == 0
+
+def test_initialisation_of_FloorSnowbiom(my_floorSnowbiom):
+    assert my_floorSnowbiom.tall == 100
+    assert my_floorSnowbiom.width == 1000
+    assert my_floorSnowbiom.top_left == [0, 900]
+    assert my_floorSnowbiom.biom_id == 1
+
+    assert my_floorSnowbiom.height == 100
+    assert my_floorSnowbiom.number == 0
+
+def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
+    assert len(my_stepSnowbiom.animation_frames) == 5
+    assert my_stepSnowbiom.number == 1
+    assert my_stepSnowbiom.height == 100
+    assert my_stepSnowbiom.biom_id == 1
+    assert 300 <= my_stepSnowbiom.top_left[0] <= 600
+
+    # Ensure the animation frames are mocks
+    for frame in my_stepSnowbiom.animation_frames:
+        assert isinstance(frame, Mock)
+
+def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
+    assert len(my_stepJunglebiom.animation_frames) == 5
+    assert my_stepJunglebiom.number == 1
+    assert my_stepJunglebiom.height == 100
+    assert my_stepJunglebiom.biom_id == 2
+    assert 300 <= my_stepJunglebiom.top_left[0] <= 600
+
+    # Ensure the animation frames are mocks
+    for frame in my_stepJunglebiom.animation_frames:
+        assert isinstance(frame, Mock)
+
+def test_initialisation_of_StepLavabiom(my_stepLavabiom):
+    assert len(my_stepLavabiom.animation_frames) == 5
+    assert my_stepLavabiom.number == 1
+    assert my_stepLavabiom.height == 100
+    assert my_stepLavabiom.biom_id == 3
+    assert 300 <= my_stepLavabiom.top_left[0] <= 600
+
+    # Ensure the animation frames are mocks
+    for frame in my_stepLavabiom.animation_frames:
+        assert isinstance(frame, Mock)
+
 
