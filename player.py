@@ -170,8 +170,12 @@ class Player(pygame.sprite.Sprite):
             if self.counter % 5 == 0 and self.super_jump:
                 self.actual_angle = (self.actual_angle + 60) % 360
                 self._set_position()
-            if self.rect.top > 100 and self.y_speed <= 0:
+            if self.rect.top > 100:
                 self.rect.centery += self.y_speed
+            if self.rect.top <= 100 and self.y_speed <= 0:
+                self.rect.top = 100
+            elif self.rect.top <= 100 and self.y_speed > 0:
+                self.rect.top += self.y_speed
         else:
             self.actual_angle = 0
             self.counter = 0
@@ -199,4 +203,4 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.height_status()
         self.apply_gravity()
-        # print(f"{self.current_height}_{self.can_jump}_{self.y_speed}")  # for testing purposes
+        print(f"{self.y_speed}")  # for testing purposes
