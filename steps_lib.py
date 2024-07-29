@@ -1,5 +1,5 @@
 import pygame
-import random
+import random 
 
 
 class StepTemplate(pygame.sprite.Sprite):
@@ -129,6 +129,67 @@ class StepSnowbiom(StepTemplate):
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
 
+class StepSnowbiom250(StepTemplate):
+    """
+    Step_snowbiom is a class representing step from junglebiom (id = 1)
+    
+    Attributes:
+    ----------
+    image : pygame.Surface
+        The current image of the step used for rendering.
+    rect : pygame.Rect
+        The rectangular area defining the step's position and dimensions.
+
+    Methods:
+    --------
+    __init__():
+        Loads textures added to self.animation_frames
+
+    """
+
+    def __init__(self, spawn_height: int, spawn_number: int):
+        super().__init__(spawn_height, spawn_number)
+        self.step_0 = pygame.image.load('resources/floors/step_snowbiom250_0.png').convert_alpha()
+        self.step_1 = pygame.image.load('resources/floors/step_snowbiom250_1.png').convert_alpha()
+        self.step_2 = pygame.image.load('resources/floors/step_snowbiom250_2.png').convert_alpha()
+        self.step_3 = pygame.image.load('resources/floors/step_snowbiom250_3.png').convert_alpha()
+        self.step_4 = pygame.image.load('resources/floors/step_snowbiom250_4.png').convert_alpha()
+        self.initialize_animation_frames()
+
+        self.top_left = [random.randint(300, 600), self.step_height]
+        self.image = self.animation_frames[0]
+        self.rect = self.image.get_rect(topleft=self.top_left)
+
+class StepSnowbiom200(StepTemplate):
+    """
+    Step_snowbiom is a class representing step from junglebiom (id = 1)
+    
+    Attributes:
+    ----------
+    image : pygame.Surface
+        The current image of the step used for rendering.
+    rect : pygame.Rect
+        The rectangular area defining the step's position and dimensions.
+
+    Methods:
+    --------
+    __init__():
+        Loads textures added to self.animation_frames
+
+    """
+
+    def __init__(self, spawn_height: int, spawn_number: int):
+        super().__init__(spawn_height, spawn_number)
+        self.step_0 = pygame.image.load('resources/floors/step_snowbiom200_0.png').convert_alpha()
+        self.step_1 = pygame.image.load('resources/floors/step_snowbiom200_1.png').convert_alpha()
+        self.step_2 = pygame.image.load('resources/floors/step_snowbiom200_2.png').convert_alpha()
+        self.step_3 = pygame.image.load('resources/floors/step_snowbiom200_3.png').convert_alpha()
+        self.step_4 = pygame.image.load('resources/floors/step_snowbiom200_4.png').convert_alpha()
+        self.initialize_animation_frames()
+
+        self.top_left = [random.randint(300, 600), self.step_height]
+        self.image = self.animation_frames[0]
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
 class StepJunglebiom(StepTemplate):
     """

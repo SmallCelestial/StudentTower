@@ -1,6 +1,8 @@
 import pygame
-from steps_lib import StepSnowbiom, StepLavabiom, StepJunglebiom, FloorSnowbiom
+from steps_lib import FloorSnowbiom, StepSnowbiom, StepSnowbiom250, StepSnowbiom200
+from steps_lib import StepLavabiom, StepJunglebiom 
 import math
+import random
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -26,11 +28,11 @@ class Engine:
         self.score = 0
 
         self.last_step_time = pygame.time.get_ticks() # do you use this virable/
-        self.start_time = pygame.time.get_ticks()
-        self.timer_for_steps_multiplier = 1
         self.current_combo = 0
         self.can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
+        self.start_time = pygame.time.get_ticks()
+
 
     def _is_contact_with_step(self, step):
         if (step.rect.top - 10 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
@@ -44,9 +46,12 @@ class Engine:
         for step in self.list_of_steps:
             if step.step_height < self.my_player.sprite.max_height + 1000:
                 self.my_steps.add(step)
-                if step.step_number < 10:
-                    new_step = StepSnowbiom(step.step_height + 1000, step.step_number + 5)
-                elif step.step_number < 20:
+                if step.step_number < 20:
+                    new_step = random.choice(
+                        [StepSnowbiom(step.step_height + 1000, step.step_number + 5),
+                        StepSnowbiom250(step.step_height + 1000, step.step_number + 5),
+                        StepSnowbiom200(step.step_height + 1000, step.step_number + 5)])                             
+                elif step.step_number < 40:
                     new_step = StepJunglebiom(step.step_height + 1000, step.step_number + 5)
                 else:
                     new_step = StepLavabiom(step.step_height + 1000, step.step_number + 5)
@@ -88,6 +93,8 @@ class Engine:
 
     def time_destroying_steps(self):
         self.timer_for_steps = int((pygame.time.get_ticks()-self.start_time)/25)
+        # factor/divisor regulates how fast x-argument in log function
+        # while base of logarithm regulates estimated max_multiplier, y in log function
         self.timer_for_steps_multiplier = math.log(3+(pygame.time.get_ticks()-self.start_time)/20000,3)
         for step in self.my_steps:
             if step.step_height < max(self.my_player.sprite.current_height-100, 
@@ -128,9 +135,8 @@ class Engine:
         self.level = 0
         self.max_combo = 0
         self.score = 0
-
         self.start_time = pygame.time.get_ticks()
-        self.timer_for_steps_multiplier = 1
+
 
     def update(self):
         self.spawning_steps()
