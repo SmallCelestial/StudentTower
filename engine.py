@@ -41,12 +41,12 @@ class Engine:
         for step in self.list_of_steps:
             if step.step_height < self.my_player.sprite.max_height + 1000:
                 self.my_steps.add(step)
-                if step.number < 10:
-                    new_step = StepSnowbiom(step.step_height + 1000, step.number + 5)
-                elif step.number < 20:
-                    new_step = StepJunglebiom(step.step_height + 1000, step.number + 5)
+                if step.step_number < 10:
+                    new_step = StepSnowbiom(step.step_height + 1000, step.step_number + 5)
+                elif step.step_number < 20:
+                    new_step = StepJunglebiom(step.step_height + 1000, step.step_number + 5)
                 else:
-                    new_step = StepLavabiom(step.step_height + 1000, step.number + 5)
+                    new_step = StepLavabiom(step.step_height + 1000, step.step_number + 5)
                 new_steps_list.append(new_step)
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
@@ -87,16 +87,16 @@ class Engine:
         #     self.can_do_more_combo = False
         if self.my_player.sprite.can_jump:
             for step in self.my_steps:
-                if self._is_contact_with_step(step) and step.number > self.level:
-                    self.score += (step.number - self.level) * 10
-                    if self.can_do_more_combo and step.number - self.level > 1:
-                        self.current_combo += step.number - self.level
+                if self._is_contact_with_step(step) and step.step_number > self.level:
+                    self.score += (step.step_number - self.level) * 10
+                    if self.can_do_more_combo and step.step_number - self.level > 1:
+                        self.current_combo += step.step_number - self.level
                     else:
                         self.max_combo = max(self.max_combo, self.current_combo)
                         self.score += self.current_combo ** 2 * 5
                         self.can_do_more_combo = True
                         self.current_combo = 0
-                    self.level = step.number
+                    self.level = step.step_number
 
     def display_result(self):
         text_surface = self.font.render(str(self.score), True, "Brown")

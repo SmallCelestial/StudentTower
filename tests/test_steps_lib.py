@@ -29,8 +29,7 @@ def my_stepLavabiom():
 
 def test_initialization_of_StepTemplate(my_stepTemplate):
     assert my_stepTemplate.step_height == 0
-    assert my_stepTemplate.top_left == [0,0]
-    assert my_stepTemplate.number == 1
+    assert my_stepTemplate.step_number == 1
 
 def test_initialize_animation_frames(my_stepTemplate):
     my_stepTemplate.initialize_animation_frames()
@@ -45,33 +44,32 @@ def test_destruction_mechanic(my_stepTemplate):
     assert len(step_group) == 0
 
 def test_initialisation_of_FloorSnowbiom(my_floorSnowbiom):
-    assert my_floorSnowbiom.top_left == [0, 900]
     assert my_floorSnowbiom.step_height == 100
-    assert my_floorSnowbiom.number == 0
+    assert my_floorSnowbiom.step_number == 0
 
 def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
     assert len(my_stepSnowbiom.animation_frames) == 5
-    assert my_stepSnowbiom.number == 1
+    assert my_stepSnowbiom.step_number == 1
     assert my_stepSnowbiom.step_height == 100
-    assert 300 <= my_stepSnowbiom.top_left[0] <= 600
+    assert 300 <= my_stepSnowbiom.rect.left <= 600
 
     for frame in my_stepSnowbiom.animation_frames:
         assert isinstance(frame, Mock)
 
 def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
     assert len(my_stepJunglebiom.animation_frames) == 5
-    assert my_stepJunglebiom.number == 1
+    assert my_stepJunglebiom.step_number == 1
     assert my_stepJunglebiom.step_height == 100
-    assert 300 <= my_stepJunglebiom.top_left[0] <= 600
+    assert 300 <= my_stepSnowbiom.rect.left <= 600
 
     for frame in my_stepJunglebiom.animation_frames:
         assert isinstance(frame, Mock)
 
 def test_initialisation_of_StepLavabiom(my_stepLavabiom):
     assert len(my_stepLavabiom.animation_frames) == 5
-    assert my_stepLavabiom.number == 1
+    assert my_stepLavabiom.step_number == 1
     assert my_stepLavabiom.step_height == 100
-    assert 300 <= my_stepLavabiom.top_left[0] <= 600
+    assert 300 <= my_stepSnowbiom.rect.left <= 600
 
     for frame in my_stepLavabiom.animation_frames:
         assert isinstance(frame, Mock)
