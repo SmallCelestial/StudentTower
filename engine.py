@@ -39,28 +39,28 @@ class Engine:
     def spawning_steps(self):
         new_steps_list = []
         for step in self.list_of_steps:
-            if step.absolute_height < self.my_player.sprite.max_height + 1000:
+            if step.step_height < self.my_player.sprite.max_height + 1000:
                 self.my_steps.add(step)
                 if step.number < 10:
-                    new_step = StepSnowbiom(step.absolute_height + 1000, step.number + 5)
+                    new_step = StepSnowbiom(step.step_height + 1000, step.number + 5)
                 elif step.number < 20:
-                    new_step = StepJunglebiom(step.absolute_height + 1000, step.number + 5)
+                    new_step = StepJunglebiom(step.step_height + 1000, step.number + 5)
                 else:
-                    new_step = StepLavabiom(step.absolute_height + 1000, step.number + 5)
+                    new_step = StepLavabiom(step.step_height + 1000, step.number + 5)
                 new_steps_list.append(new_step)
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
 
     def adjust_steps(self):
-        if self.my_player.sprite.rect.bottom > 200:
+        if self.my_player.sprite.rect.top > 120:
             for step in self.my_steps:
-                step.rect.top = 800 - step.absolute_height + self.my_player.sprite.current_height
+                step.rect.top = 800 - step.step_height + self.my_player.sprite.current_height
         else:
             for step in self.my_steps:
-                step.absolute_height += self.my_player.sprite.y_speed
-                step.rect.top = 800 - step.absolute_height + self.my_player.sprite.current_height
+                step.step_height += self.my_player.sprite.y_speed
+                step.rect.top = 800 - step.step_height + self.my_player.sprite.current_height
             for step in self.list_of_steps:
-                step.absolute_height += self.my_player.sprite.y_speed
+                step.step_height += self.my_player.sprite.y_speed
 
     # def check_result(self):
     #     for step in self.my_steps:

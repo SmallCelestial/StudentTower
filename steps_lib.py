@@ -14,21 +14,12 @@ class StepTemplate(pygame.sprite.Sprite):
         list of surfaces making animatation
     animation_frames_index : int
         iterator of an animation_frames list
-
-    tall : float
-        how many pixels tall a step is
-    width : float
-        width of a step in pixels
-    height : float
+    step_height : float
         height of a step at which it is spawned/shown
-    topLeft : list[x,y]
+    number : int
+        number of steps spawned under this certain step
+    top_left : list[x,y]
         a list of two elements, first being x cord, second y cord of topleft corner of step
-    biom_id : float
-        it identifies the belonging of step to a biom:
-        0 - biom not selected yet
-        1 - snow_biom
-        2 - jungle_biom
-        3 - lava_biom
     destruction : bool
         When it is true, the process of destroying (killing) step has already started.
 
@@ -44,7 +35,7 @@ class StepTemplate(pygame.sprite.Sprite):
         Updates the step's state.
 
     """
-    def __init__(self, height: int = 0, step_number: int = 0):
+    def __init__(self, spawn_height : int, step_number : int):
         super().__init__()
         self.step_0 = None
         self.step_1 = None
@@ -55,16 +46,9 @@ class StepTemplate(pygame.sprite.Sprite):
         self.animation_frames_index = 0
         self.destruction = False
 
-        self.tall = 0  # initiated value
-        self.width = 0  # initiated value
-        self.topLeft = [0, 0]  # initiated value
-        self.biom_id = 0  # 0 means biom_id not selected yet
+        self.top_left = [0, 0]  # initiated value       
         self.number = step_number
-
-        # CHANGES
-
-        #  self.height -> self.absolute_height
-        self.absolute_height = height
+        self.step_height = spawn_height
 
     def initialize_animation_frames(self):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
@@ -100,29 +84,17 @@ class FloorSnowbiom(StepTemplate):
         This function overrides the destruction_mechanic of parent class, floor doesn't disappear.
     """   
 
-    def __init__(self, height: int = 0, step_number: int = 0):
-        super().__init__(height, step_number)
+    def __init__(self, spawn_height : int, step_number : int):
+        super().__init__(spawn_height, step_number)
         self.floor_snowbiom_0 = pygame.image.load('resources/floors/floor_snowbiom_0.png').convert_alpha()
         self.animation_frames = [self.floor_snowbiom_0]
 
-        # Do czego to?
-        self.tall = 100
-        self.width = 1000
-        ###
-
-        # Po co ta zmienna
         self.top_left = [0, 900]
-        ###
-
-        # Możliwe, że to też niepotrzebne
-        self.biom_id = 1
-        ###
-        
         self.image = self.floor_snowbiom_0
         self.rect = self.image.get_rect(topleft=self.top_left)
 
-    # def destruction_mechanic(self):
-    #     pass
+    def destruction_mechanic(self):
+        pass
 
 
 class StepSnowbiom(StepTemplate):
@@ -152,12 +124,7 @@ class StepSnowbiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_snowbiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
-        self.tall = 50
-        self.width = 300
-        self.absolute_height = spawn_height
-        self.top_left = [random.randint(300, 600), self.absolute_height]
-        self.biom_id = 1
-
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
 
@@ -189,12 +156,7 @@ class StepJunglebiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_junglebiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
-        self.tall = 50
-        self.width = 300
-        self.absolute_height = spawn_height
-        self.top_left = [random.randint(300, 600), self.absolute_height]
-        self.biom_id = 2
-
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
 
@@ -226,12 +188,7 @@ class StepLavabiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_lavabiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
-        self.tall = 50
-        self.width = 300
-        self.absolute_height = spawn_height
-        self.top_left = [random.randint(300, 600), self.absolute_height]
-        self.biom_id = 3
-
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
         
