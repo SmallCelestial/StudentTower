@@ -46,6 +46,7 @@ def test_destruction_mechanic(my_stepTemplate):
 def test_initialisation_of_FloorSnowbiom(my_floorSnowbiom):
     assert my_floorSnowbiom.step_height == 100
     assert my_floorSnowbiom.step_number == 0
+    assert my_floorSnowbiom.top_left[0] == 0
 
 def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
     assert len(my_stepSnowbiom.animation_frames) == 5
