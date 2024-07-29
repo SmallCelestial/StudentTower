@@ -144,7 +144,7 @@ class StepSnowbiom(StepTemplate):
     """
 
     def __init__(self, spawn_height: int, step_number: int):
-        super().__init__(step_number)
+        super().__init__(spawn_height, step_number)
         self.step_0 = pygame.image.load('resources/floors/step_snowbiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_snowbiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_snowbiom_2.png').convert_alpha()
@@ -181,7 +181,7 @@ class StepJunglebiom(StepTemplate):
     """
 
     def __init__(self, spawn_height: int, step_number: int):
-        super().__init__(step_number)
+        super().__init__(spawn_height, step_number)
         self.step_0 = pygame.image.load('resources/floors/step_junglebiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_junglebiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_junglebiom_2.png').convert_alpha()
@@ -218,7 +218,7 @@ class StepLavabiom(StepTemplate):
     """
 
     def __init__(self, spawn_height: int, step_number: int):
-        super().__init__(step_number)
+        super().__init__(spawn_height, step_number)
         self.step_0 = pygame.image.load('resources/floors/step_lavabiom_0.png').convert_alpha()
         self.step_1 = pygame.image.load('resources/floors/step_lavabiom_1.png').convert_alpha()
         self.step_2 = pygame.image.load('resources/floors/step_lavabiom_2.png').convert_alpha()

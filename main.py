@@ -56,7 +56,8 @@ while True:
     elif game_status == "outro":
 
         outro.score = main_engine.score
-        outro.level = main_engine.score
+        outro.level = main_engine.level
+        outro.max_combo = main_engine.max_combo
         outro.update()
         if outro.status == "game_on":
             sleep(0.2)
