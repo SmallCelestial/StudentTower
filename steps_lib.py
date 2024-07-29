@@ -57,10 +57,15 @@ class StepTemplate(pygame.sprite.Sprite):
 
         self.tall = 0  # initiated value
         self.width = 0  # initiated value
-        self.height = 0  # initiated value
         self.topLeft = [0, 0]  # initiated value
         self.biom_id = 0  # 0 means biom_id not selected yet
         self.number = step_number
+
+        # CHANGES
+
+        #  self.height -> self.absolute_height
+        self.absolute_height = 0
+        self.height = 0
 
     def initialize_animation_frames(self):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
@@ -103,7 +108,7 @@ class FloorSnowbiom(StepTemplate):
 
         self.tall = 100
         self.width = 1000
-        self.height = spawn_height
+        self.absolute_height = spawn_height
         self.top_left = [0, 900]
         self.biom_id = 1 
         
@@ -143,8 +148,8 @@ class StepSnowbiom(StepTemplate):
 
         self.tall = 50
         self.width = 300
-        self.height = spawn_height
-        self.top_left = [random.randint(300, 600), self.height]
+        self.absolute_height = spawn_height
+        self.top_left = [random.randint(300, 600), self.absolute_height]
         self.biom_id = 1
 
         self.image = self.animation_frames[0]
@@ -180,8 +185,8 @@ class StepJunglebiom(StepTemplate):
 
         self.tall = 50
         self.width = 300
-        self.height = spawn_height
-        self.top_left = [random.randint(300, 600), self.height]
+        self.absolute_height = spawn_height
+        self.top_left = [random.randint(300, 600), self.absolute_height]
         self.biom_id = 2
 
         self.image = self.animation_frames[0]
@@ -217,8 +222,8 @@ class StepLavabiom(StepTemplate):
 
         self.tall = 50
         self.width = 300
-        self.height = spawn_height
-        self.top_left = [random.randint(300, 600), self.height]
+        self.absolute_height = spawn_height
+        self.top_left = [random.randint(300, 600), self.absolute_height]
         self.biom_id = 3
 
         self.image = self.animation_frames[0]
