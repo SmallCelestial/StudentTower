@@ -203,4 +203,4 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.height_status()
         self.apply_gravity()
-        print(f"{self.y_speed}")  # for testing purposes
+        # print(f"{self.y_speed}")  # for testing purposes
