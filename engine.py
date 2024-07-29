@@ -53,7 +53,7 @@ class Engine:
     def check_result(self):
         for step in self.my_steps:
             if (step.rect.top == self.my_player.sprite.rect.bottom and self.my_player.sprite.y_speed == 0
-                    and step.rect.right >= self.my_player.sprite.rect.centerx >= step.rect.left):  # czy nie naliczy obok dla y =0 zlego maxa?
+                    and step.rect.right >= self.my_player.sprite.rect.centerx >= step.rect.left):
                 self.level = max(self.level, step.number)
                 self.score = max(self.score, step.number)
 

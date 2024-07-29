@@ -44,7 +44,7 @@ class StepTemplate(pygame.sprite.Sprite):
         Updates the step's state.
 
     """
-    def __init__(self, step_number: int):
+    def __init__(self, height: int = 0, step_number: int = 0):
         super().__init__()
         self.step_0 = None
         self.step_1 = None
@@ -64,8 +64,7 @@ class StepTemplate(pygame.sprite.Sprite):
         # CHANGES
 
         #  self.height -> self.absolute_height
-        self.absolute_height = 0
-        self.height = 0
+        self.absolute_height = height
 
     def initialize_animation_frames(self):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
@@ -101,22 +100,29 @@ class FloorSnowbiom(StepTemplate):
         This function overrides the destruction_mechanic of parent class, floor doesn't disappear.
     """   
 
-    def __init__(self, spawn_height: int, step_number: int):
-        super().__init__(step_number)
+    def __init__(self, height: int = 0, step_number: int = 0):
+        super().__init__(height, step_number)
         self.floor_snowbiom_0 = pygame.image.load('resources/floors/floor_snowbiom_0.png').convert_alpha()
         self.animation_frames = [self.floor_snowbiom_0]
 
+        # Do czego to?
         self.tall = 100
         self.width = 1000
-        self.absolute_height = spawn_height
+        ###
+
+        # Po co ta zmienna
         self.top_left = [0, 900]
-        self.biom_id = 1 
+        ###
+
+        # Możliwe, że to też niepotrzebne
+        self.biom_id = 1
+        ###
         
         self.image = self.floor_snowbiom_0
         self.rect = self.image.get_rect(topleft=self.top_left)
 
-    def destruction_mechanic(self):
-        pass
+    # def destruction_mechanic(self):
+    #     pass
 
 
 class StepSnowbiom(StepTemplate):
@@ -228,3 +234,4 @@ class StepLavabiom(StepTemplate):
 
         self.image = self.animation_frames[0]
         self.rect = self.image.get_rect(topleft=self.top_left)
+        
