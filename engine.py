@@ -68,7 +68,7 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                step.destruction = True
+                #step.destruction = True
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
