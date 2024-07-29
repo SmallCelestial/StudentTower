@@ -1,5 +1,6 @@
 import pygame
 from steps_lib import StepSnowbiom, StepLavabiom, StepJunglebiom, FloorSnowbiom
+import math
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -24,7 +25,9 @@ class Engine:
         self.max_combo = 0
         self.score = 0
 
-        self.last_step_time = pygame.time.get_ticks()
+        self.last_step_time = pygame.time.get_ticks() # do you use this virable/
+        self.start_time = pygame.time.get_ticks()
+        self.timer_for_steps_multiplier = 1
         self.current_combo = 0
         self.can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
@@ -62,6 +65,7 @@ class Engine:
             for step in self.list_of_steps:
                 step.step_height += self.my_player.sprite.y_speed
 
+
     # def check_result(self):
     #     for step in self.my_steps:
     #         if (step.rect.top == self.my_player.sprite.rect.bottom and self.my_player.sprite.y_speed == 0
@@ -81,6 +85,15 @@ class Engine:
                 #step.destruction = True
         if not flag_1:
             self.my_player.sprite.can_jump = False
+
+    def time_destroying_steps(self):
+        self.timer_for_steps = int((pygame.time.get_ticks()-self.start_time)/25)
+        self.timer_for_steps_multiplier = math.log(3+(pygame.time.get_ticks()-self.start_time)/20000,3)
+        for step in self.my_steps:
+            if step.step_height < max(self.my_player.sprite.current_height-100, 
+                                      int(self.timer_for_steps*self.timer_for_steps_multiplier)):
+                step.destruction = True
+        print(f"{self.timer_for_steps_multiplier}_{self.timer_for_steps}") 
 
     def update_result(self):
         # if pygame.time.get_ticks() - self.last_step_time > 1500:
@@ -116,10 +129,14 @@ class Engine:
         self.max_combo = 0
         self.score = 0
 
+        self.start_time = pygame.time.get_ticks()
+        self.timer_for_steps_multiplier = 1
+
     def update(self):
         self.spawning_steps()
         self.adjust_steps()
         self.contact_with_steps()
+        self.time_destroying_steps()
         self.update_result()
         # self.check_result()
 
