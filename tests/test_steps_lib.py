@@ -28,7 +28,7 @@ def my_stepLavabiom():
         return StepLavabiom(100, 1)
 
 def test_initialization_of_StepTemplate(my_stepTemplate):
-    assert my_stepTemplate.tall == my_stepTemplate.width == my_stepTemplate.height == my_stepTemplate.biom_id == 0
+    assert my_stepTemplate.tall == my_stepTemplate.width == my_stepTemplate.absolute_height == my_stepTemplate.biom_id == 0
     assert my_stepTemplate.topLeft == [0,0]
     assert my_stepTemplate.number == 1
 
@@ -50,13 +50,13 @@ def test_initialisation_of_FloorSnowbiom(my_floorSnowbiom):
     assert my_floorSnowbiom.top_left == [0, 900]
     assert my_floorSnowbiom.biom_id == 1
 
-    assert my_floorSnowbiom.height == 100
+    assert my_floorSnowbiom.absolute_height == 100
     assert my_floorSnowbiom.number == 0
 
 def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
     assert len(my_stepSnowbiom.animation_frames) == 5
     assert my_stepSnowbiom.number == 1
-    assert my_stepSnowbiom.height == 100
+    assert my_stepSnowbiom.absolute_height == 100
     assert my_stepSnowbiom.biom_id == 1
     assert 300 <= my_stepSnowbiom.top_left[0] <= 600
 
@@ -67,7 +67,7 @@ def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
 def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
     assert len(my_stepJunglebiom.animation_frames) == 5
     assert my_stepJunglebiom.number == 1
-    assert my_stepJunglebiom.height == 100
+    assert my_stepJunglebiom.absolute_height == 100
     assert my_stepJunglebiom.biom_id == 2
     assert 300 <= my_stepJunglebiom.top_left[0] <= 600
 
@@ -78,7 +78,7 @@ def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
 def test_initialisation_of_StepLavabiom(my_stepLavabiom):
     assert len(my_stepLavabiom.animation_frames) == 5
     assert my_stepLavabiom.number == 1
-    assert my_stepLavabiom.height == 100
+    assert my_stepLavabiom.absolute_height == 100
     assert my_stepLavabiom.biom_id == 3
     assert 300 <= my_stepLavabiom.top_left[0] <= 600
 

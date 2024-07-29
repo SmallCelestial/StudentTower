@@ -4,11 +4,11 @@ from screens import Intro, Outro
 from time import sleep
 from player import Player
 
-WIDTH = 1000
-HEIGHT = 800
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 800
 
 # SCREEN initialization
-main_screen = pygame.display.set_mode((WIDTH, HEIGHT))
+main_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Student_Tower")
 
 # GROUPS
