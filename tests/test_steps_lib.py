@@ -51,7 +51,7 @@ def test_initialisation_of_StepSnowbiom(my_stepSnowbiom):
     assert len(my_stepSnowbiom.animation_frames) == 5
     assert my_stepSnowbiom.step_number == 1
     assert my_stepSnowbiom.step_height == 100
-    assert 300 <= my_stepSnowbiom.rect.left <= 600
+    assert 300 <= my_stepSnowbiom.top_left[0] <= 600
 
     for frame in my_stepSnowbiom.animation_frames:
         assert isinstance(frame, Mock)
@@ -60,7 +60,7 @@ def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
     assert len(my_stepJunglebiom.animation_frames) == 5
     assert my_stepJunglebiom.step_number == 1
     assert my_stepJunglebiom.step_height == 100
-    assert 300 <= my_stepSnowbiom.rect.left <= 600
+    assert 300 <= my_stepJunglebiom.top_left[0] <= 600
 
     for frame in my_stepJunglebiom.animation_frames:
         assert isinstance(frame, Mock)
@@ -69,7 +69,7 @@ def test_initialisation_of_StepLavabiom(my_stepLavabiom):
     assert len(my_stepLavabiom.animation_frames) == 5
     assert my_stepLavabiom.step_number == 1
     assert my_stepLavabiom.step_height == 100
-    assert 300 <= my_stepSnowbiom.rect.left <= 600
+    assert 300 <= my_stepLavabiom.top_left[0] <= 600
 
     for frame in my_stepLavabiom.animation_frames:
         assert isinstance(frame, Mock)

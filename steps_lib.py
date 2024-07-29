@@ -18,6 +18,9 @@ class StepTemplate(pygame.sprite.Sprite):
         height of a step at which it is spawned/shown
     step_number : int
         number of steps spawned under this certain step
+    top_left : [int, int]
+        first number is a coordinate x of the topLeft corner of a step,
+        second number is a coordinate y of the topLeft corner of a step
     destruction : bool
         When it is true, the process of destroying (killing) step has already started.
 
@@ -43,7 +46,8 @@ class StepTemplate(pygame.sprite.Sprite):
         self.animation_frames = []
         self.animation_frames_index = 0
         self.destruction = False
-      
+
+        self.top_left = [0, 0]
         self.step_number = spawn_number
         self.step_height = spawn_height
 
@@ -86,8 +90,9 @@ class FloorSnowbiom(StepTemplate):
         self.floor_snowbiom_0 = pygame.image.load('resources/floors/floor_snowbiom_0.png').convert_alpha()
         self.animation_frames = [self.floor_snowbiom_0]
 
+        self.top_left = [0, 900]
         self.image = self.floor_snowbiom_0
-        self.rect = self.image.get_rect(topleft=(0,900))
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
     def destruction_mechanic(self):
         pass
@@ -120,8 +125,9 @@ class StepSnowbiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_snowbiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=(random.randint(300, 600),self.step_height))
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
 
 class StepJunglebiom(StepTemplate):
@@ -151,8 +157,9 @@ class StepJunglebiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_junglebiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=(random.randint(300, 600),self.step_height))
+        self.rect = self.image.get_rect(topleft=self.top_left)
 
 
 class StepLavabiom(StepTemplate):
@@ -182,6 +189,7 @@ class StepLavabiom(StepTemplate):
         self.step_4 = pygame.image.load('resources/floors/step_lavabiom_4.png').convert_alpha()
         self.initialize_animation_frames()
 
+        self.top_left = [random.randint(300, 600), self.step_height]
         self.image = self.animation_frames[0]
-        self.rect = self.image.get_rect(topleft=(random.randint(300, 600),self.step_height))
+        self.rect = self.image.get_rect(topleft=self.top_left)
         
