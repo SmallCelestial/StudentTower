@@ -29,7 +29,7 @@ def my_stepLavabiom():
 
 def test_initialization_of_StepTemplate(my_stepTemplate):
     assert my_stepTemplate.step_height == 0
-    assert my_stepTemplate.topLeft == [0,0]
+    assert my_stepTemplate.top_left == [0,0]
     assert my_stepTemplate.number == 1
 
 def test_initialize_animation_frames(my_stepTemplate):
@@ -70,7 +70,7 @@ def test_initialisation_of_StepJunglebiom(my_stepJunglebiom):
 def test_initialisation_of_StepLavabiom(my_stepLavabiom):
     assert len(my_stepLavabiom.animation_frames) == 5
     assert my_stepLavabiom.number == 1
-    assert my_stepLavabiom.sep_height == 100
+    assert my_stepLavabiom.step_height == 100
     assert 300 <= my_stepLavabiom.top_left[0] <= 600
 
     for frame in my_stepLavabiom.animation_frames:

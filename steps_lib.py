@@ -35,7 +35,7 @@ class StepTemplate(pygame.sprite.Sprite):
         Updates the step's state.
 
     """
-    def __init__(self, spawn_height : int, step_number : int):
+    def __init__(self, spawn_height: int, step_number: int):
         super().__init__()
         self.step_0 = None
         self.step_1 = None
@@ -84,7 +84,7 @@ class FloorSnowbiom(StepTemplate):
         This function overrides the destruction_mechanic of parent class, floor doesn't disappear.
     """   
 
-    def __init__(self, spawn_height : int, step_number : int):
+    def __init__(self, spawn_height: int, step_number: int):
         super().__init__(spawn_height, step_number)
         self.floor_snowbiom_0 = pygame.image.load('resources/floors/floor_snowbiom_0.png').convert_alpha()
         self.animation_frames = [self.floor_snowbiom_0]
