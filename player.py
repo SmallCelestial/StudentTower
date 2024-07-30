@@ -63,6 +63,7 @@ class Player(pygame.sprite.Sprite):
         self.can_jump = True
         self.super_jump = False
         self.can_move_horizontally = True
+        self.is_alive = True
 
     def _can_process_button(self, button: str) -> bool:
         if self.ignore_buttons_counter[button] > 0:
@@ -198,8 +199,14 @@ class Player(pygame.sprite.Sprite):
         self.super_jump = False
         self.can_move_horizontally = True
         self.rect.midbottom = (500, 700)
+        self.is_alive = True
+
+    def check_player_alive(self):
+        if self.rect.bottom > 800:
+            self.is_alive = False
 
     def update(self):
+        self.check_player_alive()
         self.player_input()
         self.height_status()
         self.apply_gravity()

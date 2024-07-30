@@ -124,6 +124,7 @@ class Outro:
         self.level = 0
         self.max_combo = 0
         self.score = 0
+        self.max_score = 0
 
         self.main_screen = screen
         self.image = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
@@ -177,7 +178,7 @@ class Outro:
         self.display_text("Level: {}".format(self.level), font, (180, 150))
         self.display_text("Max combo: {}".format(self.max_combo), font, (180, 200))
         self.display_text("Total score: {}".format(self.score), font, (180, 250))
-        self.display_text("Best score: {}".format(9999), font, (180, 300))
+        self.display_text("Best score: {}".format(self.max_score), font, (180, 300))
 
     def update(self):
         self.rotate_player_group.update()
