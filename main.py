@@ -38,7 +38,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        elif game_status == "game_on" and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        elif (game_status == "game_on" and (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
+                                            not main_engine.my_player.sprite.is_alive)):
             game_status = "outro"
 
     if game_status == "game_on":
