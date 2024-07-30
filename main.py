@@ -4,9 +4,8 @@ from screens import Intro, Outro
 from time import sleep
 from player import Player
 from database.database_handler import ScoreDatabase
+from constant_var import SCREEN_HEIGHT, SCREEN_WIDTH
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 800
 
 # SCREEN initialization
 main_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))

@@ -1,11 +1,11 @@
 import pygame
 from steps_lib import FloorSnowbiom, StepSnowbiom, StepSnowbiom250, StepSnowbiom200
-from steps_lib import StepLavabiom, StepJunglebiom
+from steps_lib import StepJunglebiom, StepJunglebiom250, StepJunglebiom200
+from steps_lib import StepLavabiom, StepLavabiom250, StepLavabiom200
 import math
 import random
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 800
+
 
 
 class Engine:
@@ -75,9 +75,15 @@ class Engine:
                          StepSnowbiom250(step.step_height + 1000, step.step_number + 5),
                          StepSnowbiom200(step.step_height + 1000, step.step_number + 5)])
                 elif step.step_number < 40:
-                    new_step = StepJunglebiom(step.step_height + 1000, step.step_number + 5)
+                    new_step = random.choice(
+                        [StepJunglebiom(step.step_height + 1000, step.step_number + 5),
+                         StepJunglebiom250(step.step_height + 1000, step.step_number + 5),
+                         StepJunglebiom200(step.step_height + 1000, step.step_number + 5)])
                 else:
-                    new_step = StepLavabiom(step.step_height + 1000, step.step_number + 5)
+                    new_step = random.choice(
+                        [StepLavabiom(step.step_height + 1000, step.step_number + 5),
+                         StepLavabiom250(step.step_height + 1000, step.step_number + 5),
+                         StepLavabiom200(step.step_height + 1000, step.step_number + 5)])
                 new_steps_list.append(new_step)
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
@@ -102,7 +108,7 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                # step.destruction = True
+                step.destruction = True
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
