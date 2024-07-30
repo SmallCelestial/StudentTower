@@ -27,7 +27,6 @@ class Engine:
         self.max_combo = 0
         self.score = 0
 
-        self.last_step_time = pygame.time.get_ticks()  # do you use this virable/
         self.current_combo = 0
         self.can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
@@ -94,13 +93,6 @@ class Engine:
             for step in self.list_of_steps:
                 step.step_height += self.my_player.sprite.y_speed
 
-    # def check_result(self):
-    #     for step in self.my_steps:
-    #         if (step.rect.top == self.my_player.sprite.rect.bottom and self.my_player.sprite.y_speed == 0
-    #                 and step.rect.right >= self.my_player.sprite.rect.centerx >= step.rect.left):
-    #             self.level = max(self.level, step.number)
-    #             self.score = max(self.score, step.number)
-
     def contact_with_steps(self):
         flag_1 = False
         for step in self.my_steps:
@@ -151,6 +143,10 @@ class Engine:
         if self.combo_timer > 0 and self.level != 0:
             self._display_text(str(self.combo_timer), (820, 0))
 
+    def display_combo(self):
+        if self.current_combo > 0:
+            self._display_text(str(self.current_combo), (850, 50))
+
     def reset(self):
         self.list_of_steps = [StepSnowbiom(300, 1),
                               StepSnowbiom(500, 2),
@@ -164,6 +160,11 @@ class Engine:
         self.max_combo = 0
         self.score = 0
         self.start_time = pygame.time.get_ticks()
+        self.current_combo = 0
+        self.can_do_more_combo = True
+        self.start_time = pygame.time.get_ticks()
+        self.combo_timer = 0
+        self.combo_start_time = 0
 
     def update(self):
         self.spawning_steps()
@@ -172,7 +173,7 @@ class Engine:
         self.time_destroying_steps()
         self.update_result()
         self.display_combo_timer()
-        # self.check_result()
+        self.display_combo()
 
         self.my_player.draw(self.main_screen)
         self.my_player.update()

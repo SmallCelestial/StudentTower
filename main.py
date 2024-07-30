@@ -3,6 +3,7 @@ import pygame
 from screens import Intro, Outro
 from time import sleep
 from player import Player
+from database.database_handler import ScoreDatabase
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -33,13 +34,15 @@ main_engine = Engine(player_group, falling_floors_group, main_screen)
 intro = Intro(main_screen)
 outro = Outro(main_screen)
 
+# Database
+scores_db = ScoreDatabase('data/data.sqlite')
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        elif (game_status == "game_on" and (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
-                                            not main_engine.my_player.sprite.is_alive)):
+        elif game_status == "game_on" and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             game_status = "outro"
 
     if game_status == "game_on":
@@ -49,6 +52,11 @@ while True:
 
         # engine consisting of player class and various steps class
         main_engine.update()
+
+        if not main_engine.my_player.sprite.is_alive:
+            game_status = "outro"
+            scores_db.add_score(main_engine.score)
+            outro.max_score = scores_db.get_max_score()
     elif game_status == "intro":
         intro.update()
         if intro.play_button:
