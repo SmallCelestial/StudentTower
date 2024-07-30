@@ -1,5 +1,8 @@
 import pygame
-from steps_lib import StepSnowbiom, StepLavabiom, StepJunglebiom, FloorSnowbiom
+from steps_lib import FloorSnowbiom, StepSnowbiom, StepSnowbiom250, StepSnowbiom200
+from steps_lib import StepLavabiom, StepJunglebiom 
+import math
+import random
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -24,10 +27,12 @@ class Engine:
         self.max_combo = 0
         self.score = 0
 
-        self.last_step_time = pygame.time.get_ticks()
+        self.last_step_time = pygame.time.get_ticks() # do you use this virable/
         self.current_combo = 0
         self.can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
+        self.start_time = pygame.time.get_ticks()
+
 
     def _is_contact_with_step(self, step):
         if (step.rect.top - 10 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
@@ -39,28 +44,32 @@ class Engine:
     def spawning_steps(self):
         new_steps_list = []
         for step in self.list_of_steps:
-            if step.absolute_height < self.my_player.sprite.max_height + 1000:
+            if step.step_height < self.my_player.sprite.max_height + 1000:
                 self.my_steps.add(step)
-                if step.number < 10:
-                    new_step = StepSnowbiom(step.absolute_height + 1000, step.number + 5)
-                elif step.number < 20:
-                    new_step = StepJunglebiom(step.absolute_height + 1000, step.number + 5)
+                if step.step_number < 20:
+                    new_step = random.choice(
+                        [StepSnowbiom(step.step_height + 1000, step.step_number + 5),
+                        StepSnowbiom250(step.step_height + 1000, step.step_number + 5),
+                        StepSnowbiom200(step.step_height + 1000, step.step_number + 5)])                             
+                elif step.step_number < 40:
+                    new_step = StepJunglebiom(step.step_height + 1000, step.step_number + 5)
                 else:
-                    new_step = StepLavabiom(step.absolute_height + 1000, step.number + 5)
+                    new_step = StepLavabiom(step.step_height + 1000, step.step_number + 5)
                 new_steps_list.append(new_step)
         self.list_of_steps += new_steps_list
         self.list_of_steps = self.list_of_steps[len(new_steps_list):]
 
     def adjust_steps(self):
-        if self.my_player.sprite.rect.bottom > 200:
+        if self.my_player.sprite.rect.top > 120:
             for step in self.my_steps:
-                step.rect.top = 800 - step.absolute_height + self.my_player.sprite.current_height
+                step.rect.top = 800 - step.step_height + self.my_player.sprite.current_height
         else:
             for step in self.my_steps:
-                step.absolute_height += self.my_player.sprite.y_speed
-                step.rect.top = 800 - step.absolute_height + self.my_player.sprite.current_height
+                step.step_height += self.my_player.sprite.y_speed
+                step.rect.top = 800 - step.step_height + self.my_player.sprite.current_height
             for step in self.list_of_steps:
-                step.absolute_height += self.my_player.sprite.y_speed
+                step.step_height += self.my_player.sprite.y_speed
+
 
     # def check_result(self):
     #     for step in self.my_steps:
@@ -82,21 +91,32 @@ class Engine:
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
+    def time_destroying_steps(self):
+        self.timer_for_steps = int((pygame.time.get_ticks()-self.start_time)/25)
+        # factor/divisor regulates how fast x-argument in log function
+        # while base of logarithm regulates estimated max_multiplier, y in log function
+        self.timer_for_steps_multiplier = math.log(3+(pygame.time.get_ticks()-self.start_time)/20000,3)
+        for step in self.my_steps:
+            if step.step_height < max(self.my_player.sprite.current_height-100, 
+                                      int(self.timer_for_steps*self.timer_for_steps_multiplier)):
+                step.destruction = True
+        print(f"{self.timer_for_steps_multiplier}_{self.timer_for_steps}") 
+
     def update_result(self):
         # if pygame.time.get_ticks() - self.last_step_time > 1500:
         #     self.can_do_more_combo = False
         if self.my_player.sprite.can_jump:
             for step in self.my_steps:
-                if self._is_contact_with_step(step) and step.number > self.level:
-                    self.score += (step.number - self.level) * 10
-                    if self.can_do_more_combo and step.number - self.level > 1:
-                        self.current_combo += step.number - self.level
+                if self._is_contact_with_step(step) and step.step_number > self.level:
+                    self.score += (step.step_number - self.level) * 10
+                    if self.can_do_more_combo and step.step_number - self.level > 1:
+                        self.current_combo += step.step_number - self.level
                     else:
                         self.max_combo = max(self.max_combo, self.current_combo)
                         self.score += self.current_combo ** 2 * 5
                         self.can_do_more_combo = True
                         self.current_combo = 0
-                    self.level = step.number
+                    self.level = step.step_number
 
     def display_result(self):
         text_surface = self.font.render(str(self.score), True, "Brown")
@@ -115,11 +135,14 @@ class Engine:
         self.level = 0
         self.max_combo = 0
         self.score = 0
+        self.start_time = pygame.time.get_ticks()
+
 
     def update(self):
         self.spawning_steps()
         self.adjust_steps()
         self.contact_with_steps()
+        self.time_destroying_steps()
         self.update_result()
         # self.check_result()
 
