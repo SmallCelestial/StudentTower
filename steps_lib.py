@@ -55,7 +55,7 @@ class StepTemplate(pygame.sprite.Sprite):
         self.animation_frames = [self.step_0, self.step_1, self.step_2, self.step_3, self.step_4]
 
     def destruction_mechanic(self):
-        if self.destruction and self.step_number != 0:
+        if self.destruction:
             self.animation_frames_index += 0.02
             if self.animation_frames_index < len(self.animation_frames):
                 self.image = self.animation_frames[int(self.animation_frames_index)]

@@ -107,20 +107,23 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                step.destruction = True
+                if  self.my_player.sprite.current_height > 500:
+                    step.destruction = True
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
     def time_destroying_steps(self):
         self.timer_for_steps = int((pygame.time.get_ticks() - self.start_time) / 25)
+        if  0 <= self.my_player.sprite.current_height <= 200:
+            self.start_time = pygame.time.get_ticks()
         # factor/divisor regulates how fast x-argument in log function
         # while base of logarithm regulates estimated max_multiplier, y in log function
-        self.timer_for_steps_multiplier = math.log(3 + (pygame.time.get_ticks() - self.start_time) / 20000, 3)
+        self.timer_for_steps_multiplier = math.log(3 + (pygame.time.get_ticks() - self.start_time) / 10000, 3)
         for step in self.my_steps:
             if step.step_height < max(self.my_player.sprite.current_height - 100,
                                       int(self.timer_for_steps * self.timer_for_steps_multiplier)):
                 step.destruction = True
-        # print(f"{self.timer_for_steps_multiplier}_{self.timer_for_steps}")
+        print(f"{self.timer_for_steps_multiplier}_{self.timer_for_steps}_{self.my_player.sprite.current_height}")
 
     def update_result(self):
         self._check_player_can_do_more_combo()

@@ -1,6 +1,5 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from parameterized import parameterized
 import pygame
 import os
 import player
