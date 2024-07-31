@@ -13,7 +13,6 @@ class Player(pygame.sprite.Sprite):
     -----------
     player_walk : pygame.Surface
         The image representing the player standing.
-        TODO: The player should walk instead of standing.
     image : pygame.Surface
         The current image of the player used for rendering.
     rect : pygame.Rect
