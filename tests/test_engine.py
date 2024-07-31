@@ -3,7 +3,7 @@ import pygame
 from engine import Engine
 from steps_lib import FloorSnowbiom, StepSnowbiom
 from player import Player
-from constant_var import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 class EngineTestCase(unittest.TestCase):
     def setUp(self):
