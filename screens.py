@@ -3,29 +3,70 @@ from random import randint
 
 
 class Intro:
+    """
+       The Intro class handles the initial screen of the game.
+
+       Attributes:
+       -----------
+       main_screen : pygame.Surface
+           The surface on which the intro screen and its elements are drawn.
+       image : pygame.Surface
+           The background image for the intro screen.
+       rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the background image.
+       play_button : bool
+           Indicates whether the 'Play' button has been clicked.
+       play_image : pygame.Surface
+           The image representing the 'Play' button.
+       play_image_rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the 'Play' button.
+       help_image : pygame.Surface
+           The image representing the 'Help' button.
+       help_image_rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the 'Help' button.
+       quit_image : pygame.Surface
+           The image representing the 'Quit' button.
+       quit_image_rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the 'Quit' button.
+       tower_image : pygame.Surface
+           The image of a skyscraper displayed on the intro screen.
+       tower_image_rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the skyscraper image.
+
+       Methods:
+       --------
+       __init__(screen: pygame.Surface):
+           Initializes the Intro screen with background and button images, and sets their positions.
+       check_buttons():
+           Checks for mouse clicks on buttons and updates the state or performs actions accordingly.
+       draw():
+           Draws the background, buttons, and skyscraper image onto the main screen.
+       update():
+           Updates the intro screen by drawing all elements and checking for button interactions.
+       """
     def __init__(self, screen: pygame.Surface):
         super().__init__()
         self.main_screen = screen
-        self.image = pygame.image.load('resources/backgrounds/handpaintedwall2.png').convert_alpha()
+        self.image = pygame.image.load('resources/backgrounds/start_background.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (1000, 800))
 
         self.rect = self.image.get_rect(center=(500, 400))
         self.play_button = False
 
-        self.play_image = pygame.image.load('resources/backgrounds/PlayButtonHighlight.png').convert_alpha()
+        self.play_image = pygame.image.load('resources/buttons/PlayButtonHighlight.png').convert_alpha()
         self.play_image = pygame.transform.scale(self.play_image, (300, 200))
         self.play_image_rect = self.play_image.get_rect(bottomleft=(150, 500))
 
-        self.help_image = pygame.image.load('resources/backgrounds/HelpButtonHighlight.png').convert_alpha()
+        self.help_image = pygame.image.load('resources/buttons/HelpButtonHighlight.png').convert_alpha()
         self.help_image = pygame.transform.scale(self.help_image, (300, 200))
         self.help_image_rect = self.help_image.get_rect(bottomleft=(150, 650))
 
-        self.quit_image = pygame.image.load('resources/backgrounds/QuitButtonHighlight.png').convert_alpha()
+        self.quit_image = pygame.image.load('resources/buttons/QuitButtonHighlight.png').convert_alpha()
         self.quit_image = pygame.transform.scale(self.quit_image, (300, 200))
         self.quit_image_rect = self.quit_image.get_rect(bottomleft=(150, 800))
 
         self.tower_image = pygame.image.load('resources/backgrounds/skyscraper.png').convert_alpha()
-        self.tower_image_rect = self.quit_image.get_rect(center=(600, 300))
+        self.tower_image_rect = self.quit_image.get_rect(center=(613, 300))
 
     def check_buttons(self):
         mouse_state = pygame.mouse.get_pressed()
@@ -52,6 +93,33 @@ class Intro:
 
 
 class RotatePlayer(pygame.sprite.Sprite):
+    """
+        The RotatePlayer class represents a sprite that rotates around its center.
+
+        Attributes:
+        -----------
+        original_image : pygame.Surface
+            The original image of the player, loaded and scaled to its initial size.
+        image : pygame.Surface
+            The current image of the player, which is rotated and updated.
+        rect : pygame.Rect
+            The rectangular area defining the position and dimensions of the player image.
+        counter : int
+            A counter used to control the rotation frequency of the player image.
+        angle : float
+            The current rotation angle of the player image.
+
+        Methods:
+        --------
+        __init__():
+            Initializes the RotatePlayer instance by loading the player image, scaling it,
+             and setting its initial position and attributes.
+        rotate():
+            Updates the rotation angle of the player image and rotates it accordingly.
+             The image is rotated every 10 update cycles.
+        update():
+            Calls the rotate method to ensure the player image is updated each frame.
+        """
 
     def __init__(self):
         super().__init__()
@@ -74,12 +142,32 @@ class RotatePlayer(pygame.sprite.Sprite):
 
 
 class Floor(pygame.sprite.Sprite):
+    """
+       The Floor class represents a platform or floor in the game.
+        It is used to create and manage the floor's appearance and movement.
 
-    def __init__(self, leftbottom):
+       Attributes:
+       -----------
+       image : pygame.Surface
+           The image representing the floor or platform, loaded and scaled to the appropriate size.
+       rect : pygame.Rect
+           The rectangular area defining the position and dimensions of the floor image.
+
+       Methods:
+       --------
+       __init__(leftbottom):
+           Initializes the Floor instance by loading the floor image, scaling it,
+            and setting its position based on the provided bottom-left coordinates.
+       move_up():
+           Moves the floor upwards by one pixel.
+       update():
+           Calls the move_up method to update the floor's position each frame.
+       """
+    def __init__(self, left_bottom: tuple[int, int]):
         super().__init__()
         self.image = pygame.image.load('resources/floors/step_snowbiom_0.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (100, 30))
-        self.rect = self.image.get_rect(bottomleft=leftbottom)
+        self.rect = self.image.get_rect(bottomleft=left_bottom)
 
     def move_up(self):
         self.rect.centery -= 1
@@ -89,7 +177,27 @@ class Floor(pygame.sprite.Sprite):
 
 
 class AllFloors:
+    """
+        The AllFloors class manages a group of floor sprites in the game.
 
+        Attributes:
+        -----------
+        floors_group : pygame.sprite.Group
+            A group containing all the floor sprites in the game.
+
+        Methods:
+        --------
+        __init__():
+            Initializes the AllFloors instance by creating a group of floor sprites.
+        check_steps():
+            Checks if any floors have moved out of view (i.e., their bottom edge has moved above the screen).
+             If so, removes them from the group and replaces them with new floors at the bottom of the screen.
+        update():
+            Updates the state of all floor sprites by calling their update methods
+             and checks for floors that need to be replaced.
+        draw(screen):
+            Draws all the floor sprites onto the provided screen surface.
+        """
     def __init__(self):
         self.floors_group = pygame.sprite.Group()
         height = 100
@@ -118,8 +226,55 @@ class AllFloors:
 
 
 class Outro:
+    """
+        The Outro class represents the game over or ending screen.
 
-    def __init__(self, screen):
+        Attributes:
+        -----------
+        level : int
+            Maximum level reached by the player in the game.
+        max_combo : int
+            The highest combo achieved by the player during the game.
+        score : int
+            The total score accumulated by the player.
+        max_score : int
+            The highest score achieved by the player across all games.
+        main_screen : pygame.Surface
+            The surface on which the outro screen is drawn.
+        image : pygame.Surface
+            The background image for the outro screen.
+        rect : pygame.Rect
+            The rectangular area defining the position and dimensions of the background image.
+        rotate_player_group : pygame.sprite.GroupSingle
+            A group containing a single RotatePlayer sprite to show a rotating player on the outro screen.
+        restart_image : pygame.Surface
+            The image of the restart button.
+        restart_image_rect : pygame.Rect
+            The rectangular area defining the position and dimensions of the restart button.
+        home_image : pygame.Surface
+            The image of the home button.
+        home_image_rect : pygame.Rect
+            The rectangular area defining the position and dimensions of the home button.
+        floors_group : AllFloors
+            An instance of the AllFloors class to manage and display floor sprites on the outro screen.
+        status : str
+            The current status of the outro screen, used to handle transitions between game states.
+
+        Methods:
+        --------
+        __init__(screen):
+            Initializes the Outro instance by loading images, setting up the rotate player sprite, floor sprites,
+             and defining the screen for rendering.
+        display_text(text, font, top_left):
+            Renders and displays the given text on the screen at the specified position.
+        check_buttons():
+            Checks for mouse clicks on buttons and updates the status accordingly to handle user input.
+        draw():
+            Draws the outro screen, including background image, buttons, rotating player, floors, and game statistics.
+        update():
+            Updates the state of the rotate player sprite and floors, checks for button clicks.
+        """
+    def __init__(self, screen: pygame.Surface):
 
         self.level = 0
         self.max_combo = 0
@@ -131,25 +286,22 @@ class Outro:
         self.image = pygame.transform.scale(self.image, (1000, 800))
         self.rect = self.image.get_rect(center=(500, 400))
 
-        # falling player
         self.rotate_player_group = pygame.sprite.GroupSingle()
         self.rotate_player_group.add(RotatePlayer())
 
-        # Images are just temporary
-        self.restart_image = pygame.image.load('resources/backgrounds/restart.png').convert_alpha()
+        self.restart_image = pygame.image.load('resources/buttons/restart.png').convert_alpha()
         self.restart_image = pygame.transform.scale_by(self.restart_image, 2)
         self.restart_image_rect = self.restart_image.get_rect(bottomleft=(200, 600))
 
-        self.home_image = pygame.image.load('resources/backgrounds/home.png').convert_alpha()
+        self.home_image = pygame.image.load('resources/buttons/home.png').convert_alpha()
         self.home_image = pygame.transform.scale_by(self.home_image, 2)
         self.home_image_rect = self.home_image.get_rect(bottomleft=(200, 750))
 
-        # Floors
         self.floors_group = AllFloors()
 
         self.status = "outro"
 
-    def display_text(self, text, font, top_left):
+    def display_text(self, text: str, font: pygame.font.Font, top_left: tuple[int, int]):
         text_surface = font.render(text, True, "Brown")
         text_rect = text_surface.get_rect(topleft=top_left)
         self.main_screen.blit(text_surface, text_rect)

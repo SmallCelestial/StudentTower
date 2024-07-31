@@ -1,6 +1,6 @@
 import pygame
 import random 
-from constant_var import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
+from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
 
 class StepTemplate(pygame.sprite.Sprite):
     """

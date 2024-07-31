@@ -12,6 +12,7 @@ class Engine:
         self.my_player = player  # this is GroupSingle
         self.my_steps = steps  # this is Group
         self.main_screen = screen
+        self.start_background = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
 
         self.list_of_steps = [StepSnowbiom(300, 1),
                               StepSnowbiom(500, 2),
@@ -171,6 +172,7 @@ class Engine:
         self.combo_start_time = 0
 
     def update(self):
+        self.main_screen.blit(self.start_background, (0, 0))
         self.spawning_steps()
         self.adjust_steps()
         self.contact_with_steps()
