@@ -63,6 +63,7 @@ class Player(pygame.sprite.Sprite):
         self.super_jump = False
         self.can_move_horizontally = True
         self.is_alive = True
+        print("----")
 
     def _can_process_button(self, button: str) -> bool:
         if self.ignore_buttons_counter[button] > 0:
