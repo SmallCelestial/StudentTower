@@ -1,5 +1,5 @@
 import sqlite3
-from constant_var import PROJECT_ROOT
+from constants import PROJECT_ROOT
 
 
 class ScoreDatabase:
