@@ -1,18 +1,20 @@
 import pygame
-
-LEFT_WALL_COORDINATE = 100
-RIGHT_WALL_COORDINATE = 900
+from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
 
 
 class Player(pygame.sprite.Sprite):
     """
-    The Player class represents the main character in the game, which can walk, jump, and interact with the game
-    environment.
+    The Player class represents the main character in the game, capable of walking, jumping
+     and interacting with the game environment.
 
     Attributes:
     -----------
-    player_walk : pygame.Surface
-        The image representing the player standing.
+    player_facing_forward : pygame.Surface
+        The image representing the player standing still.
+    player_facing_right : pygame.Surface
+        The image representing the player walking to the right.
+    player_facing_left : pygame.Surface
+        The image representing the player walking to the left (mirrored image of player_facing_right).
     image : pygame.Surface
         The current image of the player used for rendering.
     rect : pygame.Rect
@@ -24,22 +26,52 @@ class Player(pygame.sprite.Sprite):
     current_height : float
         The current height of the player above the ground.
     max_height : float
-        The maximum height the player can reach when jumping in the current area.
+        The maximum height the player has reached during a game.
     can_jump : bool
-        Indicates whether the player is able to jump.
+        Indicates whether the player is able to jump. The player can jump if standing on the floor or a step.
+    direction : str
+        The direction the player is facing ('left', 'right', 'forward').
+    ignore_buttons_counter : dict
+        Counters for ignoring directional button presses ('left', 'right').
+    super_jump : bool
+        Indicates if the player is performing a super jump.
+    can_move_horizontally : bool
+        Indicates if the player can move horizontally.
+    is_alive : bool
+        Indicates whether the player is alive.
 
     Methods:
     --------
     __init__():
-        Initializes the player with default settings and loads the standing image.
+        Initializes the player with default settings and loads images for different player states.
+    _can_process_button(button: str) -> bool:
+        Checks if the button can be processed based on the ignore counters.
+        If the button press cannot be processed, the method decreases the counter for that button.
     _jump():
-        Handles the jumping logic when the player is on the floor.
+        Handles the jumping logic when the player is on the ground.
+    _check_wall_collision():
+        Checks for wall collisions and updates the player's position accordingly.
+    _set_position():
+        Sets the current image of the player and its position based on direction and state.
+    _turn_around():
+        Handles the player's turnaround logic and direction change if necessary.
+    _move():
+        Handles the player's horizontal movement to the left or right.
+    _slow_down():
+        Slows down the player when no directional button is pressed.
     player_input():
-        Handles the player's input for movement and jumping.
+        Handles player input for movement and jumping.
     apply_gravity():
         Applies gravity to the player and updates their position.
+    height_status():
+        Updates the player's height above the ground and the maximum height achieved.
+    reset():
+        Resets all player attributes to their initial values.
+    check_player_alive():
+        Checks if the player is still alive based on their position.
     update():
-        Updates the player's state by processing input, applying gravity, and checking floor contact.
+        Updates the player's state by checking if they are alive, processing input, updating height,
+         and applying gravity.
     """
     def __init__(self):
         super().__init__()
@@ -209,4 +241,3 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.height_status()
         self.apply_gravity()
-        # print(f"{self.y_speed}")  # for testing purposes

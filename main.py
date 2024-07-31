@@ -4,37 +4,23 @@ from screens import Intro, Outro
 from time import sleep
 from player import Player
 from database.database_handler import ScoreDatabase
-from constant_var import SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
-
-# SCREEN initialization
+pygame.init()
 main_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Student_Tower")
+main_clock = pygame.time.Clock()
+game_status = "intro"
 
-# GROUPS
 falling_floors_group = pygame.sprite.Group()
 player_group = pygame.sprite.GroupSingle()
 player_group.add(Player())
 
-pygame.init()
-
-# GLOBAL VARIABLES
-main_clock = pygame.time.Clock()
-game_status = "intro"  # intro, game_on, outro
-
-
-# BACKGROUND_AND_FLOOR_TEXTURES
-start_background = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
-
-# Engine class initialisation
-main_engine = Engine(player_group, falling_floors_group, main_screen)
-
-# screens
 intro = Intro(main_screen)
 outro = Outro(main_screen)
-
-# Database
 scores_db = ScoreDatabase('data.sqlite')
+main_engine = Engine(player_group, falling_floors_group, main_screen)
+
 
 while True:
     for event in pygame.event.get():
@@ -45,11 +31,6 @@ while True:
             game_status = "outro"
 
     if game_status == "game_on":
-
-        # module responsible for background and steps display
-        main_screen.blit(start_background, (0, 0))
-
-        # engine consisting of player class and various steps class
         main_engine.update()
 
         if not main_engine.my_player.sprite.is_alive:
@@ -79,4 +60,4 @@ while True:
             outro.status = "outro"
 
     pygame.display.update()
-    main_clock.tick(60)  # maximum framerate 60tics = 1 second
+    main_clock.tick(60)

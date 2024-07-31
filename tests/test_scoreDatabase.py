@@ -1,7 +1,7 @@
 import os
 import unittest
 from database.database_handler import ScoreDatabase
-from constant_var import PROJECT_ROOT
+from constants import PROJECT_ROOT
 
 
 class TestScoreDatabase(unittest.TestCase):
@@ -28,5 +28,21 @@ class TestScoreDatabase(unittest.TestCase):
 
         self.assertEqual(expected_absolute_database_path, actual_absolute_database_path)
 
+    def test_add_score(self):
+        self.db.add_score(100)
+        self.db.add_score(100)
 
+        self.db.cursor.execute("SELECT score FROM scores")
+        scores = tuple(score[0] for score in self.db.cursor.fetchall())
 
+        self.assertEqual(scores, (100, 100))
+
+    def test_get_max_score(self):
+        self.db.add_score(100)
+        self.db.add_score(150)
+        self.db.add_score(200)
+        expected_max_score = 200
+
+        actual_max_score = self.db.get_max_score()
+
+        self.assertEqual(expected_max_score, actual_max_score)
