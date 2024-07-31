@@ -6,8 +6,6 @@ import math
 import random
 
 
-
-
 class Engine:
     def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group, screen):
         super().__init__()

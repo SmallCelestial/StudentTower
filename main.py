@@ -34,7 +34,7 @@ intro = Intro(main_screen)
 outro = Outro(main_screen)
 
 # Database
-scores_db = ScoreDatabase('data/data.sqlite')
+scores_db = ScoreDatabase('data.sqlite')
 
 while True:
     for event in pygame.event.get():

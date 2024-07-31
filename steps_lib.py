@@ -223,7 +223,7 @@ class StepJunglebiom(StepTemplate):
 class StepJunglebiom250(StepTemplate):
     """
     Step_junglebiom is a class representing step from junglebiom
-    
+
     Attributes:
     ----------
     image : pygame.Surface
@@ -254,7 +254,7 @@ class StepJunglebiom250(StepTemplate):
 class StepJunglebiom200(StepTemplate):
     """
     Step_junglebiom is a class representing step from junglebiom
-    
+
     Attributes:
     ----------
     image : pygame.Surface
@@ -317,7 +317,7 @@ class StepLavabiom(StepTemplate):
 class StepLavabiom250(StepTemplate):
     """
     Step_lavabiom is a class representing step from lavabiom
-    
+
     Attributes:
     ----------
     image : pygame.Surface
@@ -348,7 +348,7 @@ class StepLavabiom250(StepTemplate):
 class StepLavabiom200(StepTemplate):
     """
     Step_lavabiom is a class representing step from lavabiom
-    
+
     Attributes:
     ----------
     image : pygame.Surface
