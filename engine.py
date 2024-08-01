@@ -7,6 +7,83 @@ import random
 
 
 class Engine:
+    """
+    Engine class is responsible for interaction of player, steps, screens classes.
+
+    Attributes:
+    -----------
+    my_player : pygame.sprite.GroupSingle
+        it contains player object in Groupsingle, which is created in main.py file, but given in
+        engine-class constructor.
+    my_steps : pygame.sprite.Group
+        it contains steps object in Group, which currently exists and are shown on screen, this group
+        is created in main.py file, but is given in engine class-constructor.
+    main_screen : pygame.display
+        it contains instance of main screen, which is created in main.py file, but is provided in
+        eingine-class constructor.
+    start_background : pygame.image
+        Texture og backgound shown during gameplay
+    list_of_steps : list
+        it contains steps with their spawnheight and their index numeration from the bottom, when 
+        spawning_steps() fuction decides that certain steps should be spawned it will remove it form
+        the list and add it to my_steps group (for it to be displayed)
+    level : 
+        ---
+    max_combo : 
+        ---
+    score : 
+        ---
+    current_combo : 
+        ---
+    can_do_more_combo :
+        ---   #shouldnt it be in player class?
+    font : pygame.font
+        default font for displaying mid-game information (like combo score, current level etc.)
+    start_time : pygame.time
+        it holds the tick number when certain game-run started. The length of game-run is 
+        subtraction of current tick number (updated every second during gamplay) and start_time tick.
+    combo_timer :
+        ---
+    combo_start_time :
+        ---
+    
+    Methods:
+    -------
+    __init__() :
+        Initialises engine object with player_group, falling_floors_group and main_screen.
+    _is_contact_with_step() : bool
+        it checks whether player stays on certain step or not and return adequate bool value
+    _check_player_can_do_more_combo() : bool
+        it checks whether player can cantinue the current combo or not and return adequate bool value
+    _get_step_under_player() : pygame.sprite.Group.sprites()[]
+        it returns the step-object player currently stays on (and None if player stays on none).
+    _update_score_and_level() :
+        it updates score and level of current game-run
+    _display_text() :
+        it displays given text on main_screen with font mentioned in attributes
+    spawning_steps():
+        This method works on list_of_steps. It decides when stair should be transplanted from 
+        list_of_steps to my_steps group by comparing the height on which steps is placed and height on 
+        which player currently is. Also, when one step is removed from list_of_steps, new step with 
+        greater spawn height is added at the end of the list. Which step is added depends on its 
+        step_number. For example, when step which is about to be added to list_of_steps should have 
+        step_number between 20 and 39,  it will result in adding junglebiom step at the end of the
+        list_of_steps. This creates instance of junglebiom from step nr 20 to step nr 39.
+    adjust_steps():
+        This method is responsible for how player and stairs are displayed. When player gets to the 
+        upper part of screen, instead of moving him even higher, we move  steps downwards
+        prioportionally more. Thanks to it player, player stays on certain high of a screen without
+        messing the relation of distance between player and steps surrounding him.
+    contact_with_steps():
+    time_destroying_steps():
+    update_result():
+        ---
+    display_result():
+    display_combo_timer():
+    display_combo():
+    reset():
+    update():
+    """
     def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group, screen):
         super().__init__()
         self.my_player = player  # this is GroupSingle
@@ -33,7 +110,7 @@ class Engine:
         self.combo_timer = 0
         self.combo_start_time = 0
 
-    def _is_contact_with_step(self, step):
+    def _is_contact_with_step(self, step) -> bool: 
         if (step.rect.top - 10 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
                 step.rect.left <= self.my_player.sprite.rect.centerx <= step.rect.right and
                 self.my_player.sprite.y_speed >= 0):
