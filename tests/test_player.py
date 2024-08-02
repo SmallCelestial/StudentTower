@@ -45,7 +45,7 @@ class TestPlayer(unittest.TestCase):
 
         mock_load.assert_any_call("resources/Player/player_stand.png")
         mock_load.assert_any_call("resources/Player/player_walk_1.png")
-        mock_flip.called_once_with(instance.player_facing_right, True, False)
+        mock_flip.assert_called_once_with(instance.player_facing_right, True, False)
         mock_image.get_rect.assert_called_once_with(midbottom=(500, 700))
 
         self.assertEqual(instance.x_speed, 0)
