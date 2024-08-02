@@ -48,10 +48,12 @@ while True:
         outro.max_combo = main_engine.max_combo
         outro.update()
         if outro.status == "game_on":
+            print(game_status)
             sleep(0.2)
             main_engine.reset()
             game_status = "game_on"
             outro.status = "outro"
+            print(game_status)
         elif outro.status == "intro":
             sleep(0.2)
             main_engine.reset()
