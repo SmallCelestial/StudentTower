@@ -54,7 +54,6 @@ class TestIntro(unittest.TestCase):
         with patch('builtins.print') as mock_print:
             self.intro.check_buttons()
             mock_print.assert_called_once_with("I can't help you")
-            # self.assertTrue(self.intro.play_button)
 
     @patch('pygame.mouse.get_pressed')
     @patch('pygame.mouse.get_pos')
