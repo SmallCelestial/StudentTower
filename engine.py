@@ -84,7 +84,8 @@ class Engine:
         atribute (which measures how many seconds the playthorugh is). If its right time, it starts
         the desctruction process of a set, which hurries the player.
     update_result():
-       Updates the game result based on the current state, including the score and level, at the moment the game is being updated.
+       Updates the game result based on the current state, including the score and level,
+        at the moment the game is being updated.
     display_result():
         Displays current score that player has
     display_combo_timer():

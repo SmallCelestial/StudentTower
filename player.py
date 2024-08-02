@@ -100,9 +100,9 @@ class Player(pygame.sprite.Sprite):
         self.can_move_horizontally = None
         self.is_alive = None
         self.can_do_more_combo = None
-        self.setup_player_parameters()
+        self._setup_player_parameters()
     
-    def setup_player_parameters(self):
+    def _setup_player_parameters(self):
         self.x_speed = 0
         self.y_speed = 0
         self.current_height = 0
@@ -239,7 +239,8 @@ class Player(pygame.sprite.Sprite):
         self.max_height = max(self.max_height, self.current_height)
 
     def reset(self):
-        self.setup_player_parameters()
+        self._setup_player_parameters()
+        self.rect.midbottom = (500, 700)
 
     def check_player_alive(self):
         if self.rect.bottom > 800:
