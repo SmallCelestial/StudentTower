@@ -50,6 +50,8 @@ class Engine:
     -------
     __init__() :
         Initialises engine object with player_group, falling_floors_group and main_screen.
+    __setup_game_parametrs() :
+        It initialises engine-object with start parameters.
     _is_contact_with_step() : bool
         it checks whether player stays on certain step or not and return adequate bool value
     _check_player_can_do_more_combo() : bool
@@ -74,14 +76,27 @@ class Engine:
         prioportionally more. Thanks to it player, player stays on certain high of a screen without
         messing the relation of distance between player and steps surrounding him.
     contact_with_steps():
+        This method checks if player has contanct with any step (basically stays on it), and if yes,
+        sets player parameter can_jump tO True. It also is responsible for player sticking to the top
+        of the step until player jumps again.
     time_destroying_steps():
+        This method goes through list of spawned steps and compare their height to the timer_for_steps
+        atribute (which measures how many seconds the playthorugh is). If its right time, it starts
+        the desctruction process of a set, which hurries the player.
     update_result():
        Updates the game result based on the current state, including the score and level, at the moment the game is being updated.
     display_result():
+        Displays current score that player has
     display_combo_timer():
+        Displays current combo timer during combo
     display_combo():
+        Displays how many points combo is currently worth
     reset():
+        Empites my_steps group, set player's attributes to its start value, and reset game_parameters
+        to their start values.
     update():
+        Updates the engine's state, by runing all player-object methods, all steps-object methods and
+        all methods managing relation between player-object and steps-objects.
     """
     def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group, screen):
         super().__init__()
@@ -99,7 +114,6 @@ class Engine:
         self.start_time = None
         self.combo_timer = None
         self.combo_start_time = None
-
         self._setup_game_parameters()
 
     def _setup_game_parameters(self):

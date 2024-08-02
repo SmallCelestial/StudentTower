@@ -46,6 +46,8 @@ class Player(pygame.sprite.Sprite):
     --------
     __init__():
         Initializes the player with default settings and loads images for different player states.
+    setup_player_parametrs() :
+        It initialises player-object with start parameters.
     _can_process_button(button: str) -> bool:
         Checks if the button can be processed based on the ignore counters.
         If the button press cannot be processed, the method decreases the counter for that button.
@@ -84,6 +86,23 @@ class Player(pygame.sprite.Sprite):
         self.image = self.player_facing_forward
         self.rect = self.image.get_rect(midbottom=(500, 700))
 
+        self.x_speed = None
+        self.y_speed = None
+        self.current_height = None
+        self.max_height = None
+        self.counter = None
+        self.actual_angle = None
+        self.around_delay_counter = None
+        self.direction = None
+        self.ignore_buttons_counter = None
+        self.can_jump = None
+        self.super_jump = None
+        self.can_move_horizontally = None
+        self.is_alive = None
+        self.can_do_more_combo = None
+        self.setup_player_parameters()
+    
+    def setup_player_parameters(self):
         self.x_speed = 0
         self.y_speed = 0
         self.current_height = 0
@@ -98,7 +117,6 @@ class Player(pygame.sprite.Sprite):
         self.can_move_horizontally = True
         self.is_alive = True
         self.can_do_more_combo = True
-        print("----")
 
     def _can_process_button(self, button: str) -> bool:
         if self.ignore_buttons_counter[button] > 0:
@@ -221,21 +239,7 @@ class Player(pygame.sprite.Sprite):
         self.max_height = max(self.max_height, self.current_height)
 
     def reset(self):
-        self.x_speed = 0
-        self.y_speed = 0
-        self.current_height = 0
-        self.max_height = 0
-        self.counter = 0
-        self.actual_angle = 0
-        self.around_delay_counter = 0
-        self.direction = 'forward'
-        self.ignore_buttons_counter = {'left': 0, 'right': 0}
-        self.can_jump = True
-        self.super_jump = False
-        self.can_move_horizontally = True
-        self.rect.midbottom = (500, 700)
-        self.is_alive = True
-        self.can_do_more_combo = True
+        self.setup_player_parameters()
 
     def check_player_alive(self):
         if self.rect.bottom > 800:
