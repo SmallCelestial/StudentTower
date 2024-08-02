@@ -8,6 +8,8 @@ from parameterized import parameterized
 import player
 from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
 
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 
 class TestPlayer(unittest.TestCase):
 

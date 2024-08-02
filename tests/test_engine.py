@@ -1,12 +1,14 @@
+import os
 import unittest
 from unittest.mock import patch, MagicMock
 
 import pygame
-import os
 
 from engine import Engine
-from steps_lib import FloorSnowbiom, StepSnowbiom
 from player import Player
+from steps_lib import FloorSnowbiom, StepSnowbiom
+
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 class EngineTestCase(unittest.TestCase):

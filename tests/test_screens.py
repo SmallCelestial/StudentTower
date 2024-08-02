@@ -5,6 +5,8 @@ import os
 
 import screens
 
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 
 class TestIntro(unittest.TestCase):
 
@@ -76,6 +78,8 @@ class TestIntro(unittest.TestCase):
 
 class TestRotatePlayer(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -129,6 +133,8 @@ class TestRotatePlayer(unittest.TestCase):
 
 class TestFloor(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -176,6 +182,8 @@ class TestFloor(unittest.TestCase):
 
 class TestAllFloors(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -222,6 +230,8 @@ class TestAllFloors(unittest.TestCase):
 
 
 class TestOutro(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):
