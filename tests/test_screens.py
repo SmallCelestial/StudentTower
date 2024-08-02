@@ -5,8 +5,12 @@ import os
 
 import screens
 
+os.environ["SDL_VIDEODRIVER"] = "dummy"
+
 
 class TestIntro(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):
@@ -50,7 +54,6 @@ class TestIntro(unittest.TestCase):
         with patch('builtins.print') as mock_print:
             self.intro.check_buttons()
             mock_print.assert_called_once_with("I can't help you")
-            # self.assertTrue(self.intro.play_button)
 
     @patch('pygame.mouse.get_pressed')
     @patch('pygame.mouse.get_pos')
@@ -73,6 +76,8 @@ class TestIntro(unittest.TestCase):
 
 
 class TestRotatePlayer(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):
@@ -127,6 +132,8 @@ class TestRotatePlayer(unittest.TestCase):
 
 class TestFloor(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -173,6 +180,8 @@ class TestFloor(unittest.TestCase):
 
 
 class TestAllFloors(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):
@@ -221,6 +230,8 @@ class TestAllFloors(unittest.TestCase):
 
 class TestOutro(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -256,8 +267,8 @@ class TestOutro(unittest.TestCase):
         self.assertEqual(outro.status, "outro")
 
         mock_load.assert_any_call('resources/backgrounds/background.png')
-        mock_load.assert_any_call('resources/backgrounds/restart.png')
-        mock_load.assert_any_call('resources/backgrounds/home.png')
+        mock_load.assert_any_call('resources/buttons/restart.png')
+        mock_load.assert_any_call('resources/buttons/home.png')
 
         mock_scale.assert_any_call(outro.image, (1000, 800))
         mock_scale_by.assert_any_call(mock_image, 2)

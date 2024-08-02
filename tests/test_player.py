@@ -2,11 +2,18 @@ import unittest
 from unittest.mock import patch, MagicMock
 import pygame
 import os
+
+from parameterized import parameterized
+
 import player
-from player import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
+from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
+
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 
 class TestPlayer(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):
@@ -55,6 +62,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(instance.ignore_buttons_counter['left'], 0)
         self.assertEqual(instance.ignore_buttons_counter['right'], 0)
         self.assertTrue(instance.is_alive)
+        self.assertTrue(instance.can_do_more_combo)
 
     @parameterized.expand([
         ("test_player_input_jump_with_K_UP", {pygame.K_UP: True, pygame.K_SPACE: False, pygame.K_LEFT: False,
@@ -218,6 +226,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(instance.super_jump, self.player.super_jump)
         self.assertEqual(instance.can_move_horizontally, self.player.can_move_horizontally)
         self.assertEqual(instance.is_alive, self.player.is_alive)
+        self.assertTrue(instance.can_do_more_combo)
 
     def test_check_player_alive(self):
         self.player.rect.top = 801

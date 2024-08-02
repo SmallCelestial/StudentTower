@@ -39,6 +39,8 @@ class Player(pygame.sprite.Sprite):
         Indicates if the player can move horizontally.
     is_alive : bool
         Indicates whether the player is alive.
+    can_do_more_combo : bool
+        Indicates whether the player can continue the current combo.
 
     Methods:
     --------
@@ -95,6 +97,7 @@ class Player(pygame.sprite.Sprite):
         self.super_jump = False
         self.can_move_horizontally = True
         self.is_alive = True
+        self.can_do_more_combo = True
         print("----")
 
     def _can_process_button(self, button: str) -> bool:
@@ -232,6 +235,7 @@ class Player(pygame.sprite.Sprite):
         self.can_move_horizontally = True
         self.rect.midbottom = (500, 700)
         self.is_alive = True
+        self.can_do_more_combo = True
 
     def check_player_alive(self):
         if self.rect.bottom > 800:

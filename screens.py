@@ -54,16 +54,16 @@ class Intro:
         self.play_button = False
 
         self.play_image = pygame.image.load('resources/buttons/PlayButtonHighlight.png').convert_alpha()
-        self.play_image = pygame.transform.scale(self.play_image, (300, 200))
-        self.play_image_rect = self.play_image.get_rect(bottomleft=(150, 500))
+        self.play_image = pygame.transform.scale(self.play_image, (200, 130))
+        self.play_image_rect = self.play_image.get_rect(bottomleft=(175, 450))
 
         self.help_image = pygame.image.load('resources/buttons/HelpButtonHighlight.png').convert_alpha()
-        self.help_image = pygame.transform.scale(self.help_image, (300, 200))
-        self.help_image_rect = self.help_image.get_rect(bottomleft=(150, 650))
+        self.help_image = pygame.transform.scale(self.help_image, (200, 130))
+        self.help_image_rect = self.help_image.get_rect(bottomleft=(175, 600))
 
         self.quit_image = pygame.image.load('resources/buttons/QuitButtonHighlight.png').convert_alpha()
-        self.quit_image = pygame.transform.scale(self.quit_image, (300, 200))
-        self.quit_image_rect = self.quit_image.get_rect(bottomleft=(150, 800))
+        self.quit_image = pygame.transform.scale(self.quit_image, (200, 130))
+        self.quit_image_rect = self.quit_image.get_rect(bottomleft=(175, 750))
 
         self.tower_image = pygame.image.load('resources/backgrounds/skyscraper.png').convert_alpha()
         self.tower_image_rect = self.quit_image.get_rect(center=(613, 300))

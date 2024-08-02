@@ -2,6 +2,7 @@ import pygame
 import random 
 from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
 
+
 class StepTemplate(pygame.sprite.Sprite):
     """
     Step_template is a father class for other step classes (child classes only add texture)
@@ -46,6 +47,8 @@ class StepTemplate(pygame.sprite.Sprite):
         self.animation_frames = []
         self.animation_frames_index = 0
         self.destruction = False
+        self.rect = None
+        self.image = None
 
         self.top_left = [0, 0]
         self.step_number = spawn_number
@@ -93,7 +96,6 @@ class FloorSnowbiom(StepTemplate):
         self.top_left = [0, 900]
         self.image = self.floor_snowbiom_0
         self.rect = self.image.get_rect(topleft=self.top_left)
-
 
 
 class StepSnowbiom(StepTemplate):
