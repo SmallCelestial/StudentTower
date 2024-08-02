@@ -2,11 +2,16 @@ import unittest
 from unittest.mock import patch, MagicMock
 import pygame
 import os
+
+from parameterized import parameterized
+
 import player
-from player import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
+from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
 
 
 class TestPlayer(unittest.TestCase):
+
+    original_directory = None
 
     @classmethod
     def setUpClass(cls):

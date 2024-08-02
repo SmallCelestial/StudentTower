@@ -8,6 +8,8 @@ import screens
 
 class TestIntro(unittest.TestCase):
 
+    original_directory = None
+
     @classmethod
     def setUpClass(cls):
         cls.original_directory = os.getcwd()
@@ -256,8 +258,8 @@ class TestOutro(unittest.TestCase):
         self.assertEqual(outro.status, "outro")
 
         mock_load.assert_any_call('resources/backgrounds/background.png')
-        mock_load.assert_any_call('resources/backgrounds/restart.png')
-        mock_load.assert_any_call('resources/backgrounds/home.png')
+        mock_load.assert_any_call('resources/buttons/restart.png')
+        mock_load.assert_any_call('resources/buttons/home.png')
 
         mock_scale.assert_any_call(outro.image, (1000, 800))
         mock_scale_by.assert_any_call(mock_image, 2)

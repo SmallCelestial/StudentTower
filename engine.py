@@ -14,6 +14,20 @@ class Engine:
         self.main_screen = screen
         self.start_background = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
 
+        self.list_of_steps = None
+        self.level = None
+        self.max_combo = None
+        self.score = None
+        self.current_combo = None
+        self.player_can_do_more_combo = None
+        self.font = None
+        self.start_time = None
+        self.combo_timer = None
+        self.combo_start_time = None
+
+        self._setup_game_parameters()
+
+    def _setup_game_parameters(self):
         self.list_of_steps = [StepSnowbiom(300, 1),
                               StepSnowbiom(500, 2),
                               StepSnowbiom(700, 3),
@@ -27,9 +41,9 @@ class Engine:
         self.score = 0
 
         self.current_combo = 0
-        self.can_do_more_combo = True
+        self.player_can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
-        self.start_time = pygame.time.get_ticks()
+        self.start_time = 0
         self.combo_timer = 0
         self.combo_start_time = 0
 
@@ -43,9 +57,9 @@ class Engine:
     def _check_player_can_do_more_combo(self):
         self.combo_timer = 3000 - (pygame.time.get_ticks() - self.combo_start_time)
         if self.combo_start_time == 0 or self.combo_timer > 0:
-            self.can_do_more_combo = True
+            self.player_can_do_more_combo = True
         else:
-            self.can_do_more_combo = False
+            self.player_can_do_more_combo = False
 
     def _get_step_under_player(self):
         for step in self.my_steps:
@@ -107,23 +121,21 @@ class Engine:
                 self.my_player.sprite.rect.bottom = step.rect.top
                 self.my_player.sprite.y_speed = 0
                 flag_1 = True
-                if  self.my_player.sprite.current_height > 500:
+                if self.my_player.sprite.current_height > 500:
                     step.destruction = True
         if not flag_1:
             self.my_player.sprite.can_jump = False
 
     def time_destroying_steps(self): 
-        if  not  self.my_player.sprite.current_height > 200:
+        if self.my_player.sprite.max_height <= 200:
             self.start_time = pygame.time.get_ticks()
         timer_for_steps = (pygame.time.get_ticks() - self.start_time) // 25
-        # factor/divisor regulates how fast x-argument in log function
-        # while base of logarithm regulates estimated max_multiplier, y in log function
+
         timer_for_steps_multiplier = math.log(3 + (pygame.time.get_ticks() - self.start_time) / 10000, 3)
         for step in self.my_steps:
             if step.step_height < max(self.my_player.sprite.current_height - 100,
                                       int(timer_for_steps * timer_for_steps_multiplier)):
                 step.destruction = True
-        print(f"{timer_for_steps_multiplier}_{timer_for_steps}_{self.my_player.sprite.current_height}")
 
     def update_result(self):
         self._check_player_can_do_more_combo()
@@ -135,10 +147,10 @@ class Engine:
         level_difference = step_under_player.step_number - self.level
         self._update_score_and_level(level_difference)
 
-        if self.can_do_more_combo and level_difference > 1:
+        if self.player_can_do_more_combo and level_difference > 1:
             self.current_combo += level_difference
             self.combo_start_time = pygame.time.get_ticks()
-        elif not self.can_do_more_combo or level_difference == 1:
+        elif not self.player_can_do_more_combo or level_difference == 1 or level_difference < 0:
             self.score += self.current_combo ** 2 * 5
             self.max_combo = max(self.max_combo, self.current_combo)
             self.current_combo = 0
@@ -156,23 +168,9 @@ class Engine:
             self._display_text(str(self.current_combo), (850, 50))
 
     def reset(self):
-        self.list_of_steps = [StepSnowbiom(300, 1),
-                              StepSnowbiom(500, 2),
-                              StepSnowbiom(700, 3),
-                              StepSnowbiom(900, 4),
-                              StepSnowbiom(1100, 5)]
         self.my_steps.empty()
-        self.my_steps.add(FloorSnowbiom(100, 0))
         self.my_player.sprite.reset()
-        self.level = 0
-        self.max_combo = 0
-        self.score = 0
-        self.start_time = pygame.time.get_ticks()
-        self.current_combo = 0
-        self.can_do_more_combo = True
-        self.start_time = pygame.time.get_ticks()
-        self.combo_timer = 0
-        self.combo_start_time = 0
+        self._setup_game_parameters()
 
     def update(self):
         self.main_screen.blit(self.start_background, (0, 0))
