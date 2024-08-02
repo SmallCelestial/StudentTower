@@ -3,7 +3,6 @@ from unittest.mock import patch, MagicMock
 import pygame
 import os
 
-from parameterized import parameterized
 
 import player
 from constants import LEFT_WALL_COORDINATE, RIGHT_WALL_COORDINATE
