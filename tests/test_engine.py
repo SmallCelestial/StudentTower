@@ -47,7 +47,6 @@ class EngineTestCase(unittest.TestCase):
         self.assertEqual(0, self.engine.combo_timer)
         self.assertEqual(0, self.engine.combo_start_time)
         self.assertEqual(0, self.engine.start_time)
-        self.assertTrue(self.engine.player_can_do_more_combo)
         self.assertEqual(pygame.font.Font, type(self.engine.font))
         self.assertEqual(1, len(self.steps_group))
 
@@ -149,7 +148,7 @@ class EngineTestCase(unittest.TestCase):
 
         self.engine.update_result()
 
-        self.assertFalse(self.engine.player_can_do_more_combo)
+        self.assertFalse(self.engine.my_player.sprite.can_do_more_combo)
         self.assertEqual(70 + 5 ** 2 * 5, self.engine.score)
         self.assertEqual(5, self.engine.max_combo)
         self.assertEqual(0, self.engine.current_combo)
@@ -167,7 +166,7 @@ class EngineTestCase(unittest.TestCase):
 
         self.engine.update_result()
 
-        self.assertTrue(self.engine.player_can_do_more_combo)
+        self.assertTrue(self.engine.can_do_more_combo)
         self.assertEqual(70, self.engine.score)
         self.assertEqual(0, self.engine.max_combo)
         self.assertEqual(2, self.engine.current_combo)
@@ -222,7 +221,7 @@ class EngineTestCase(unittest.TestCase):
         self.engine.score = 10
 
         self.engine.current_combo = 10
-        self.engine.player_can_do_more_combo = False
+        self.engine.can_do_more_combo = False
         self.engine.font = pygame.font.SysFont("Comic Sans MS", 35)
         self.engine.start_time = 2
         self.engine.combo_timer = 2

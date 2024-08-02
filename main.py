@@ -24,11 +24,10 @@ main_engine = Engine(player_group, falling_floors_group, main_screen)
 
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if (event.type == pygame.QUIT or
+                (game_status == "game_on" and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE)):
             pygame.quit()
             exit()
-        elif game_status == "game_on" and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            game_status = "outro"
 
     if game_status == "game_on":
         main_engine.update()

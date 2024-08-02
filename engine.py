@@ -1,7 +1,8 @@
 import pygame
-from steps_lib import FloorSnowbiom, StepSnowbiom, StepSnowbiom250, StepSnowbiom200
-from steps_lib import StepJunglebiom, StepJunglebiom250, StepJunglebiom200
-from steps_lib import StepLavabiom, StepLavabiom250, StepLavabiom200
+from steps_lib import (FloorSnowbiom, StepSnowbiom, StepSnowbiom250, StepSnowbiom200,
+                       StepJunglebiom, StepJunglebiom250, StepJunglebiom200,
+                       StepLavabiom, StepLavabiom250, StepLavabiom200,
+                       StepTemplate)
 import math
 import random
 
@@ -27,25 +28,23 @@ class Engine:
         it contains steps with their spawnheight and their index numeration from the bottom, when 
         spawning_steps() fuction decides that certain steps should be spawned it will remove it form
         the list and add it to my_steps group (for it to be displayed)
-    level : 
-        ---
-    max_combo : 
-        ---
-    score : 
-        ---
-    current_combo : 
-        ---
-    can_do_more_combo :
-        ---   #shouldnt it be in player class?
+    level : int
+        Represents the maximum step number on which the player has stood during the game.
+    max_combo : int
+        Represents the maximum combo achieved by the player in the current game session.
+    score : int
+        Represents the player's current score.
+    current_combo : int
+        Represents the current combo count.
     font : pygame.font
         default font for displaying mid-game information (like combo score, current level etc.)
     start_time : pygame.time
         it holds the tick number when certain game-run started. The length of game-run is 
         subtraction of current tick number (updated every second during gamplay) and start_time tick.
-    combo_timer :
-        ---
-    combo_start_time :
-        ---
+    combo_timer : int
+        The amount of time remaining, in milliseconds, to continue the current combo.
+    combo_start_time : int
+        The tick number when the current combo started.
     
     Methods:
     -------
@@ -77,7 +76,7 @@ class Engine:
     contact_with_steps():
     time_destroying_steps():
     update_result():
-        ---
+       Updates the game result based on the current state, including the score and level, at the moment the game is being updated.
     display_result():
     display_combo_timer():
     display_combo():
@@ -86,8 +85,8 @@ class Engine:
     """
     def __init__(self, player: pygame.sprite.GroupSingle, steps: pygame.sprite.Group, screen):
         super().__init__()
-        self.my_player = player  # this is GroupSingle
-        self.my_steps = steps  # this is Group
+        self.my_player = player
+        self.my_steps = steps
         self.main_screen = screen
         self.start_background = pygame.image.load('resources/backgrounds/background.png').convert_alpha()
 
@@ -96,7 +95,6 @@ class Engine:
         self.max_combo = None
         self.score = None
         self.current_combo = None
-        self.player_can_do_more_combo = None
         self.font = None
         self.start_time = None
         self.combo_timer = None
@@ -118,13 +116,13 @@ class Engine:
         self.score = 0
 
         self.current_combo = 0
-        self.player_can_do_more_combo = True
+        self.can_do_more_combo = True
         self.font = pygame.font.SysFont("Comic Sans MS", 30)
         self.start_time = 0
         self.combo_timer = 0
         self.combo_start_time = 0
 
-    def _is_contact_with_step(self, step) -> bool: 
+    def _is_contact_with_step(self, step: StepTemplate) -> bool:
         if (step.rect.top - 10 <= self.my_player.sprite.rect.bottom <= step.rect.top + 10 and
                 step.rect.left <= self.my_player.sprite.rect.centerx <= step.rect.right and
                 self.my_player.sprite.y_speed >= 0):
@@ -134,22 +132,22 @@ class Engine:
     def _check_player_can_do_more_combo(self):
         self.combo_timer = 3000 - (pygame.time.get_ticks() - self.combo_start_time)
         if self.combo_start_time == 0 or self.combo_timer > 0:
-            self.player_can_do_more_combo = True
+            self.my_player.sprite.can_do_more_combo = True
         else:
-            self.player_can_do_more_combo = False
+            self.my_player.sprite.can_do_more_combo = False
 
-    def _get_step_under_player(self):
+    def _get_step_under_player(self) -> StepTemplate | None:
         for step in self.my_steps:
             if self._is_contact_with_step(step):
                 return step
         return None
 
-    def _update_score_and_level(self, level_difference):
+    def _update_score_and_level(self, level_difference: int):
         if level_difference > 0:
             self.score += level_difference * 10
             self.level += level_difference
 
-    def _display_text(self, text, top_left):
+    def _display_text(self, text: str, top_left: tuple[int, int]):
         text_surface = self.font.render(text, True, "Brown")
         text_rect = text_surface.get_rect(topleft=top_left)
         self.main_screen.blit(text_surface, text_rect)
@@ -224,10 +222,10 @@ class Engine:
         level_difference = step_under_player.step_number - self.level
         self._update_score_and_level(level_difference)
 
-        if self.player_can_do_more_combo and level_difference > 1:
+        if self.my_player.sprite.can_do_more_combo and level_difference > 1:
             self.current_combo += level_difference
             self.combo_start_time = pygame.time.get_ticks()
-        elif not self.player_can_do_more_combo or level_difference == 1 or level_difference < 0:
+        elif not self.my_player.sprite.can_do_more_combo or level_difference == 1 or level_difference < 0:
             self.score += self.current_combo ** 2 * 5
             self.max_combo = max(self.max_combo, self.current_combo)
             self.current_combo = 0
