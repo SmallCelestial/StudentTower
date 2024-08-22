@@ -19,10 +19,6 @@ Full list of libraries needed is below:
 ```
 pip install pygame
 ```
-**sqlite3** -library responsible for database:
-```
-pip install sqlite
-```
 ## Project structure:
 Files metionned below contain classes (and their descriptions) repsonsible for game functionality:
 - main.py
