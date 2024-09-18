@@ -20,7 +20,7 @@ Full list of libraries needed is below:
 pip install pygame
 ```
 ## Project structure:
-Files metionned below contain classes (and their descriptions) repsonsible for game functionality:
+Files metioned below contain classes (and their descriptions) repsonsible for game functionality:
 - main.py
 - engine.py
 - player.py
@@ -29,7 +29,7 @@ Files metionned below contain classes (and their descriptions) repsonsible for g
 ## Tests:
 Our projects include tests written in **Unittest** and **pytest** frameworks. You can find them in _test_ dictionary. Each file has specific name indicating for which class tests it include.
 ## Database:
-We decided to implement databee basen on **SQLite3** framework. It collects data about best score player has got, and it shown after player either dies.
+We decided to implement database basen on **SQLite3** framework. It collects data about best score player has got, and it shown after player either dies.
 
 ## License 
 No license was included for this project, We reserve the right to place future versions of this library under some specific license.
