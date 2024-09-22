@@ -12,15 +12,12 @@ The goal of a player is to help Bob get as high as possible, the higher you go t
 earns you additional points, so called combos. But be careful, after some time steps start to collapse, so you have to hurry!
 
 ## Requirements
-Our game is based on pygame library, however additionals libraries are needed.  
-Full list of libraries needed is below:  
-  
-**Pygame** -library responsible for game engine:
+Our game is based on **pygame** library.  
 ```
 pip install pygame
 ```
 ## Project structure:
-Files metioned below contain classes (and their descriptions) repsonsible for game functionality:
+Files metioned below contain classes (and their descriptions) responsible for game functionality:
 - main.py
 - engine.py
 - player.py
