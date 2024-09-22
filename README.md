@@ -7,9 +7,8 @@
   
 ## What our game is about
 StudentTower was inspired by old yet still legendary game **Icy Tower**. 
-The main character "Bob" is placed in a never ending tower which as time passes start to colapse  starting from the bottom!
-The goal of a player is to help Bob get as high as possible, the higher you go the better score you get. Jumping with style make 
-earns you additional points, so called combos. But be careful, after some time steps start to collapse, so you have to hurry!
+The main character "Bob" is placed in a never ending tower which as time passes starts to collapse from the bottom!
+The goal of a player is to help Bob get as high as possible, the higher you go the better score you get. Jumping with style makes you earn additional points, so called combos. But be careful, after some time steps start to collapse, so you have to hurry!
 
 ## Requirements
 Our game is based on **pygame** library.  
